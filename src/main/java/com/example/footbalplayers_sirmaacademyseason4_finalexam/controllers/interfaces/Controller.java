@@ -1,4 +1,4 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.commandLineRunners.interfaces;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers.interfaces;
 
 import java.util.List;
 
