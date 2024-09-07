@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 @Component
@@ -77,6 +79,51 @@ public class PlayerCommandLineRunner implements Controller<PlayerDTO>, CommandLi
      */
     @Override
     public void run(String... args) throws Exception {
+        if (args.length == 0 || 5 < args.length) {
+            return;
+        }
 
+        if (args[0].equals("player")) {
+            if (args[1].equals("load")) {
+                try {
+                    long id = Integer.parseInt(args[2]);
+                    PlayerDTO playerDTO = loadById(id);
+                    System.out.println(playerDTO);
+                } catch (InputMismatchException ex) {
+                    return;
+                }
+            } else if (args[1].equals("loadAll")) {
+                List<PlayerDTO> playerDTOs = loadAll();
+                for (PlayerDTO playerDTO : playerDTOs) {
+                    System.out.println(playerDTO);
+                }
+            } else if (args[1].equals("update")) {
+                try {
+                    Long id = Long.parseLong(args[2]);
+
+                    List<String> updateArgs = new ArrayList<>();
+                    PlayerDTO dto = new PlayerDTO();
+                    dto.setId(id);
+                    dto.setTeamNumber(Integer.parseInt(args[2]));
+                    dto.setPosition(args[3]);
+                    dto.setFullName(args[4]);
+
+                    update(id, dto);
+                } catch (InputMismatchException ex) {
+                    return;
+                }
+            } else if (args[1].equals("delete")) {
+                try {
+                    Long id = Long.parseLong(args[2]);
+                    delete(id);
+                } catch (InputMismatchException ex) {
+                    return;
+                }
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
     }
 }
