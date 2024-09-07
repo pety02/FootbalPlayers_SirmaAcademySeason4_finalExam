@@ -9,11 +9,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PlayerDTO {
+public class TeamDTO {
     private Long id;
-    private Integer teamNumber;
-    private String position;
-    private String fullName;
-    private Long teamId;
-    private List<Long> recordsIds;
+    private String name;
+    private String managerFullName;
+    private String group;
+    private List<Long> playersIds;
+    private List<Long> matchesIds;
 }
