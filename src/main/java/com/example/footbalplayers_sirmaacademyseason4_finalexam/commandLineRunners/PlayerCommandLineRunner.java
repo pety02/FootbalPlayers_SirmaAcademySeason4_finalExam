@@ -3,6 +3,7 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.commandLineRunn
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.commandLineRunners.interfaces.Controller;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.PlayerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 
 @Component
+@Slf4j
 public class PlayerCommandLineRunner implements Controller<PlayerDTO>, CommandLineRunner {
     private final PlayerService playerService;
 
@@ -90,7 +92,7 @@ public class PlayerCommandLineRunner implements Controller<PlayerDTO>, CommandLi
                     PlayerDTO playerDTO = loadById(id);
                     System.out.println(playerDTO);
                 } catch (InputMismatchException ex) {
-                    return;
+                    log.error(ex.getMessage());
                 }
             } else if (args[1].equals("loadAll")) {
                 List<PlayerDTO> playerDTOs = loadAll();
@@ -110,20 +112,16 @@ public class PlayerCommandLineRunner implements Controller<PlayerDTO>, CommandLi
 
                     update(id, dto);
                 } catch (InputMismatchException ex) {
-                    return;
+                    log.error(ex.getMessage());
                 }
             } else if (args[1].equals("delete")) {
                 try {
                     Long id = Long.parseLong(args[2]);
                     delete(id);
                 } catch (InputMismatchException ex) {
-                    return;
+                    log.error(ex.getMessage());
                 }
-            } else {
-                return;
             }
-        } else {
-            return;
         }
     }
 }
