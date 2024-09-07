@@ -39,6 +39,13 @@ public class HeadersValidator {
                 && headers[4].equals("Score");
     }
 
+    /**
+     *
+     * @param cl
+     * @param headers
+     * @return
+     * @param <T>
+     */
     public static <T> boolean areValid(Class<T> cl, String[] headers) {
         if(cl == Player.class) {
             return areValidPlayerHeaders(headers);

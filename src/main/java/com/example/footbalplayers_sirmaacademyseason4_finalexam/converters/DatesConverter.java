@@ -1,4 +1,4 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.converters;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
