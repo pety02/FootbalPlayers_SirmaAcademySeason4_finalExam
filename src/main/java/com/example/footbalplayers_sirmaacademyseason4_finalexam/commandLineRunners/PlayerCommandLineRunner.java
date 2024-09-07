@@ -2,6 +2,7 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.commandLineRunn
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.commandLineRunners.interfaces.Controller;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -81,7 +83,7 @@ public class PlayerCommandLineRunner implements Controller<PlayerDTO>, CommandLi
      */
     @Override
     public void run(String... args) throws Exception {
-        if (args.length == 0 || 5 < args.length) {
+        if (args.length == 0 || 9 < args.length) {
             return;
         }
 
@@ -99,16 +101,32 @@ public class PlayerCommandLineRunner implements Controller<PlayerDTO>, CommandLi
                 for (PlayerDTO playerDTO : playerDTOs) {
                     System.out.println(playerDTO);
                 }
+            } else if (args[1].equals("create")) {
+                PlayerDTO dto = new PlayerDTO();
+                dto.setTeamNumber(Integer.parseInt(args[2]));
+                dto.setPosition(args[3]);
+                dto.setFullName(args[4]);
+                dto.setTeamId(Long.parseLong(args[5]));
+
+                PlayerDTO created = create(dto);
+                System.out.println(created);
             } else if (args[1].equals("update")) {
                 try {
                     Long id = Long.parseLong(args[2]);
 
-                    List<String> updateArgs = new ArrayList<>();
                     PlayerDTO dto = new PlayerDTO();
                     dto.setId(id);
                     dto.setTeamNumber(Integer.parseInt(args[2]));
                     dto.setPosition(args[3]);
                     dto.setFullName(args[4]);
+                    dto.setTeamId(Long.parseLong(args[5]));
+                    String[] ids = args[6].split(",");
+                    List<Long> recordsIds = new ArrayList<>();
+                    for (String val : ids) {
+                        val = val.replaceAll("\\s", "");
+                        recordsIds.add(Long.parseLong(val));
+                    }
+                    dto.setRecordsIds(recordsIds);
 
                     update(id, dto);
                 } catch (InputMismatchException ex) {
