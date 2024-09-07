@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: to comment the class
 public class Reader implements Readable{
     /**
      *
@@ -42,7 +43,6 @@ public class Reader implements Readable{
         List<Map<String, String>> data = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            // Read and validate the header line
             String headersLine = br.readLine();
             if (headersLine.isEmpty() || headersLine.isBlank()) {
                 throw new IOException("CSV file is empty!");
@@ -51,7 +51,6 @@ public class Reader implements Readable{
             headersLine = headersLine.replaceAll("\\s", "");
             String[] headers = getHeaders(cl, headersLine, delimiter);
 
-            // Read and process each line of the CSV file
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(delimiter);
                 int index = 0;

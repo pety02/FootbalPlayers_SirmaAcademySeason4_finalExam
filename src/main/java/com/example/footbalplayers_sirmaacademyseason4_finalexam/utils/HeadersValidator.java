@@ -3,7 +3,13 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 
+// TODO: to comment the class
 public class HeadersValidator {
+    /**
+     *
+     * @param headers
+     * @return
+     */
     private static boolean areValidPlayerHeaders(String[] headers) {
         if(headers.length != 5) {
             return false;
@@ -13,6 +19,11 @@ public class HeadersValidator {
                 && headers[4].equals("TeamID");
     }
 
+    /**
+     *
+     * @param headers
+     * @return
+     */
     private static boolean areValidTeamHeaders(String[] headers) {
         if(headers.length != 4) {
             return false;
@@ -21,6 +32,11 @@ public class HeadersValidator {
                 && headers[2].equals("ManagerFullName") && headers[3].equals("Group");
     }
 
+    /**
+     *
+     * @param headers
+     * @return
+     */
     private static boolean areValidRecordHeaders(String[] headers) {
         if(headers.length != 5) {
             return false;
@@ -30,6 +46,11 @@ public class HeadersValidator {
                 && headers[4].equals("toMinutes");
     }
 
+    /**
+     *
+     * @param headers
+     * @return
+     */
     private static boolean areValidMatchHeaders(String[] headers) {
         if(headers.length != 5) {
             return false;
