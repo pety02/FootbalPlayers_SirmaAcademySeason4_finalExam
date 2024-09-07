@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: to comment the class
 @org.springframework.stereotype.Service
 public class PlayerService implements Service<Player, PlayerDTO> {
     private final PlayerConverter playerConverter;
@@ -61,6 +62,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      */
     @Override
     public PlayerDTO create(PlayerDTO playerDTO) {
+        // TODO: cascade creation to records, players_records and teams_players
         return playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(playerDTO)));
     }
 
@@ -71,6 +73,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      */
     @Override
     public void update(Long id, PlayerDTO playerDTO) {
+        // TODO: cascade update to records, players_records and teams_players
         if(playerRepository.findById(id).isPresent() && id.equals(playerDTO.getId())) {
             playerRepository.save(playerConverter.toEntity(playerDTO));
         }
@@ -82,6 +85,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      */
     @Override
     public void deleteById(Long id) {
+        // TODO: cascade deletion from records, players_records and teams_players
         playerRepository.deleteById(id);
     }
 }
