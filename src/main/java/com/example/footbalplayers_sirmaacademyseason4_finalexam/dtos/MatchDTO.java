@@ -1,5 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos;
 
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.annotations.ValidDate;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +20,10 @@ public class MatchDTO {
     @Min(value = 1, message = "BTeamId should be positive number!")
     private Long bTeamId;
     @NotNull(message = "Date should not be null!")
-    // TODO: after adding custom valid date annotation and custom date validator to annotate it properly
+    @NotNull(message = "Date should not be null!")
+    @ValidDate(formats = {"YYYY-MM-DD", "MM/DD/YYYY",
+            "DD.MM.YYYY", "YYYY-MM-DD"},
+            message = "Date should be in YYYY-MM-DD, MM/DD/YYYY, DD.MM.YYYY or YYYY-MM-DD format!")
     private LocalDate date;
     @NotNull(message = "Score should not be null!")
     @NotBlank(message = "Score should not be blank!")
