@@ -8,126 +8,130 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfa
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 
-// TODO: to comment the class
 @Component
 public class SupportingTableService implements SupportingService {
 
     /**
-     *
-     * @param playerId
-     * @param recordId
+     * Inserts into players_records supporting table new record
+     * @param playerId the new record's player id
+     * @param recordId the new record's record id
      */
     @Query(value = "INSERT INTO players_records (player_id, record_id) VALUES (:playerId, :recordId)", nativeQuery = true)
     private void addPlayerRecord(Long playerId, Long recordId) {
     }
 
     /**
-     *
-     * @param teamId
-     * @param matchId
+     * Inserts into teams_matches supporting table new record
+     * @param teamId the new records' team id
+     * @param matchId the new record's match id
      */
     @Query(value = "INSERT INTO teams_matches (team_id, match_id) VALUES (:teamId, :matchId)", nativeQuery = true)
     private void addTeamMatch(Long teamId, Long matchId) {
     }
 
     /**
-     *
-     * @param teamId
-     * @param playerId
+     * Inserts into teams_players supporting table new record
+     * @param teamId the new record's team id
+     * @param playerId the new record's player id
      */
     @Query(value = "INSERT INTO teams_players (team_id, player_id) VALUES (:teamId, :playerId)", nativeQuery = true)
     private void addTeamPlayer(Long teamId, Long playerId) {
     }
 
     /**
-     *
-     * @param playerId
-     * @param recordId
+     * Updates a definite record in the players_records supporting table. The updated field is player_id.
+     * @param playerId the updated record's player id
+     * @param recordId the updated record's record id
      */
     @Query(value = "UPDATE players_records SET player_id = :playerId WHERE record_id = :recordId", nativeQuery = true)
     private void updatePlayerRecord(Long playerId, Long recordId) {
     }
 
     /**
-     *
-     * @param recordId
-     * @param playerId
+     * Updates a definite record in the players_records supporting table. The updated field is record_id.
+     * @param recordId the updated record's record id
+     * @param playerId the updated record's player id
      */
     @Query(value = "UPDATE players_records SET record_id = :recordId WHERE player_id = :playerId", nativeQuery = true)
     private void updateRecordPlayer(Long recordId, Long playerId) {
     }
 
     /**
-     *
-     * @param teamId
-     * @param matchId
+     * Updates a definite record in the teams_matches supporting table. The updated field is team_id.
+     * @param teamId the updated record's team id
+     * @param matchId the updated record's match id
      */
     @Query(value = "UPDATE teams_matches SET team_id = :teamId WHERE match_id = :matchId", nativeQuery = true)
     private void updateTeamMatch(Long teamId, Long matchId) {
     }
 
     /**
-     *
-     * @param matchId
-     * @param teamId
+     * Updates a definite record in the teams_matches supporting table. The updated field is match_id.
+     * @param matchId the updated record's match id
+     * @param teamId the updated record's team id
      */
     @Query(value = "UPDATE teams_matches SET match_id = :matchId WHERE team_id = :teamId", nativeQuery = true)
     private void updateMatchTeam(Long matchId, Long teamId) {
     }
 
     /**
-     *
-     * @param teamId
-     * @param playerId
+     * Updates a definite record in the teams_players supporting table. The updated field is team_id.
+     * @param teamId the updated record's team id
+     * @param playerId the updated record's player id
      */
     @Query(value = "UPDATE teams_players SET team_id = :teamId WHERE player_id = :playerId", nativeQuery = true)
     private void updateTeamPlayer(Long teamId, Long playerId) {
     }
 
     /**
-     *
-     * @param playerId
-     * @param teamId
+     * Updates a definite record in the teams_players supporting table. The updated field is player_id.
+     * @param playerId the updated record's player id
+     * @param teamId the updated record's team id
      */
     @Query(value = "UPDATE teams_players SET player_id = :playerId WHERE team_id = :teamId", nativeQuery = true)
     private void updatePlayerTeam(Long playerId, Long teamId) {
     }
 
     /**
-     *
-     * @param playerId
-     * @param recordId
+     * Deletes a definite record from the players_records supporting table
+     * @param playerId the deleted record's player id
+     * @param recordId the deleted record's record id
      */
     @Query(value = "DELETE FROM players_records WHERE player_id = :playerId AND record_id = :recordId", nativeQuery = true)
     private void deletePlayerRecord(Long playerId, Long recordId) {
     }
 
     /**
-     *
-     * @param teamId
-     * @param matchId
+     * Deletes a definite record from the teams_matches supporting table
+     * @param teamId the deleted records' team id
+     * @param matchId the deleted record's match id
      */
     @Query(value = "DELETE FROM teams_matches WHERE team_id = :teamId AND match_id = :matchId", nativeQuery = true)
     private void deleteTeamMatch(Long teamId, Long matchId) {
     }
 
     /**
-     *
-     * @param teamId
-     * @param playerId
+     * Deletes a definite record from the teams_players supporting table
+     * @param teamId the deleted record's team id
+     * @param playerId the deleted record's player id
      */
     @Query(value = "DELETE FROM teams_players WHERE team_id = :teamId AND player_id = :playerId", nativeQuery = true)
     private void deleteTeamPlayer(Long teamId, Long playerId) {
     }
 
     /**
-     *
-     * @param firstCl
-     * @param secondCl
-     * @param supportingTableDTO
-     * @param <M>
-     * @param <N>
-     * @throws RuntimeException
+     * Inserts new records in some of the supporting tables: players_records, teams_matches or teams_players.
+     * The method decides which helper methods to execute as checking of firstCl and secondCl arguments values.
+     * If the firstCl or secondCl has not supported values the methods throws an exception.
+     * @param firstCl the first class
+     * @param secondCl the second class
+     * @param supportingTableDTO a SupportingTableDTO object that will be given as an argument of the helper
+     *                           methods execution when its needed
+     * @param <M> a template parameter that defines the value of the firstCl
+     * @param <N> a template parameter that defines the value of the secondCl
+     * @throws RuntimeException this exception is thrown when any of the template argument defines not
+     * supported type for firstCl or secondCl parameters. The supported types are: Player.class, Record.class,
+     * Team.class or Match.class.
      */
     @Override
     public <M, N> void create(Class<M> firstCl, Class<N> secondCl,
@@ -147,14 +151,19 @@ public class SupportingTableService implements SupportingService {
     }
 
     /**
-     *
-     * @param firstCl
-     * @param secondCl
-     * @param id
-     * @param supportingTableDTO
-     * @param <M>
-     * @param <N>
-     * @throws RuntimeException
+     * Updates a definite record in some of the supporting tables: players_records, teams_matches or teams_players.
+     * The method decides which helper methods to execute as checking of firstCl and secondCl arguments values.
+     * If the firstCl or secondCl has not supported values the methods throws an exception.
+     * @param firstCl the first class
+     * @param secondCl the second class
+     * @param id the id for the updated record
+     * @param supportingTableDTO a SupportingTableDTO object that will be given as an argument of the helper
+     *                           methods execution when its needed
+     * @param <M> a template parameter that defines the value of the firstCl
+     * @param <N> a template parameter that defines the value of the secondCl
+     * @throws RuntimeException this exception is thrown when any of the template argument defines not
+     * supported type for firstCl or secondCl parameters. The supported types are: Player.class, Record.class,
+     * Team.class or Match.class.
      */
     @Override
     public <M, N> void update(Class<M> firstCl, Class<N> secondCl, Long id,
@@ -177,14 +186,18 @@ public class SupportingTableService implements SupportingService {
     }
 
     /**
-     *
-     * @param firstCl
-     * @param secondCl
-     * @param firstId
-     * @param secondId
-     * @param <M>
-     * @param <N>
-     * @throws RuntimeException
+     * Deletes from the supporting tables: players_records, teams_matches or teams_players.
+     * The method decides which helper methods to execute as checking of firstCl and secondCl arguments values.
+     * If the firstCl or secondCl has not supported values the methods throws an exception.
+     * @param firstCl the first class
+     * @param secondCl the second class
+     * @param firstId the first id, passed as an argument to the helpers methods
+     * @param secondId the second id, passed as an argument to the helpers methods
+     * @param <M> a template parameter that defines the value of the firstCl
+     * @param <N> a template parameter that defines the value of the secondCl
+     * @throws RuntimeException this exception is thrown when any of the template argument defines not
+     * supported type for firstCl or secondCl parameters. The supported types are: Player.class, Record.class,
+     * Team.class or Match.class.
      */
     @Override
     public <M, N> void deleteById(Class<M> firstCl, Class<N> secondCl, Long firstId, Long secondId) throws RuntimeException {

@@ -1,84 +1,90 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.RecordConverter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.MatchRepository;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.PlayerRepository;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
-// TODO: to comment the class
 @org.springframework.stereotype.Service
 public class RecordService implements Service<Record, RecordDTO> {
     private final RecordRepository recordRepository;
-    private final PlayerRepository playerRepository;
-    private final MatchRepository matchRepository;
+    private final RecordConverter recordConverter;
 
     /**
-     *
-     * @param recordRepository
-     * @param playerRepository
-     * @param matchRepository
+     * RecordService class constructor with arguments
+     * @param recordRepository the record repository
+     * @param recordConverter the record converter
      */
     @Autowired
     public RecordService(RecordRepository recordRepository,
-                         PlayerRepository playerRepository,
-                         MatchRepository matchRepository) {
+                         RecordConverter recordConverter) {
         this.recordRepository = recordRepository;
-        this.playerRepository = playerRepository;
-        this.matchRepository = matchRepository;
+        this.recordConverter = recordConverter;
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Loads a Record object by its id from the database, converts it
+     * to a RecordDTO object and return the convertd object
+     * @param id the record's id
+     * @return the converted object
      */
     @Override
     public RecordDTO loadByID(Long id) {
-        // TODO: to implement it
-        return null;
+        Record record = recordRepository.findById(id).orElse(null);
+        return recordConverter.toDTO(record);
     }
 
     /**
-     *
-     * @return
+     * Loads all Record objects from the database and converts them
+     * to RecordDTO objects and return them as a List of RecordDTO objects
+     * @return a List of RecordDTO objects
      */
     @Override
     public List<RecordDTO> loadAll() {
-        // TODO: to implement it
-        return null;
+        List<Record> records = recordRepository.findAll();
+        List<RecordDTO> recordDTOs = new ArrayList<>();
+        for(Record record : records) {
+            recordDTOs.add(recordConverter.toDTO(record));
+        }
+
+        return recordDTOs;
     }
 
     /**
-     *
-     * @param entity
-     * @return
+     * Creates a Record object from the RecordDTO object in the database
+     * @param dto the RecordDTO object
+     * @return the created object, converted to a RecordDTO object
      */
     @Override
-    public RecordDTO create(RecordDTO entity) {
-        // TODO: to implement it
-        return null;
+    public RecordDTO create(RecordDTO dto) {
+        Record record = recordConverter.toEntity(dto);
+        return recordConverter.toDTO(recordRepository.save(record));
     }
 
     /**
-     *
-     * @param id
-     * @param entity
+     * Updates a definite Record object by its id in the database
+     * @param id the Record object's id
+     * @param dto the updated fields packaged as a RecordDTO object
      */
     @Override
-    public void update(Long id, RecordDTO entity) {
-        // TODO: to implement it
+    public void update(Long id, RecordDTO dto) {
+        if(recordRepository.existsById(id) && dto.getId().equals(id)) {
+            Record record = recordConverter.toEntity(dto);
+            recordRepository.save(record);
+        }
     }
 
     /**
-     *
-     * @param id
+     * Deletes a Record object by its id from the database
+     * @param id the Record object's id
      */
     @Override
     public void deleteById(Long id) {
-        // TODO: to implement it
+        recordRepository.deleteById(id);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public interface Service<Entity, DTO> {
     DTO loadByID(Long id);
     List<DTO> loadAll();
-    DTO create(DTO entity);
-    void update(Long id, DTO entity);
+    DTO create(DTO dto);
+    void update(Long id, DTO dto);
     void deleteById(Long id);
 }

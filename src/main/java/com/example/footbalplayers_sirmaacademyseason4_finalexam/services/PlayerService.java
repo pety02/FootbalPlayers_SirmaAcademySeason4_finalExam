@@ -57,25 +57,25 @@ public class PlayerService implements Service<Player, PlayerDTO> {
 
     /**
      *
-     * @param playerDTO
+     * @param dto
      * @return
      */
     @Override
-    public PlayerDTO create(PlayerDTO playerDTO) {
+    public PlayerDTO create(PlayerDTO dto) {
         // TODO: cascade creation to records, players_records and teams_players
-        return playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(playerDTO)));
+        return playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));
     }
 
     /**
      *
      * @param id
-     * @param playerDTO
+     * @param dto
      */
     @Override
-    public void update(Long id, PlayerDTO playerDTO) {
+    public void update(Long id, PlayerDTO dto) {
         // TODO: cascade update to records, players_records and teams_players
-        if(playerRepository.findById(id).isPresent() && id.equals(playerDTO.getId())) {
-            playerRepository.save(playerConverter.toEntity(playerDTO));
+        if(playerRepository.findById(id).isPresent() && id.equals(dto.getId())) {
+            playerRepository.save(playerConverter.toEntity(dto));
         }
     }
 

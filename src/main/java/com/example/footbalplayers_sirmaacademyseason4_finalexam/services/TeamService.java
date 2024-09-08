@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: to comment the class
 @org.springframework.stereotype.Service
 public class TeamService implements Service<Team, TeamDTO> {
     private final TeamConverter teamConverter;
     private final TeamRepository teamRepository;
 
     /**
+     * TeamService class constructor with arguments
      *
-     * @param teamConverter
-     * @param teamRepository
+     * @param teamConverter  the team converter
+     * @param teamRepository the team repository
      */
     @Autowired
     public TeamService(TeamConverter teamConverter,
@@ -29,9 +29,11 @@ public class TeamService implements Service<Team, TeamDTO> {
     }
 
     /**
+     * Loads a Team object from the database by its id
+     * and converts it to TeamDTO object
      *
-     * @param id
-     * @return
+     * @param id the Team object id
+     * @return a TeamDTO object
      */
     @Override
     public TeamDTO loadByID(Long id) {
@@ -39,14 +41,16 @@ public class TeamService implements Service<Team, TeamDTO> {
     }
 
     /**
+     * Loads all Team object from the database and converts them
+     * to TeamDTO objects
      *
-     * @return
+     * @return a List of TeamDTO objects
      */
     @Override
     public List<TeamDTO> loadAll() {
         List<Team> teams = teamRepository.findAll();
         List<TeamDTO> teamDTOs = new ArrayList<>();
-        for(Team team : teams) {
+        for (Team team : teams) {
             teamDTOs.add(teamConverter.toDTO(team));
         }
 
@@ -54,32 +58,40 @@ public class TeamService implements Service<Team, TeamDTO> {
     }
 
     /**
+     * Creates a Team object from a TeamDTO object
+     * and saves it in the database
      *
-     * @param entity
-     * @return
+     * @param dto the TeamDTO object
+     * @return the saved object converted to TeamDTO object
      */
     @Override
-    public TeamDTO create(TeamDTO entity) {
-        // TODO: to implement it
-        return null;
+    public TeamDTO create(TeamDTO dto) {
+        Team team = teamConverter.toEntity(dto);
+        return teamConverter.toDTO(teamRepository.save(team));
     }
 
     /**
+     * Updates a Team object by its id and TeamDTO object
+     * that packages the updated fields
      *
-     * @param id
-     * @param entity
+     * @param id  the id of the Team object that should be updated
+     * @param dto the TeamDTO object with updated fields
      */
     @Override
-    public void update(Long id, TeamDTO entity) {
-        // TODO: to implement it
+    public void update(Long id, TeamDTO dto) {
+        if (teamRepository.existsById(id) && dto.getId().equals(id)) {
+            Team team = teamConverter.toEntity(dto);
+            teamRepository.save(team);
+        }
     }
 
     /**
+     * Deletes a Team object by its id
      *
-     * @param id
+     * @param id the id of the Team object that should be deleted
      */
     @Override
     public void deleteById(Long id) {
-        // TODO: to implement it
+        teamRepository.deleteById(id);
     }
 }
