@@ -13,16 +13,15 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: to comment the class
 @Component
 public class TeamConverter implements Convertable<Team, TeamDTO> {
     private final PlayerRepository playerRepository;
     private final MatchRepository matchRepository;
 
     /**
-     *
-     * @param playerRepository
-     * @param matchRepository
+     * TeamConverter class constructor with parameters
+     * @param playerRepository the player repository
+     * @param matchRepository the math repository
      */
     @Autowired
     public TeamConverter(PlayerRepository playerRepository,
@@ -32,9 +31,9 @@ public class TeamConverter implements Convertable<Team, TeamDTO> {
     }
 
     /**
-     *
-     * @param teamDTO
-     * @return
+     * Converts a TeamDTO object to a Team object
+     * @param teamDTO the TeamDTO object
+     * @return a Team object
      */
     @Override
     public Team toEntity(TeamDTO teamDTO) {
@@ -62,9 +61,9 @@ public class TeamConverter implements Convertable<Team, TeamDTO> {
     }
 
     /**
-     *
-     * @param team
-     * @return
+     * Converts a Team object to a TeamDTO object
+     * @param team the Team object
+     * @return a TeamDTO object
      */
     @Override
     public TeamDTO toDTO(Team team) {

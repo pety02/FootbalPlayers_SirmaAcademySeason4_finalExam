@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: to comment the class
 @Component
 public class PlayerConverter implements Convertable<Player, PlayerDTO> {
     private final TeamRepository teamRepository;
     private final RecordRepository recordRepository;
 
     /**
-     *
-     * @param teamRepository
+     * PlayerConverter constructor with arguments
+     * @param teamRepository the team repository
+     * @param recordRepository the record repository
      */
     @Autowired
     public PlayerConverter(TeamRepository teamRepository,
@@ -31,9 +31,9 @@ public class PlayerConverter implements Convertable<Player, PlayerDTO> {
     }
 
     /**
-     *
-     * @param playerDTO
-     * @return
+     * Converts a PlayerDTO object to a Player object
+     * @param playerDTO the PlayerDTO object
+     * @return a Player object
      */
     @Override
     public Player toEntity(PlayerDTO playerDTO) {
@@ -60,9 +60,9 @@ public class PlayerConverter implements Convertable<Player, PlayerDTO> {
     }
 
     /**
-     *
-     * @param player
-     * @return
+     * Converts a Player object to a PlayerDTO object
+     * @param player the Player object
+     * @return a PlayerDTO object
      */
     @Override
     public PlayerDTO toDTO(Player player) {
