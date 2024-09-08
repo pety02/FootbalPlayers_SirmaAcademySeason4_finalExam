@@ -2,9 +2,12 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.MatchConverter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.SupportingTableDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.MatchRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.SupportingService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -14,17 +17,21 @@ import java.util.List;
 public class MatchService implements Service<Match, MatchDTO> {
     private final MatchRepository matchRepository;
     private final MatchConverter matchConverter;
+    private final SupportingService supportingService;
 
     /**
      * MatchService class constructor with arguments
      * @param matchRepository the match repository
      * @param matchConverter the match converter
+     * @param supportingService the supporting tables service
      */
     @Autowired
     public MatchService(MatchRepository matchRepository,
-                        MatchConverter matchConverter) {
+                        MatchConverter matchConverter,
+                        SupportingService supportingService) {
         this.matchRepository = matchRepository;
         this.matchConverter = matchConverter;
+        this.supportingService = supportingService;
     }
 
     /**
@@ -59,9 +66,10 @@ public class MatchService implements Service<Match, MatchDTO> {
      */
     @Override
     public MatchDTO create(MatchDTO dto) {
-        // TODO: cascade creation
-        Match match = matchConverter.toEntity(dto);
-        return matchConverter.toDTO(matchRepository.save(match));
+        Match created = matchRepository.save(matchConverter.toEntity(dto));
+        SupportingTableDTO teamMatchDTO = new SupportingTableDTO(created.getATeam().getId(), created.getId());
+        supportingService.create(Team.class, Match.class, teamMatchDTO);
+        return matchConverter.toDTO(created);
     }
 
     /**
@@ -74,7 +82,6 @@ public class MatchService implements Service<Match, MatchDTO> {
      */
     @Override
     public void update(Long id, MatchDTO dto) {
-        // TODO: cascade updation
         if(matchRepository.existsById(id) && dto.getId().equals(id)) {
             Match match = matchConverter.toEntity(dto);
             matchRepository.save(match);
@@ -87,7 +94,11 @@ public class MatchService implements Service<Match, MatchDTO> {
      */
     @Override
     public void deleteById(Long id) {
-        // TODO: cascade deletion
-        matchRepository.deleteById(id);
+        if(matchRepository.findById(id).isPresent()) {
+            Match match = matchRepository.findById(id).get();
+            supportingService.deleteById(Team.class, Match.class, match.getATeam().getId(), match.getId());
+            supportingService.deleteById(Team.class, Match.class, match.getBTeam().getId(), match.getId());
+            matchRepository.deleteById(id);
+        }
     }
 }
