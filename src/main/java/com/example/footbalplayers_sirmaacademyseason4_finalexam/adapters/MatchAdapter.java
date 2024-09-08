@@ -1,6 +1,6 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.converters;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.interfaces.Convertable;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.interfaces.Adaptable;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MatchConverter implements Convertable<Match, MatchDTO> {
+public class MatchAdapter implements Adaptable<Match, MatchDTO> {
     private final TeamRepository teamRepository;
-    private final TeamConverter teamConverter;
+    private final TeamAdapter teamConverter;
 
     /**
      * MatchConverter class constructor with arguments
@@ -20,8 +20,8 @@ public class MatchConverter implements Convertable<Match, MatchDTO> {
      * @param teamConverter the team converter
      */
     @Autowired
-    public MatchConverter(TeamRepository teamRepository,
-                          TeamConverter teamConverter) {
+    public MatchAdapter(TeamRepository teamRepository,
+                        TeamAdapter teamConverter) {
         this.teamRepository = teamRepository;
         this.teamConverter = teamConverter;
     }

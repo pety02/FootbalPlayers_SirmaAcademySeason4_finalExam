@@ -1,6 +1,6 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.converters;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.interfaces.Convertable;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.interfaces.Adaptable;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RecordConverter implements Convertable<Record, RecordDTO> {
+public class RecordAdapter implements Adaptable<Record, RecordDTO> {
     private final MatchRepository matchRepository;
-    private final MatchConverter matchConverter;
+    private final MatchAdapter matchConverter;
     private final PlayerRepository playerRepository;
-    private final PlayerConverter playerConverter;
+    private final PlayerAdapter playerConverter;
 
     /**
      * RecordConverter class constructor with arguments
@@ -27,10 +27,10 @@ public class RecordConverter implements Convertable<Record, RecordDTO> {
      * @param playerConverter the player converter
      */
     @Autowired
-    public RecordConverter(MatchRepository matchRepository,
-                           MatchConverter matchConverter,
-                           PlayerRepository playerRepository,
-                           PlayerConverter playerConverter) {
+    public RecordAdapter(MatchRepository matchRepository,
+                         MatchAdapter matchConverter,
+                         PlayerRepository playerRepository,
+                         PlayerAdapter playerConverter) {
         this.matchRepository = matchRepository;
         this.matchConverter = matchConverter;
         this.playerRepository = playerRepository;
