@@ -1,6 +1,6 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.converters;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.interfaces.Convertable;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.interfaces.Adaptable;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PlayerConverter implements Convertable<Player, PlayerDTO> {
+public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
     private final TeamRepository teamRepository;
     private final RecordRepository recordRepository;
 
@@ -24,8 +24,8 @@ public class PlayerConverter implements Convertable<Player, PlayerDTO> {
      * @param recordRepository the record repository
      */
     @Autowired
-    public PlayerConverter(TeamRepository teamRepository,
-                           RecordRepository recordRepository) {
+    public PlayerAdapter(TeamRepository teamRepository,
+                         RecordRepository recordRepository) {
         this.teamRepository = teamRepository;
         this.recordRepository = recordRepository;
     }
