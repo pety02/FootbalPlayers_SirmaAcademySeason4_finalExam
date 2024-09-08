@@ -24,7 +24,7 @@ public class Reader implements Readable{
      * @throws IllegalArgumentException this exception is thrown
      * if some of these headers is/are not valid
      */
-    private static <T> String[] getHeaders(Class<T> cl, String headerLine, String delimiter) throws IllegalArgumentException {
+    private <T> String[] getHeaders(Class<T> cl, String headerLine, String delimiter) throws IllegalArgumentException {
         String[] headers = headerLine.split(delimiter);
         if(HeadersValidator.areValid(cl, headers)) {
             return headers;

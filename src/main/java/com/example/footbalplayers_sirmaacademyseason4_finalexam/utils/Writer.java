@@ -19,7 +19,7 @@ public class Writer implements Writable {
      * @throws IOException this exception is thrown if the buffered writer cannot write
      * because of any occurred issue in the writing process
      */
-    private static void writeLine(BufferedWriter bw, String[] fields, String delimiter) throws IOException {
+    private void writeLine(BufferedWriter bw, String[] fields, String delimiter) throws IOException {
         StringBuilder line = new StringBuilder();
         for (int i = 0; i < fields.length; i++) {
             if (i > 0) {
