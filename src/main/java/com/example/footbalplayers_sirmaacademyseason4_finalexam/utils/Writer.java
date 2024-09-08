@@ -9,20 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.io.BufferedWriter;
 
-// TODO: to comment the class
 public class Writer implements Writable {
     /**
-     *
-     * @param bw
-     * @param fields
-     * @param csvSeparator
-     * @throws IOException
+     * Writes a line in a CSV file via buffered writer, delimiter and fields
+     * that should be written in the CSV file
+     * @param bw the buffered writer
+     * @param fields the array of String that represent the fields
+     * @param delimiter the delimiter used to separate the fields in the CSV file
+     * @throws IOException this exception is thrown if the buffered writer cannot write
+     * because of any occurred issue in the writing process
      */
-    private static void writeLine(BufferedWriter bw, String[] fields, String csvSeparator) throws IOException {
+    private static void writeLine(BufferedWriter bw, String[] fields, String delimiter) throws IOException {
         StringBuilder line = new StringBuilder();
         for (int i = 0; i < fields.length; i++) {
             if (i > 0) {
-                line.append(csvSeparator);
+                line.append(delimiter);
             }
             line.append(fields[i]);
         }
@@ -31,10 +32,11 @@ public class Writer implements Writable {
     }
 
     /**
-     *
-     * @param filename
-     * @param objs
-     * @return
+     * Writes all objects, represented of List of Map of String and
+     * String, in a CSV file with a definite filename
+     * @param filename the filename
+     * @param objs the List of Map of String and String that represents the objects
+     * @return true if the objects are written successfully and false if not
      */
     @Override
     public boolean write(String filename, List<Map<String, String>> objs) {

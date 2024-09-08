@@ -3,12 +3,11 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 
-// TODO: to comment the class
 public class HeadersValidator {
     /**
-     *
-     * @param headers
-     * @return
+     * Validates the Player class headers used in a CSV file
+     * @param headers the headers that should be validated
+     * @return true if the headers are valid and false if not
      */
     private static boolean areValidPlayerHeaders(String[] headers) {
         if(headers.length != 5) {
@@ -20,9 +19,9 @@ public class HeadersValidator {
     }
 
     /**
-     *
-     * @param headers
-     * @return
+     * Validates the Team class headers used in a CSV file
+     * @param headers the headers that should be validated
+     * @return true if the headers are valid and false if not
      */
     private static boolean areValidTeamHeaders(String[] headers) {
         if(headers.length != 4) {
@@ -33,9 +32,9 @@ public class HeadersValidator {
     }
 
     /**
-     *
-     * @param headers
-     * @return
+     * Validates the Record class headers used in a CSV file
+     * @param headers the headers that should be validated
+     * @return true if the headers are valid and false if not
      */
     private static boolean areValidRecordHeaders(String[] headers) {
         if(headers.length != 5) {
@@ -47,9 +46,9 @@ public class HeadersValidator {
     }
 
     /**
-     *
-     * @param headers
-     * @return
+     * Validates the Match class headers used in a CSV file
+     * @param headers the headers that should be validated
+     * @return true if the headers are valid and false if not
      */
     private static boolean areValidMatchHeaders(String[] headers) {
         if(headers.length != 5) {
@@ -61,11 +60,11 @@ public class HeadersValidator {
     }
 
     /**
-     *
-     * @param cl
-     * @param headers
-     * @return
-     * @param <T>
+     * Validates the headers in dependence of the class
+     * @param cl the class
+     * @param headers the headers that should be validated
+     * @return true id the headers are valid and false if not
+     * @param <T> a template argument that defines the type of the class
      */
     public static <T> boolean areValid(Class<T> cl, String[] headers) {
         if(cl == Player.class) {

@@ -9,16 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO: to comment the class
 public class Reader implements Readable{
     /**
-     *
-     * @param cl
-     * @param headerLine
-     * @param delimiter
-     * @return
-     * @param <T>
-     * @throws IllegalArgumentException
+     * Splits the headers line by definite delimiter of
+     * a CSV file and validates the headers in dependence
+     * of which class objects are stored in this file
+     * @param cl the class
+     * @param headerLine the header line
+     * @param delimiter the delimiter symbol
+     * @return an array of headers
+     * @param <T> template argument that define for which
+     * class objects are used these headers
+     * @throws IllegalArgumentException this exception is thrown
+     * if some of these headers is/are not valid
      */
     private static <T> String[] getHeaders(Class<T> cl, String headerLine, String delimiter) throws IllegalArgumentException {
         String[] headers = headerLine.split(delimiter);
@@ -30,11 +33,13 @@ public class Reader implements Readable{
     }
 
     /**
-     *
-     * @param filename
-     * @param cl
-     * @return
-     * @param <T>
+     * Reads CSV file with definite filename
+     * @param filename the filename of the CSV file
+     * @param cl the class
+     * @return List of Map of String and String that represents
+     * all lines of the CSV file
+     * @param <T> template argument that define for which
+     * class objects are used these headers
      */
     @Override
     public <T> List<Map<String, String>> read(String filename, Class<T> cl) {
