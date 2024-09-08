@@ -1,6 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.RecordConverter;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.RecordAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class RecordService implements Service<Record, RecordDTO> {
     private final RecordRepository recordRepository;
-    private final RecordConverter recordConverter;
+    private final RecordAdapter recordConverter;
 
     /**
      * RecordService class constructor with arguments
@@ -22,7 +22,7 @@ public class RecordService implements Service<Record, RecordDTO> {
      */
     @Autowired
     public RecordService(RecordRepository recordRepository,
-                         RecordConverter recordConverter) {
+                         RecordAdapter recordConverter) {
         this.recordRepository = recordRepository;
         this.recordConverter = recordConverter;
     }

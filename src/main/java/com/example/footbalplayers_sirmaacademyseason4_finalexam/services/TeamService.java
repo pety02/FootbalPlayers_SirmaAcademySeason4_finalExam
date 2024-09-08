@@ -1,6 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.TeamConverter;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.TeamAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.TeamRepository;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class TeamService implements Service<Team, TeamDTO> {
-    private final TeamConverter teamConverter;
+    private final TeamAdapter teamConverter;
     private final TeamRepository teamRepository;
 
     /**
@@ -22,7 +22,7 @@ public class TeamService implements Service<Team, TeamDTO> {
      * @param teamRepository the team repository
      */
     @Autowired
-    public TeamService(TeamConverter teamConverter,
+    public TeamService(TeamAdapter teamConverter,
                        TeamRepository teamRepository) {
         this.teamConverter = teamConverter;
         this.teamRepository = teamRepository;

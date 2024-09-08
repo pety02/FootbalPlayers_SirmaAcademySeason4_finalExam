@@ -1,6 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.MatchConverter;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.MatchAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.SupportingTableDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
@@ -16,7 +16,7 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class MatchService implements Service<Match, MatchDTO> {
     private final MatchRepository matchRepository;
-    private final MatchConverter matchConverter;
+    private final MatchAdapter matchConverter;
     private final SupportingService supportingService;
 
     /**
@@ -27,7 +27,7 @@ public class MatchService implements Service<Match, MatchDTO> {
      */
     @Autowired
     public MatchService(MatchRepository matchRepository,
-                        MatchConverter matchConverter,
+                        MatchAdapter matchConverter,
                         SupportingService supportingService) {
         this.matchRepository = matchRepository;
         this.matchConverter = matchConverter;

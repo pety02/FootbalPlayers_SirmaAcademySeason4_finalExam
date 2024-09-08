@@ -1,6 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.converters.PlayerConverter;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.PlayerAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.SupportingTableDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @org.springframework.stereotype.Service
 public class PlayerService implements Service<Player, PlayerDTO> {
-    private final PlayerConverter playerConverter;
+    private final PlayerAdapter playerConverter;
     private final PlayerRepository playerRepository;
     private final RecordRepository recordRepository;
     private final SupportingTableService supportingTableService;
@@ -29,7 +29,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      * @param supportingTableService the supporting tables service
      */
     @Autowired
-    public PlayerService(PlayerConverter playerConverter,
+    public PlayerService(PlayerAdapter playerConverter,
                          PlayerRepository playerRepository,
                          RecordRepository recordRepository,
                          SupportingTableService supportingTableService) {
