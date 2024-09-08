@@ -1,4 +1,4 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.validation;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
