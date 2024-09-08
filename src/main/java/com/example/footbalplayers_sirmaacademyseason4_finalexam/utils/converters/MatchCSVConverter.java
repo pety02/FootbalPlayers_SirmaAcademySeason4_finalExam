@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MatchCSVConverter implements CSVConvertable<MatchDTO> {
+
     /**
-     *
-     * @param data
-     * @return
+     * Converts a List of Map of String and String to List of MatchDTO
+     * @param data the List of Map of String and String
+     * @return a List of MatchDTO representation of all read lines from the CSV file
      */
     @Override
     public List<MatchDTO> convertToListOfModel(List<Map<String, String>> data) {
@@ -38,9 +39,9 @@ public class MatchCSVConverter implements CSVConvertable<MatchDTO> {
     }
 
     /**
-     *
-     * @param objs
-     * @return
+     * Converts a List of MatchDTO to List of Map of String and String
+     * @param objs the List of MatchDTO
+     * @return a List of Map of String and String representation of all lines of CSV file
      */
     @Override
     public List<Map<String, String>> convertToCSV(List<MatchDTO> objs) {

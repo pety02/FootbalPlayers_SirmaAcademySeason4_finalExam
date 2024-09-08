@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
+
+    /**
+     * Converts a List of Map of String and String to List of TeamDTO
+     * @param data the List of Map of String and String
+     * @return a List of TeamDTO representation of all read lines from the CSV file
+     */
     @Override
     public List<TeamDTO> convertToListOfModel(List<Map<String, String>> data) {
         List<TeamDTO> teamDTOs = new ArrayList<>();
@@ -30,6 +36,11 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
         return teamDTOs;
     }
 
+    /**
+     * Converts a List of TeamDTO to List of Map of String and String
+     * @param objs the List of TeamDTO
+     * @return a List of Map of String and String representation of all lines of CSV file
+     */
     @Override
     public List<Map<String, String>> convertToCSV(List<TeamDTO> objs) {
         List<Map<String, String>> data = new ArrayList<>();

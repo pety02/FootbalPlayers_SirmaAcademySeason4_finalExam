@@ -11,9 +11,9 @@ import java.util.Map;
 public class PlayerCSVConverter implements CSVConvertable<PlayerDTO> {
 
     /**
-     *
-     * @param data
-     * @return
+     * Converts a List of Map of String and String to List of PlayerDTO
+     * @param data the List of Map of String and String
+     * @return a List of PlayerDTO representation of all read lines from the CSV file
      */
     @Override
     public List<PlayerDTO> convertToListOfModel(List<Map<String, String>> data) {
@@ -38,10 +38,9 @@ public class PlayerCSVConverter implements CSVConvertable<PlayerDTO> {
     }
 
     /**
-     *
-     * @param objs
-     * @return
-     * @throws IllegalArgumentException
+     * Converts a List of PlayerDTO to List of Map of String and String
+     * @param objs the List of PlayerDTO
+     * @return a List of Map of String and String representation of all lines of CSV file
      */
     @Override
     public List<Map<String, String>> convertToCSV(List<PlayerDTO> objs) throws IllegalArgumentException{
