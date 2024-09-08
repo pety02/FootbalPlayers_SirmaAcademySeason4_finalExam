@@ -32,6 +32,9 @@ public class MatchConverter implements Convertable<Match, MatchDTO> {
      */
     @Override
     public Match toEntity(MatchDTO matchDTO) {
+        if(matchDTO == null) {
+            return null;
+        }
         Match match = new Match();
         match.setId(matchDTO.getId());
         Team teamA = teamRepository.findById(matchDTO.getATeamId()).orElse(null);
@@ -51,6 +54,9 @@ public class MatchConverter implements Convertable<Match, MatchDTO> {
      */
     @Override
     public MatchDTO toDTO(Match match) {
+        if(match == null) {
+            return null;
+        }
         MatchDTO matchDTO = new MatchDTO();
         matchDTO.setId(match.getId());
         TeamDTO teamADTO = teamConverter.toDTO(match.getATeam());

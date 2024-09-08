@@ -44,6 +44,9 @@ public class RecordConverter implements Convertable<Record, RecordDTO> {
      */
     @Override
     public Record toEntity(RecordDTO recordDTO) {
+        if(recordDTO == null) {
+            return null;
+        }
         Record record = new Record();
         record.setId(recordDTO.getId());
         Match match = matchRepository.findById(recordDTO.getMatchId()).orElse(null);
@@ -63,6 +66,9 @@ public class RecordConverter implements Convertable<Record, RecordDTO> {
      */
     @Override
     public RecordDTO toDTO(Record record) {
+        if(record == null) {
+            return null;
+        }
         RecordDTO recordDTO = new RecordDTO();
         recordDTO.setId(record.getId());
         MatchDTO matchDTO = matchConverter.toDTO(record.getMatch());
