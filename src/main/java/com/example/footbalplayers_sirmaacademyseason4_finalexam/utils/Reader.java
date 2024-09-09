@@ -1,6 +1,7 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.interfaces.Readable;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.validation.HeadersValidator;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class Reader implements Readable{
     /**
      * Splits the headers line by definite delimiter of
@@ -72,7 +74,8 @@ public class Reader implements Readable{
                 data.add(obj);
             }
         } catch (Exception ex) {
-            ex.fillInStackTrace();
+            log.error("Exception occurred:" + ex.getMessage());
+            return data;
         }
 
         return data;
