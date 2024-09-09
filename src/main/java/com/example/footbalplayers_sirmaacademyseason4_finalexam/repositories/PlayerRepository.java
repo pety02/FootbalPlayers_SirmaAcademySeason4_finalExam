@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
+    @Query(value = "SELECT p FROM Player p WHERE p.id = :id")
     Optional<Player> findById(Long id);
     @Query(value = "SELECT CASE WHEN COUNT(p) > 0 THEN TRUE ELSE FALSE END FROM Player p WHERE p.teamNumber = :teamNumber")
     boolean existsByTeamNumber(Integer teamNumber);

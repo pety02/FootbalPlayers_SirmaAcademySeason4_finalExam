@@ -10,6 +10,7 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.Pla
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import jakarta.transaction.Transactional;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -30,10 +31,10 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      * @param supportingTableService the supporting tables service
      */
     @Autowired
-    public PlayerService(PlayerAdapter playerConverter,
-                         PlayerRepository playerRepository,
-                         RecordRepository recordRepository,
-                         SupportingTableService supportingTableService) {
+    public PlayerService(@NonNull PlayerAdapter playerConverter,
+                         @NonNull PlayerRepository playerRepository,
+                         @NonNull RecordRepository recordRepository,
+                         @NonNull SupportingTableService supportingTableService) {
         this.playerConverter = playerConverter;
         this.playerRepository = playerRepository;
         this.recordRepository = recordRepository;
