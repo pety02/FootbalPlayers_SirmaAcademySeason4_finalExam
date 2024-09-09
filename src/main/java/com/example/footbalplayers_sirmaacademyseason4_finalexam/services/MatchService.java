@@ -8,6 +8,7 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.MatchRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.SupportingService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -41,7 +42,9 @@ public class MatchService implements Service<Match, MatchDTO> {
      */
     @Override
     public MatchDTO loadByID(Long id) {
-        return matchConverter.toDTO(matchRepository.findById(id).orElse(null));
+        return matchConverter.toDTO(matchRepository
+                .findById(id)
+                .orElse(null));
     }
 
     /**
@@ -63,9 +66,15 @@ public class MatchService implements Service<Match, MatchDTO> {
      * Creates Match object from a MatchDTO object and store it in the database
      * @param dto the MatchDTO object
      * @return the saved Match object converted to a MatchDTO object
+     * @throws IllegalArgumentException this exception is thrown if in the database
+     * already exist a Match object with the MatchDTO object's id
      */
+    @Transactional
     @Override
-    public MatchDTO create(MatchDTO dto) {
+    public MatchDTO create(MatchDTO dto) throws IllegalArgumentException {
+        if(dto.getId() != null && matchRepository.existsById(dto.getId())) {
+            throw new IllegalArgumentException("Match ID already exists!");
+        }
         Match created = matchRepository.save(matchConverter.toEntity(dto));
         SupportingTableDTO teamMatchDTO = new SupportingTableDTO(created.getATeam().getId(), created.getId());
         supportingService.create(Team.class, Match.class, teamMatchDTO);
@@ -79,21 +88,36 @@ public class MatchService implements Service<Match, MatchDTO> {
      * @param id the definite id
      * @param dto the updated values for the Match object packaged in
      *            the MatchDTO object
+     * @throws RuntimeException this exception is thrown when the user try to update not
+     * existing Match object or when the passed id not match the passed Match update DTO
+     * object's id
      */
     @Override
-    public void update(Long id, MatchDTO dto) {
-        if(matchRepository.existsById(id) && dto.getId().equals(id)) {
-            Match match = matchConverter.toEntity(dto);
-            matchRepository.save(match);
+    public void update(Long id, MatchDTO dto) throws RuntimeException {
+        if(!matchRepository.existsById(id)) {
+            throw new RuntimeException("Match not exists!");
         }
+        if(!id.equals(dto.getId())) {
+            throw new RuntimeException("Passed id not matching Match update DTO object's id!");
+        }
+
+        Match match = matchConverter.toEntity(dto);
+        matchRepository.save(match);
     }
 
     /**
      * Deletes a definite Match object via its id from the database
      * @param id the definite Match object's id
+     * @throws RuntimeException this exception is thrown when the user try to delete not
+     * existing Match object
      */
+    @Transactional
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws RuntimeException {
+        if(matchRepository.findById(id).isEmpty()) {
+            throw new RuntimeException("Match not exists!");
+        }
+
         if(matchRepository.findById(id).isPresent()) {
             Match match = matchRepository.findById(id).get();
             supportingService.deleteById(Team.class, Match.class, match.getATeam().getId(), match.getId());

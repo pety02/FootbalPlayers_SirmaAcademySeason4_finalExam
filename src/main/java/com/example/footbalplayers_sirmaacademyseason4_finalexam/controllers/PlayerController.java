@@ -66,12 +66,12 @@ public class PlayerController {
      * Executes a GET request that returns a Model object with an empty
      * PlayerDTO object in order to be filled and stored in the database
      * @param model the Model object to which an empty PlayerDTO object will be attached
-     * @return player.html view that contains empty PlayerDTO object
+     * @return create-player.html view that contains empty PlayerDTO object
      */
     @GetMapping("/all-players/create")
     public String getAddPlayerForm(@NonNull Model model) {
         model.addAttribute("newPlayerDTO", new PlayerDTO());
-        return "player";
+        return "create-player";
     }
 
     /**
@@ -190,12 +190,12 @@ public class PlayerController {
                                @NonNull RedirectAttributes redirectAttributes) {
         try {
             playerService.deleteById(id);
-            return "redirect:/all-players";
         } catch (RuntimeException ex) {
             log.error("Error deleting a player: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("playerID", id);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerID", binding);
-            return "redirect:/all-players";
         }
+
+        return "redirect:/all-players";
     }
 }

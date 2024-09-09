@@ -82,7 +82,8 @@ public class PlayerService implements Service<Player, PlayerDTO> {
     @Transactional
     @Override
     public PlayerDTO create(PlayerDTO dto) throws IllegalArgumentException {
-        if(playerRepository.existsById(dto.getId()) || playerRepository.existsByTeamNumber(dto.getTeamNumber())) {
+        if((dto.getId() != null && playerRepository.existsById(dto.getId()))
+                || (dto.getTeamNumber() != null && playerRepository.existsByTeamNumber(dto.getTeamNumber()))) {
             throw new IllegalArgumentException("Player ID or player team number already exists!");
         }
 
@@ -117,7 +118,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      * @param id the Player object's id
      * @param dto updated fields of the Player object packaged in a PlayerDTO object
      * @throws RuntimeException this exception is thrown when the user try to update not
-     * existing Player object or when the passed id not match the passed Player update
+     * existing Player object or when the passed id not match the passed Player update DTO
      * object's id
      */
     @Override
@@ -126,7 +127,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
             throw new RuntimeException("Player not exists!");
         }
         if(!id.equals(dto.getId())) {
-            throw new RuntimeException("Passed id not matching Player update object's id!");
+            throw new RuntimeException("Passed id not matching Player update DTO object's id!");
         }
 
         playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));
@@ -136,7 +137,7 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      * Deletes a Player object from the database via its id and updates
      * the Records table and supporting tables in the database
      * @param id the Player object's id
-     * @throws RuntimeException this exception is thrown when the user try to update not
+     * @throws RuntimeException this exception is thrown when the user try to delete not
      * existing Player object
      */
     @Transactional
