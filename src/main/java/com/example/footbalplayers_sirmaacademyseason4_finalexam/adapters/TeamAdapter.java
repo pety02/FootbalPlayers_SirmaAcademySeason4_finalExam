@@ -57,7 +57,7 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
             matches.add(matchRepository.findById(matchId).orElse(null));
         }
         team.setMatches(matches);
-        return null;
+        return team;
     }
 
     /**

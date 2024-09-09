@@ -28,6 +28,7 @@ public class Reader implements Readable{
      */
     private <T> String[] getHeaders(Class<T> cl, String headerLine, String delimiter) throws IllegalArgumentException {
         String[] headers = headerLine.split(delimiter);
+
         if(HeadersValidator.areValid(cl, headers)) {
             return headers;
         } else {

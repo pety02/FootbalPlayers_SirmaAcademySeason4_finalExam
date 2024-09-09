@@ -21,10 +21,20 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
         for(Map<String, String> line : data) {
             String[] fields = line.values().toArray(new String[0]);
             try {
-                Long id = Long.parseLong(fields[0]);
-                String name = fields[1];
+                Long id = Long.parseLong(fields[1]);
+                String name = fields[3];
                 String managerFullName = fields[2];
-                String group = fields[3];
+                StringBuilder managerFullNameModified = new StringBuilder(managerFullName.charAt(0) + "");
+                for(int i = 1; i < managerFullName.length(); ++i) {
+                    char currChar = managerFullName.charAt(i);
+                    if('A' <= currChar && currChar <= 'Z') {
+                        managerFullNameModified.append(' ');
+                    }
+                    managerFullNameModified.append(currChar);
+                }
+                managerFullName = managerFullNameModified.toString();
+                String group = fields[0];
+                System.out.printf("%d, %s, %s, %s%n", id, name, managerFullName, group);
                 TeamDTO teamDTO = new TeamDTO(id, name, managerFullName, group, new ArrayList<>(), new ArrayList<>());
                 teamDTOs.add(teamDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
@@ -45,6 +55,10 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
     public List<Map<String, String>> convertToCSV(List<TeamDTO> objs) {
         List<Map<String, String>> data = new ArrayList<>();
         String[] headers = objs.getFirst().toString().split(",");
+        for(String h : headers) {
+            System.out.print(h);
+            System.out.print(", ");
+        }
         if(headers.length == 0) {
             throw new IllegalArgumentException("The CSV file is in incorrect format or empty!");
         }

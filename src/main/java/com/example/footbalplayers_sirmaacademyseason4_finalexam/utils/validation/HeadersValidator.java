@@ -1,5 +1,9 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.validation;
 
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 
@@ -13,7 +17,7 @@ public class HeadersValidator {
         if(headers.length != 5) {
             return false;
         }
-        return headers[0].equals("ID") && headers[1].equals("TeamNumber")
+        return /*headers[0].equals("ID") &&*/ headers[1].equals("TeamNumber")
                 && headers[2].equals("Position") && headers[3].equals("FullName")
                 && headers[4].equals("TeamID");
     }
@@ -27,8 +31,14 @@ public class HeadersValidator {
         if(headers.length != 4) {
             return false;
         }
-        return headers[0].equals("ID") && headers[1].equals("Name")
+        int index = 0;
+        for(String h : headers) {
+            headers[index++] = h.trim();
+        }
+        boolean b = /*headers[0].equals("ID") &&*/ headers[1].equals("Name")
                 && headers[2].equals("ManagerFullName") && headers[3].equals("Group");
+
+        return b;
     }
 
     /**
@@ -67,13 +77,13 @@ public class HeadersValidator {
      * @param <T> a template argument that defines the type of the class
      */
     public static <T> boolean areValid(Class<T> cl, String[] headers) {
-        if(cl == Player.class) {
+        if(cl == PlayerDTO.class) {
             return areValidPlayerHeaders(headers);
-        } else if (cl == Team.class) {
+        } else if (cl == TeamDTO.class) {
             return areValidTeamHeaders(headers);
-        } else if (cl == Record.class) {
+        } else if (cl == RecordDTO.class) {
             return areValidRecordHeaders(headers);
-        } else if (cl == Math.class) {
+        } else if (cl == MatchDTO.class) {
             return areValidMatchHeaders(headers);
         } else {
             return false;

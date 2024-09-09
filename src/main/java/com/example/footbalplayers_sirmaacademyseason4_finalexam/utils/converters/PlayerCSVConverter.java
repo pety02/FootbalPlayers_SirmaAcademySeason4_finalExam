@@ -20,11 +20,13 @@ public class PlayerCSVConverter implements CSVConvertable<PlayerDTO> {
         List<PlayerDTO> players = new ArrayList<>();
         for(Map<String, String> line : data) {
             String[] fields = line.values().toArray(new String[0]);
+            System.out.printf("%s, %s, %s, %s, %s%n", fields[0], fields[1],
+                    fields[2], fields[3], fields[4]);
             try {
-                Long id = Long.parseLong(fields[0]);
-                Integer teamNumber = Integer.parseInt(fields[1]);
-                String position = fields[2];
-                String fullName = fields[3];
+                Long id = Long.parseLong(fields[1]);
+                Integer teamNumber = Integer.parseInt(fields[3]);
+                String position = fields[0];
+                String fullName = fields[2];
                 Long teamId = Long.parseLong(fields[4]);
                 PlayerDTO currentPlayerDTO = new PlayerDTO(id, teamNumber, position, fullName, teamId, new ArrayList<>());
                 players.add(currentPlayerDTO);

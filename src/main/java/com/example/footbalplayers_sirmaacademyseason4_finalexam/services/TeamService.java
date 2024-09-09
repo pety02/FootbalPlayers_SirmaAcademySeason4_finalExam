@@ -75,7 +75,13 @@ public class TeamService implements Service<Team, TeamDTO> {
             throw new IllegalArgumentException("Team ID already exists!");
         }
 
+        if(dto == null) {
+            System.out.println("dto is null");
+        }
         Team team = teamConverter.toEntity(dto);
+        if(team == null) {
+            System.out.println("team is null");
+        }
         return teamConverter.toDTO(teamRepository.save(team));
     }
 
