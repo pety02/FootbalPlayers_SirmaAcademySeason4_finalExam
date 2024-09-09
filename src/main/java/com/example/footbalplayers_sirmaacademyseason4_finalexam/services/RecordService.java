@@ -61,9 +61,15 @@ public class RecordService implements Service<Record, RecordDTO> {
      * Creates a Record object from the RecordDTO object in the database
      * @param dto the RecordDTO object
      * @return the created object, converted to a RecordDTO object
+     * @throws IllegalArgumentException this exception is thrown when in the database
+     * exists a record with this id
      */
     @Override
-    public RecordDTO create(RecordDTO dto) {
+    public RecordDTO create(RecordDTO dto) throws IllegalArgumentException {
+        if(dto.getId() != null && recordRepository.existsById(dto.getId())) {
+            throw new IllegalArgumentException("Record ID already exists!");
+        }
+
         Record record = recordConverter.toEntity(dto);
         return recordConverter.toDTO(recordRepository.save(record));
     }
@@ -72,21 +78,35 @@ public class RecordService implements Service<Record, RecordDTO> {
      * Updates a definite Record object by its id in the database
      * @param id the Record object's id
      * @param dto the updated fields packaged as a RecordDTO object
+     * @throws RuntimeException this exception is thrown when a record with this
+     * id do not exist in the database or the passes id and the RecordDTO object's
+     * id do not match
      */
     @Override
-    public void update(Long id, RecordDTO dto) {
-        if(recordRepository.existsById(id) && dto.getId().equals(id)) {
-            Record record = recordConverter.toEntity(dto);
-            recordRepository.save(record);
+    public void update(Long id, RecordDTO dto) throws RuntimeException {
+        if(!recordRepository.existsById(id)) {
+            throw new RuntimeException("Record not exists!");
         }
+        if(!id.equals(dto.getId())) {
+            throw new RuntimeException("Passed id not matching Record update DTO object's id!");
+        }
+
+        Record record = recordConverter.toEntity(dto);
+        recordRepository.save(record);
     }
 
     /**
      * Deletes a Record object by its id from the database
      * @param id the Record object's id
+     * @throws RuntimeException this exception is thrown when a record
+     * with this id do not exist in the database
      */
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws RuntimeException {
+        if(recordRepository.findById(id).isEmpty()) {
+            throw new RuntimeException("Record not exists!");
+        }
+
         recordRepository.deleteById(id);
     }
 }

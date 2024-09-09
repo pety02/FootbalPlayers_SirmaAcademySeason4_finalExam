@@ -66,9 +66,15 @@ public class TeamService implements Service<Team, TeamDTO> {
      *
      * @param dto the TeamDTO object
      * @return the saved object converted to TeamDTO object
+     * @throws IllegalArgumentException this exception is thrown when in the database
+     * exists a team with this id
      */
     @Override
-    public TeamDTO create(TeamDTO dto) {
+    public TeamDTO create(TeamDTO dto) throws IllegalArgumentException {
+        if(dto.getId() != null && teamRepository.existsById(dto.getId())) {
+            throw new IllegalArgumentException("Team ID already exists!");
+        }
+
         Team team = teamConverter.toEntity(dto);
         return teamConverter.toDTO(teamRepository.save(team));
     }
@@ -79,22 +85,36 @@ public class TeamService implements Service<Team, TeamDTO> {
      *
      * @param id  the id of the Team object that should be updated
      * @param dto the TeamDTO object with updated fields
+     * @throws RuntimeException this exception is thrown when a team with this
+     * id do not exist in the database or the passes id and the TeamDTO object's
+     * id do not match
      */
     @Override
-    public void update(Long id, TeamDTO dto) {
-        if (teamRepository.existsById(id) && dto.getId().equals(id)) {
-            Team team = teamConverter.toEntity(dto);
-            teamRepository.save(team);
+    public void update(Long id, TeamDTO dto) throws RuntimeException {
+        if(!teamRepository.existsById(id)) {
+            throw new RuntimeException("Team not exists!");
         }
+        if(!id.equals(dto.getId())) {
+            throw new RuntimeException("Passed id not matching Team update DTO object's id!");
+        }
+
+        Team team = teamConverter.toEntity(dto);
+        teamRepository.save(team);
     }
 
     /**
      * Deletes a Team object by its id
      *
      * @param id the id of the Team object that should be deleted
+     * @throws RuntimeException this exception is thrown when a team
+     * with this id do not exist in the database
      */
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws RuntimeException {
+        if(teamRepository.findById(id).isEmpty()) {
+            throw new RuntimeException("Team not exists!");
+        }
+
         teamRepository.deleteById(id);
     }
 }
