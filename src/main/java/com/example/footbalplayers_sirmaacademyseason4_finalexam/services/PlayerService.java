@@ -12,11 +12,13 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfa
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Validated
 public class PlayerService implements Service<Player, PlayerDTO> {
     private final PlayerAdapter playerConverter;
     private final PlayerRepository playerRepository;

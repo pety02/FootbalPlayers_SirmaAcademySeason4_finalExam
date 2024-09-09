@@ -5,12 +5,15 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.TeamRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Validated
 public class TeamService implements Service<Team, TeamDTO> {
     private final TeamAdapter teamConverter;
     private final TeamRepository teamRepository;
@@ -22,8 +25,8 @@ public class TeamService implements Service<Team, TeamDTO> {
      * @param teamRepository the team repository
      */
     @Autowired
-    public TeamService(TeamAdapter teamConverter,
-                       TeamRepository teamRepository) {
+    public TeamService(@NonNull TeamAdapter teamConverter,
+                       @NonNull TeamRepository teamRepository) {
         this.teamConverter = teamConverter;
         this.teamRepository = teamRepository;
     }

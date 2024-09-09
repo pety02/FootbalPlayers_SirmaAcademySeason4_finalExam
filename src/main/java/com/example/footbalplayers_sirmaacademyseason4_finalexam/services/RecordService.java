@@ -6,11 +6,13 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Validated
 public class RecordService implements Service<Record, RecordDTO> {
     private final RecordRepository recordRepository;
     private final RecordAdapter recordConverter;

@@ -7,8 +7,10 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.SupportingService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
+@Validated
 public class SupportingTableService implements SupportingService {
 
     /**
