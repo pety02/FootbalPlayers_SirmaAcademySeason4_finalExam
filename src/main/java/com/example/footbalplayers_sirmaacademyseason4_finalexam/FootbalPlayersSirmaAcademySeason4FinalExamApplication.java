@@ -9,5 +9,4 @@ public class FootbalPlayersSirmaAcademySeason4FinalExamApplication {
     public static void main(String[] args) {
         SpringApplication.run(FootbalPlayersSirmaAcademySeason4FinalExamApplication.class, args);
     }
-
 }
