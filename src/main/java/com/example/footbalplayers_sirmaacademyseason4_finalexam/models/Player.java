@@ -11,18 +11,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "PLAYERS")
+@Table
 @Entity
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
-    @Column(name = "TeamNumber", nullable = false)
+    @Column(nullable = false)
     private Integer teamNumber;
-    @Column(name = "Position", nullable = false, length = 2)
+    @Column(nullable = false, length = 2)
     private String position;
-    @Column(name = "FullName", nullable = false, length = 150)
+    @Column(nullable = false, length = 150)
     private String fullName;
     @ManyToOne
     private Team team;

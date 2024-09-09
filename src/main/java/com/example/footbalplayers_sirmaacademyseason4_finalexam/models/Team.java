@@ -12,19 +12,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "TEAMS")
+@Table
 @Entity
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column
     private Long id;
-    @Column(name = "Name", nullable = false)
+    @Column(nullable = false)
     private String name;
-    @Column(name = "ManagerFullName", nullable = false, length = 150)
+    @Column(nullable = false, length = 150)
     private String managerFullName;
-    @Column(name = "TeamGroup", nullable = false, length = 1)
-    private String group;
+    @Column(nullable = false, length = 1)
+    private String teamGroup;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Player> players;
     @OneToMany(fetch = FetchType.LAZY)

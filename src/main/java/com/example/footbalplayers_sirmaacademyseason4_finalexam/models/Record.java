@@ -10,21 +10,18 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "RECORDS")
+@Table
 @Entity
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "PlayerID", nullable = false)
     private Player player;
     @ManyToOne
-    @JoinColumn(name = "MatchID", nullable = false)
     private Match match;
-    @Column(name = "FromMinutes", nullable = false)
+    @Column(nullable = false)
     private Integer fromMinutes;
-    @Column(name = "ToMinutes")
+    @Column
     private Integer toMinutes;
 }

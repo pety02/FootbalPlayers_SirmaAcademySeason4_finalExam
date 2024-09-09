@@ -44,7 +44,7 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
         team.setId(teamDTO.getId());
         team.setName(teamDTO.getName());
         team.setManagerFullName(teamDTO.getManagerFullName());
-        team.setGroup(teamDTO.getGroup());
+        team.setTeamGroup(teamDTO.getGroup());
         List<Long> playersIds = teamDTO.getPlayersIds();
         List<Player> players = new ArrayList<>();
         for(Long playerId : playersIds) {
@@ -74,7 +74,7 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
         teamDTO.setId(team.getId());
         teamDTO.setName(team.getName());
         teamDTO.setManagerFullName(team.getManagerFullName());
-        teamDTO.setGroup(team.getGroup());
+        teamDTO.setGroup(team.getTeamGroup());
         List<Player> players = team.getPlayers();
         List<Long> playersIds = new ArrayList<>();
         for(Player player : players) {

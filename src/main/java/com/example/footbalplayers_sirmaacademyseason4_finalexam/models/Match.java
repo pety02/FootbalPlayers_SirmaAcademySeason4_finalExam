@@ -12,19 +12,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "MATCHES")
+@Table
 @Entity
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
     @ManyToOne
     private Team aTeam;
     @ManyToOne
     private Team bTeam;
-    @Column(name = "Date", nullable = false)
+    @Column(nullable = false)
     private LocalDate date;
-    @Column(name = "Score", nullable = false)
+    @Column(nullable = false)
     private String score;
 }
