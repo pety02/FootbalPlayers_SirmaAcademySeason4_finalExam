@@ -16,7 +16,7 @@ public class SupportingTableService implements SupportingService {
      * @param playerId the new record's player id
      * @param recordId the new record's record id
      */
-    @Query(value = "INSERT INTO players_records (player_id, record_id) VALUES (:playerId, :recordId)", nativeQuery = true)
+    @Query(value = "INSERT INTO players_records (player_id, records_id) VALUES (playerId, recordId)", nativeQuery = true)
     private void addPlayerRecord(Long playerId, Long recordId) {
     }
 
@@ -25,7 +25,7 @@ public class SupportingTableService implements SupportingService {
      * @param teamId the new records' team id
      * @param matchId the new record's match id
      */
-    @Query(value = "INSERT INTO teams_matches (team_id, match_id) VALUES (:teamId, :matchId)", nativeQuery = true)
+    @Query(value = "INSERT INTO teams_matches (team_id, matches_id) VALUES (teamId, matchId)", nativeQuery = true)
     private void addTeamMatch(Long teamId, Long matchId) {
     }
 
@@ -34,7 +34,7 @@ public class SupportingTableService implements SupportingService {
      * @param teamId the new record's team id
      * @param playerId the new record's player id
      */
-    @Query(value = "INSERT INTO teams_players (team_id, player_id) VALUES (:teamId, :playerId)", nativeQuery = true)
+    @Query(value = "INSERT INTO teams_players (team_id, players_id) VALUES (teamId, playerId)", nativeQuery = true)
     private void addTeamPlayer(Long teamId, Long playerId) {
     }
 
@@ -43,7 +43,7 @@ public class SupportingTableService implements SupportingService {
      * @param playerId the updated record's player id
      * @param recordId the updated record's record id
      */
-    @Query(value = "UPDATE players_records SET player_id = :playerId WHERE record_id = :recordId", nativeQuery = true)
+    @Query(value = "UPDATE players_records SET player_id = playerId WHERE records_id = recordId", nativeQuery = true)
     private void updatePlayerRecord(Long playerId, Long recordId) {
     }
 
@@ -52,7 +52,7 @@ public class SupportingTableService implements SupportingService {
      * @param recordId the updated record's record id
      * @param playerId the updated record's player id
      */
-    @Query(value = "UPDATE players_records SET record_id = :recordId WHERE player_id = :playerId", nativeQuery = true)
+    @Query(value = "UPDATE players_records SET records_id = recordId WHERE player_id = playerId", nativeQuery = true)
     private void updateRecordPlayer(Long recordId, Long playerId) {
     }
 
@@ -61,7 +61,7 @@ public class SupportingTableService implements SupportingService {
      * @param teamId the updated record's team id
      * @param matchId the updated record's match id
      */
-    @Query(value = "UPDATE teams_matches SET team_id = :teamId WHERE match_id = :matchId", nativeQuery = true)
+    @Query(value = "UPDATE teams_matches SET team_id = teamId WHERE matches_id = matchId", nativeQuery = true)
     private void updateTeamMatch(Long teamId, Long matchId) {
     }
 
@@ -70,7 +70,7 @@ public class SupportingTableService implements SupportingService {
      * @param matchId the updated record's match id
      * @param teamId the updated record's team id
      */
-    @Query(value = "UPDATE teams_matches SET match_id = :matchId WHERE team_id = :teamId", nativeQuery = true)
+    @Query(value = "UPDATE teams_matches SET matches_id = matchId WHERE team_id = teamId", nativeQuery = true)
     private void updateMatchTeam(Long matchId, Long teamId) {
     }
 
@@ -79,7 +79,7 @@ public class SupportingTableService implements SupportingService {
      * @param teamId the updated record's team id
      * @param playerId the updated record's player id
      */
-    @Query(value = "UPDATE teams_players SET team_id = :teamId WHERE player_id = :playerId", nativeQuery = true)
+    @Query(value = "UPDATE teams_players SET team_id = teamId WHERE players_id = playerId", nativeQuery = true)
     private void updateTeamPlayer(Long teamId, Long playerId) {
     }
 
@@ -88,7 +88,7 @@ public class SupportingTableService implements SupportingService {
      * @param playerId the updated record's player id
      * @param teamId the updated record's team id
      */
-    @Query(value = "UPDATE teams_players SET player_id = :playerId WHERE team_id = :teamId", nativeQuery = true)
+    @Query(value = "UPDATE teams_players SET players_id = playerId WHERE team_id = teamId", nativeQuery = true)
     private void updatePlayerTeam(Long playerId, Long teamId) {
     }
 
@@ -97,7 +97,7 @@ public class SupportingTableService implements SupportingService {
      * @param playerId the deleted record's player id
      * @param recordId the deleted record's record id
      */
-    @Query(value = "DELETE FROM players_records WHERE player_id = :playerId AND record_id = :recordId", nativeQuery = true)
+    @Query(value = "DELETE FROM players_records WHERE player_id = playerId AND records_id = recordId", nativeQuery = true)
     private void deletePlayerRecord(Long playerId, Long recordId) {
     }
 
@@ -106,7 +106,7 @@ public class SupportingTableService implements SupportingService {
      * @param teamId the deleted records' team id
      * @param matchId the deleted record's match id
      */
-    @Query(value = "DELETE FROM teams_matches WHERE team_id = :teamId AND match_id = :matchId", nativeQuery = true)
+    @Query(value = "DELETE FROM teams_matches WHERE team_id = teamId AND matches_id = matchId", nativeQuery = true)
     private void deleteTeamMatch(Long teamId, Long matchId) {
     }
 
@@ -115,7 +115,7 @@ public class SupportingTableService implements SupportingService {
      * @param teamId the deleted record's team id
      * @param playerId the deleted record's player id
      */
-    @Query(value = "DELETE FROM teams_players WHERE team_id = :teamId AND player_id = :playerId", nativeQuery = true)
+    @Query(value = "DELETE FROM teams_players WHERE team_id = teamId AND players_id = playerId", nativeQuery = true)
     private void deleteTeamPlayer(Long teamId, Long playerId) {
     }
 

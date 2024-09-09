@@ -9,6 +9,7 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.PlayerRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -74,9 +75,16 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      * and teamPlayer records.
      * @param dto the PlayerDTO object
      * @return converted to PlayerDTO object
+     * @throws IllegalArgumentException this exception is thrown when the user pass invalid player id
+     * or invalid player team number
      */
+    @Transactional
     @Override
-    public PlayerDTO create(PlayerDTO dto) {
+    public PlayerDTO create(PlayerDTO dto) throws IllegalArgumentException {
+        if(playerRepository.existsById(dto.getId()) || playerRepository.existsByTeamNumber(dto.getTeamNumber())) {
+            throw new IllegalArgumentException("Player ID or player team number already exists!");
+        }
+
         PlayerDTO created = playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));
 
         List<Record> records = recordRepository.findAll();
@@ -107,29 +115,42 @@ public class PlayerService implements Service<Player, PlayerDTO> {
      * Updates PlayerDTO object via its id in the database
      * @param id the Player object's id
      * @param dto updated fields of the Player object packaged in a PlayerDTO object
+     * @throws RuntimeException this exception is thrown when the user try to update not
+     * existing Player object or when the passed id not match the passed Player update
+     * object's id
      */
     @Override
-    public void update(Long id, PlayerDTO dto) {
-        if(playerRepository.findById(id).isPresent() && id.equals(dto.getId())) {
-            playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));
+    public void update(Long id, PlayerDTO dto) throws RuntimeException {
+        if(!playerRepository.existsById(id)) {
+            throw new RuntimeException("Player not exists!");
         }
+        if(!id.equals(dto.getId())) {
+            throw new RuntimeException("Passed id not matching Player update object's id!");
+        }
+
+        playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));
     }
 
     /**
      * Deletes a Player object from the database via its id and updates
      * the Records table and supporting tables in the database
      * @param id the Player object's id
+     * @throws RuntimeException this exception is thrown when the user try to update not
+     * existing Player object
      */
+    @Transactional
     @Override
-    public void deleteById(Long id) {
-        if(playerRepository.findById(id).isPresent()) {
-            PlayerDTO playerDTO = playerConverter.toDTO(playerRepository.findById(id).get());
-            List<Long> recordsIds = playerDTO.getRecordsIds();
-            for (Long currRecordId : recordsIds) {
-                supportingTableService.deleteById(Player.class, Record.class, playerDTO.getId(), currRecordId);
-            }
-            supportingTableService.deleteById(Team.class, Player.class, playerDTO.getTeamId(), playerDTO.getId());
-            playerRepository.deleteById(id);
+    public void deleteById(Long id) throws RuntimeException {
+        if(playerRepository.findById(id).isEmpty()) {
+            throw new RuntimeException("Player not exists!");
         }
+
+        PlayerDTO playerDTO = playerConverter.toDTO(playerRepository.findById(id).get());
+        List<Long> recordsIds = playerDTO.getRecordsIds();
+        for (Long currRecordId : recordsIds) {
+            supportingTableService.deleteById(Player.class, Record.class, playerDTO.getId(), currRecordId);
+        }
+        supportingTableService.deleteById(Team.class, Player.class, playerDTO.getTeamId(), playerDTO.getId());
+        playerRepository.deleteById(id);
     }
 }

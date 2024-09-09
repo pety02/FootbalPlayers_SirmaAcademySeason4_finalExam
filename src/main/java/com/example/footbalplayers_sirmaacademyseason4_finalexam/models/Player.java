@@ -17,7 +17,7 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Integer teamNumber;
     @Column(nullable = false, length = 2)
     private String position;
