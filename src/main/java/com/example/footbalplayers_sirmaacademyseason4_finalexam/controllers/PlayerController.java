@@ -109,7 +109,6 @@ public class PlayerController {
             log.error("Error creating new player: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("playerDTO", playerDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerDTO", binding);
-
             return "redirect:/all-players/create";
         }
     }
