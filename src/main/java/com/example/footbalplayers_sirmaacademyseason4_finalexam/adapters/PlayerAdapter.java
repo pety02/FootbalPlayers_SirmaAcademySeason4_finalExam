@@ -41,10 +41,10 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
             return null;
         }
         Player player = new Player();
-        player.setId(player.getId());
+        player.setId(playerDTO.getId());
         player.setTeamNumber(playerDTO.getTeamNumber());
-        player.setPosition(player.getPosition());
-        player.setFullName(player.getFullName());
+        player.setPosition(playerDTO.getPosition());
+        player.setFullName(playerDTO.getFullName());
         Team team = teamRepository.findById(playerDTO.getTeamId()).orElse(null);
         if(team == null) {
             throw new IllegalArgumentException("Every player should play at a team!");
@@ -71,14 +71,16 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
         }
         PlayerDTO playerDTO = new PlayerDTO();
         playerDTO.setId(player.getId());
-        playerDTO.setTeamNumber(playerDTO.getTeamNumber());
+        playerDTO.setTeamNumber(player.getTeamNumber());
         playerDTO.setPosition(player.getPosition());
         playerDTO.setFullName(player.getFullName());
-        playerDTO.setTeamId(playerDTO.getTeamId());
+        playerDTO.setTeamId(player.getTeam().getId());
         List<Record> records = player.getRecords();
         List<Long> recordsIds = new ArrayList<>();
-        for(Record record : records) {
-            recordsIds.add(record.getId());
+        if(records != null) {
+            for (Record record : records) {
+                recordsIds.add(record.getId());
+            }
         }
         playerDTO.setRecordsIds(recordsIds);
         return playerDTO;

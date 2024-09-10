@@ -18,9 +18,9 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Team aTeam;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Team bTeam;
     @Column(nullable = false)
     private LocalDate date;

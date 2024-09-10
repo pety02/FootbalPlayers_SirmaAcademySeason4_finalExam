@@ -3,6 +3,7 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.SupportingTableDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.SupportingTableRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.SupportingTableRepositoryImpl;

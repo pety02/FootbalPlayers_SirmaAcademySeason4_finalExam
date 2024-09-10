@@ -9,16 +9,16 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @Table
 @Entity
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Player player;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Match match;
     @Column(nullable = false)
     private Integer fromMinutes;

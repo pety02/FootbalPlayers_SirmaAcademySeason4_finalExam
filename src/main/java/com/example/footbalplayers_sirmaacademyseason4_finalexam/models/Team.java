@@ -1,17 +1,16 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @Table
 @Entity
 public class Team {

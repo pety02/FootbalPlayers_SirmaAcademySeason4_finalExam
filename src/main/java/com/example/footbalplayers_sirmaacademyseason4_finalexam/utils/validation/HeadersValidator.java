@@ -50,7 +50,7 @@ public class HeadersValidator {
         if(headers.length != 5) {
             return false;
         }
-        return headers[0].equals("ID") && headers[1].equals("PlayerID")
+        return /*headers[0].equals("ID") &&*/ headers[1].equals("PlayerID")
                 && headers[2].equals("MatchID") && headers[3].equals("fromMinutes")
                 && headers[4].equals("toMinutes");
     }
@@ -64,7 +64,7 @@ public class HeadersValidator {
         if(headers.length != 5) {
             return false;
         }
-        return headers[0].equals("ID") && headers[1].equals("ATeamID")
+        return /*headers[0].equals("ID") &&*/ headers[1].equals("ATeamID")
                 && headers[2].equals("BTeamID") && headers[3].equals("Date")
                 && headers[4].equals("Score");
     }

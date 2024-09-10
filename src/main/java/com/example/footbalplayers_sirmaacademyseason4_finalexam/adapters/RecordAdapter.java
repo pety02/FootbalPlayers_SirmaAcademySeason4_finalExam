@@ -56,6 +56,7 @@ public class RecordAdapter implements Adaptable<Record, RecordDTO> {
         record.setFromMinutes(recordDTO.getFromMinutes());
         record.setToMinutes(recordDTO.getToMinutes());
 
+
         return record;
     }
 
@@ -71,12 +72,10 @@ public class RecordAdapter implements Adaptable<Record, RecordDTO> {
         }
         RecordDTO recordDTO = new RecordDTO();
         recordDTO.setId(record.getId());
-        MatchDTO matchDTO = matchConverter.toDTO(record.getMatch());
-        recordDTO.setMatchId(matchDTO.getId());
-        PlayerDTO playerDTO = playerConverter.toDTO(record.getPlayer());
-        recordDTO.setPlayerId(playerDTO.getId());
+        recordDTO.setMatchId(record.getMatch().getId());
+        recordDTO.setPlayerId(record.getPlayer().getId());
         recordDTO.setFromMinutes(record.getFromMinutes());
-        recordDTO.setToMinutes(recordDTO.getToMinutes());
+        recordDTO.setToMinutes(record.getToMinutes());
 
         return recordDTO;
     }

@@ -41,11 +41,6 @@ public class MainController {
     private void populateTeams() {
         List<TeamDTO> teamDTOs = dataExtractor.extractTeams(teamCSVFilename);
         for(TeamDTO teamDTO : teamDTOs) {
-            if(teamDTO == null) {
-                System.out.println("team is null");
-                break;
-            }
-            System.out.println(teamDTO.getName());
             teamService.create(teamDTO);
         }
     }
@@ -74,8 +69,8 @@ public class MainController {
         if(emptyDataBaseService.isEmpty()) {
             populateTeams();
             populatePlayers();
-            //populateMatches();
-            //populateRecords();
+            populateMatches();
+            populateRecords();
         }
     }
     @GetMapping("/")

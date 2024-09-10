@@ -84,33 +84,14 @@ public class PlayerService implements Service<Player, PlayerDTO> {
     @Transactional
     @Override
     public PlayerDTO create(PlayerDTO dto) throws IllegalArgumentException {
-        if((dto.getId() != null && playerRepository.existsById(dto.getId()))
-                || (dto.getTeamNumber() != null && playerRepository.existsByTeamNumber(dto.getTeamNumber()))) {
-            throw new IllegalArgumentException("Player ID or player team number already exists!");
+        if(dto.getId() != null && playerRepository.existsById(dto.getId())) {
+            throw new IllegalArgumentException("Player ID already exists!");
         }
 
         PlayerDTO created = playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));
 
-        List<Record> records = recordRepository.findAll();
-        SupportingTableDTO playerRecordDTO = new SupportingTableDTO();
-        SupportingTableDTO teamPlayerDTO = new SupportingTableDTO();
-        boolean areCreated = false;
-        for(Record record : records) {
-            for(Long currRecordId : dto.getRecordsIds()) {
-                if(record.getId().equals(currRecordId)) {
-                    record.getPlayer().setId(created.getId());
-                    playerRecordDTO = new SupportingTableDTO(created.getId(), record.getId());
-                    teamPlayerDTO = new SupportingTableDTO(created.getTeamId(), created.getId());
-                    areCreated = true;
-                    break;
-                }
-            }
-        }
-        if(areCreated) {
-            supportingTableService.create(Player.class, Record.class, playerRecordDTO);
-            supportingTableService.create(Team.class, Player.class, teamPlayerDTO);
-            recordRepository.saveAll(records);
-        }
+        SupportingTableDTO teamPlayerDTO = new SupportingTableDTO(created.getTeamId(), created.getId());
+        supportingTableService.create(Team.class, Player.class, teamPlayerDTO);
 
         return created;
     }

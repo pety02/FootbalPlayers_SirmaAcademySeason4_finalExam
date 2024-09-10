@@ -2,9 +2,13 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.RecordAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.SupportingTableDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.SupportingTableRepositoryImpl;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,17 +20,21 @@ import java.util.List;
 public class RecordService implements Service<Record, RecordDTO> {
     private final RecordRepository recordRepository;
     private final RecordAdapter recordConverter;
-
+    private final SupportingTableService supportingTableService;
     /**
      * RecordService class constructor with arguments
-     * @param recordRepository the record repository
-     * @param recordConverter the record converter
+     *
+     * @param recordRepository          the record repository
+     * @param recordConverter           the record converter
+     * @param supportingTableService
      */
     @Autowired
     public RecordService(RecordRepository recordRepository,
-                         RecordAdapter recordConverter) {
+                         RecordAdapter recordConverter,
+                         SupportingTableService supportingTableService) {
         this.recordRepository = recordRepository;
         this.recordConverter = recordConverter;
+        this.supportingTableService = supportingTableService;
     }
 
     /**
@@ -64,6 +72,7 @@ public class RecordService implements Service<Record, RecordDTO> {
      * @throws IllegalArgumentException this exception is thrown when in the database
      * exists a record with this id
      */
+    @Transactional
     @Override
     public RecordDTO create(RecordDTO dto) throws IllegalArgumentException {
         if(dto.getId() != null && recordRepository.existsById(dto.getId())) {
@@ -71,7 +80,10 @@ public class RecordService implements Service<Record, RecordDTO> {
         }
 
         Record record = recordConverter.toEntity(dto);
-        return recordConverter.toDTO(recordRepository.save(record));
+        RecordDTO savedRecordDTO = recordConverter.toDTO(recordRepository.save(record));
+        SupportingTableDTO playerRecord = new SupportingTableDTO(savedRecordDTO.getPlayerId(), savedRecordDTO.getId());
+        supportingTableService.create(Player.class, Record.class, playerRecord);
+        return savedRecordDTO;
     }
 
     /**

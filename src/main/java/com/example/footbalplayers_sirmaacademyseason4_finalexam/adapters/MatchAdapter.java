@@ -59,10 +59,8 @@ public class MatchAdapter implements Adaptable<Match, MatchDTO> {
         }
         MatchDTO matchDTO = new MatchDTO();
         matchDTO.setId(match.getId());
-        TeamDTO teamADTO = teamConverter.toDTO(match.getATeam());
-        matchDTO.setATeamId(teamADTO.getId());
-        TeamDTO teamBDTO = teamConverter.toDTO(match.getBTeam());
-        matchDTO.setBTeamId(teamBDTO.getId());
+        matchDTO.setATeamId(matchDTO.getATeamId());
+        matchDTO.setBTeamId(matchDTO.getBTeamId());
         matchDTO.setDate(match.getDate());
         matchDTO.setScore(match.getScore());
 

@@ -21,11 +21,12 @@ public class RecordCSVConverter implements CSVConvertable<RecordDTO> {
         for(Map<String, String> line : data) {
             String[] fields = line.values().toArray(new String[0]);
             try {
-                Long id = Long.parseLong(fields[0]);
-                Long playerId = Long.parseLong(fields[1]);
-                Long matchId = Long.parseLong(fields[2]);
-                Integer fromMinutes = Integer.parseInt(fields[3]);
-                Integer toMinutes = Integer.parseInt(fields[4]);
+                Long id = Long.parseLong(fields[4]);
+                Long playerId = Long.parseLong(fields[0]);
+                Long matchId = Long.parseLong(fields[3]);
+                Integer fromMinutes = Integer.parseInt(fields[2]);
+                Integer toMinutes = Integer.parseInt(fields[1]);
+
                 RecordDTO currentPlayerDTO = new RecordDTO(id, playerId, matchId, fromMinutes, toMinutes);
                 recordDTOs.add(currentPlayerDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {

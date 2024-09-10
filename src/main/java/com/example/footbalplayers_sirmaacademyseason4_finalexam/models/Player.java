@@ -10,21 +10,21 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @Table
 @Entity
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Integer teamNumber;
     @Column(nullable = false, length = 2)
     private String position;
     @Column(nullable = false, length = 150)
     private String fullName;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Team team;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Record> records;
 }

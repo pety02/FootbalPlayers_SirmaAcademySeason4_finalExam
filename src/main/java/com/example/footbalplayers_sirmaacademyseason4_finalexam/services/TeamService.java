@@ -5,7 +5,9 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.TeamRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 
@@ -38,9 +40,15 @@ public class TeamService implements Service<Team, TeamDTO> {
      * @param id the Team object id
      * @return a TeamDTO object
      */
+    @Transactional
     @Override
     public TeamDTO loadByID(Long id) {
-        return teamConverter.toDTO(teamRepository.findById(id).orElse(null));
+        Team team = teamRepository.findById(id).orElse(null);
+        if(team != null) {
+            Hibernate.initialize(team.getMatches());
+            Hibernate.initialize(team.getPlayers());
+        }
+        return teamConverter.toDTO(team);
     }
 
     /**
@@ -75,13 +83,7 @@ public class TeamService implements Service<Team, TeamDTO> {
             throw new IllegalArgumentException("Team ID already exists!");
         }
 
-        if(dto == null) {
-            System.out.println("dto is null");
-        }
         Team team = teamConverter.toEntity(dto);
-        if(team == null) {
-            System.out.println("team is null");
-        }
         return teamConverter.toDTO(teamRepository.save(team));
     }
 

@@ -34,7 +34,6 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
                 }
                 managerFullName = managerFullNameModified.toString();
                 String group = fields[0];
-                System.out.printf("%d, %s, %s, %s%n", id, name, managerFullName, group);
                 TeamDTO teamDTO = new TeamDTO(id, name, managerFullName, group, new ArrayList<>(), new ArrayList<>());
                 teamDTOs.add(teamDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
@@ -55,10 +54,7 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
     public List<Map<String, String>> convertToCSV(List<TeamDTO> objs) {
         List<Map<String, String>> data = new ArrayList<>();
         String[] headers = objs.getFirst().toString().split(",");
-        for(String h : headers) {
-            System.out.print(h);
-            System.out.print(", ");
-        }
+
         if(headers.length == 0) {
             throw new IllegalArgumentException("The CSV file is in incorrect format or empty!");
         }
