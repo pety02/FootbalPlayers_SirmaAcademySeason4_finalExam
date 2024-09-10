@@ -2,6 +2,10 @@
 <html lang="en">
 <head th:replace="~{fragments/header::head}"></head>
 <body>
-    <p>Football App!</p>
+    <div th:replace="~{fragments/menu::navigation}"></div>
+    <div class="container mt-3 mb-3">
+        <h5>Welcome to <span class="text-primary">Football Players Application</span></h5>
+    </div>
+    <div th:replace="~{fragments/footer::footer}"></div>
 </body>
 </html>

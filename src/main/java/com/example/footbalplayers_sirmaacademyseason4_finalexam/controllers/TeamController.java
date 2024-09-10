@@ -36,7 +36,7 @@ public class TeamController {
     /**
      * Executes a GET request for all TeamDTO objects from the database
      * @param model the Model object to which the list of TeamDTO object will be attached
-     * @return all-teams.html view with all teams from the database or empty list if there
+     * @return all-all-teams.html view with all teams from the database or empty list if there
      * is no teams
      */
     @GetMapping("/all-teams")

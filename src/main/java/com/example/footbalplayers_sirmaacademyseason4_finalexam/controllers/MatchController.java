@@ -35,7 +35,7 @@ public class MatchController {
     /**
      * Executes a GET request for all MatchDTO objects from the database
      * @param model the Model object to which the list of MatchDTO object will be attached
-     * @return all-matches.html view with all matches from the database or empty list if there
+     * @return all-all-matches.html view with all matches from the database or empty list if there
      * is no matches
      */
     @GetMapping("/all-matches")

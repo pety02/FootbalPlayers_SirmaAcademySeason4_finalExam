@@ -44,10 +44,6 @@ public class TeamService implements Service<Team, TeamDTO> {
     @Override
     public TeamDTO loadByID(Long id) {
         Team team = teamRepository.findById(id).orElse(null);
-        if(team != null) {
-            Hibernate.initialize(team.getMatches());
-            Hibernate.initialize(team.getPlayers());
-        }
         return teamConverter.toDTO(team);
     }
 
