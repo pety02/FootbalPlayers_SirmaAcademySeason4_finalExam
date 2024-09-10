@@ -140,6 +140,7 @@ public class MatchController {
         }
         MatchDTO matchDTO = matchService.loadByID(id);
         model.addAttribute("matchDTO", matchDTO);
+        model.addAttribute("teamsDTOs", teamService.loadAll());
         return "match-update";
     }
 
@@ -158,7 +159,7 @@ public class MatchController {
      * If there is any problem with the update of the match in the database or the
      * MatchDTO object is invalid, the method redirects to /all-matches/update/{id}.
      */
-    @PutMapping("/all-matches/update/{id}")
+    @PostMapping("/all-matches/update/{id}")
     public String updateMatch(@PathVariable @NonNull Long id,
                               @Valid MatchDTO matchDTO,
                               @NonNull BindingResult binding,

@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{fragments/header::head}"></head>
 <body>
-
+<div th:replace="~{fragments/menu::navigation}"></div>
+<div class="container mt-5" style="font-size:1rem;">
+    <a th:href="@{/all-matches}" class="btn btn-light">Back</a>
+    <br>
+    <form th:object="${matchDTO}" th:method="POST" th:action="@{/all-matches/update/{id}(id=${matchDTO.id})}"
+          enctype="multipart/form-data">
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="date" class="visually-hidden">Date</label>
+                <input type="date" class="form-control" id="date" name="date" th:value="*{date}" placeholder="Date">
+                <div th:if="${#fields.hasErrors('date')}"
+                     class="alert alert-danger alert-dismissible fade show" data-err-alert>
+                    <span th:errors="*{date}" class="alert-danger"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+            <br>
+            <div class="form-group col-md-6">
+                <label for="score" class="visually-hidden">Score</label>
+                <input type="text" class="form-control" id="score" name="score" th:value="*{score}" placeholder="Score">
+                <div th:if="${#fields.hasErrors('score')}"
+                     class="alert alert-danger alert-dismissible fade show" data-err-alert>
+                    <span th:errors="*{score}" class="alert-danger"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+            <br>
+            <div class="form-group col-md-6">
+                <label for="aTeamId" class="visually-hidden">team A name</label>
+                <select name="aTeamId" id="aTeamId">
+                    <option value="" disabled selected>Select an option</option>
+                    <option th:each="team : ${teamsDTOs}" th:text="${team.name}" th:value="${team.id}" th:selected="${matchDTO.ATeamId}"></option>
+                </select>
+            </div>
+            <br>
+            <div class="form-group col-md-6">
+                <label for="bTeamId" class="visually-hidden">team B name</label>
+                <select name="bTeamId" id="bTeamId">
+                    <option value="" disabled selected>Select an option</option>
+                    <option th:each="team : ${teamsDTOs}" th:text="${team.name}" th:value="${team.id}" th:selected="${matchDTO.BTeamId}"></option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/all-matches}" class="btn btn-light">Cancel</a>
+        </div>
+    </form>
+</div>
+<div th:replace="~{fragments/footer::foot}"></div>
 </body>
 </html>
