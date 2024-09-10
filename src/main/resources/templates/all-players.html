@@ -3,7 +3,10 @@
 <head th:replace="~{fragments/header::head}"></head>
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
-<div class="container mt-5" style="font-size:1rem;">
+<div class="container mt-3" style="font-size:1rem;">
+    <div class="container">
+        <img src="/images/football_championship_2024.jpg" class="football-logo img-fluid mx-auto d-block mt-3">
+    </div>
     <a th:href="@{/all-players/create}" class="btn btn-light">Add Footballer</a>
     <br>
     <span th:if="${playerDTOs == null || playerDTOs.isEmpty()}"
@@ -11,18 +14,20 @@
     <div class="table-wrapper">
         <div class="table-wrapper">
                 <table class="table table-hover">
-                    <thead>
+                    <thead class="bg-dark position-sticky top-0">
                     <tr>
                         <th scope="col" class="text-info">Full Name</th>
                         <th scope="col" class="text-info">Team</th>
                         <th scope="col" class="text-info">Position</th>
                         <th scope="col" class="text-info">Team Number</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="currentPlayerDTO, stat : ${playerDTOs}">
                         <td th:text="${currentPlayerDTO.fullName}"></td>
-                        <td th:text="${teamsNames[stat.count]}"></td>
+                        <td th:text="${teamsNames[stat.count - 1]}"></td>
                         <td>
                             <p th:if="${currentPlayerDTO.position == 'GK' ||
                             (currentPlayerDTO.position != 'DF' && currentPlayerDTO.position != 'MF'
@@ -46,5 +51,6 @@
         </div>
     </div>
 </div>
+<div th:replace="~{fragments/footer::foot}"></div>
 </body>
 </html>

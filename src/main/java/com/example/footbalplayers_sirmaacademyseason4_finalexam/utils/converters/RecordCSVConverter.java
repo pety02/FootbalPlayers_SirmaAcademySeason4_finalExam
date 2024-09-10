@@ -3,12 +3,14 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.converter
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.interfaces.CSVConvertable;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class RecordCSVConverter implements CSVConvertable<RecordDTO> {
 
     /**
@@ -26,7 +28,7 @@ public class RecordCSVConverter implements CSVConvertable<RecordDTO> {
                 Long playerId = Long.parseLong(fields[0]);
                 Long matchId = Long.parseLong(fields[3]);
                 Integer fromMinutes = Integer.parseInt(fields[2]);
-                Integer toMinutes = null;
+                int toMinutes;
                 if(fields[1].equals("NULL")) {
                     toMinutes = 90;
                 } else {
@@ -36,11 +38,10 @@ public class RecordCSVConverter implements CSVConvertable<RecordDTO> {
                 RecordDTO currentPlayerDTO = new RecordDTO(id, playerId, matchId, fromMinutes, toMinutes);
                 recordDTOs.add(currentPlayerDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
-                System.out.println("index out of bound or number format exception");
-                System.out.println(ex.getMessage());
+                log.error("Exception occurred:" + ex.getMessage());
                 continue;
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                log.error("Exception occurred:" + ex.getMessage());
                 return recordDTOs;
             }
         }

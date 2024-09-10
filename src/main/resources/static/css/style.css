@@ -1,11 +1,9 @@
 .football-logo {
     width: 200px;
     height: 200px;
-    margin-left: 300px;
-    margin-top: 20px;
 }
 
 .table-wrapper {
-    height: 350px; /* Set your desired table height */
+    height: 300px; /* Set your desired table height */
     overflow-y: auto; /* Enable vertical scrolling */
 }

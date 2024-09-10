@@ -3,18 +3,23 @@
 <head th:replace="~{fragments/header::head}"></head>
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
-<div class="container mt-5" style="font-size:1rem;">
+<div class="container mt-3" style="font-size:1rem;">
+    <div class="container">
+        <img src="/images/football_championship_2024.jpg" class="football-logo img-fluid mx-auto d-block">
+    </div>
     <a th:href="@{/all-teams/create}" class="btn btn-light">Add Team</a>
     <br>
     <span th:if="${teamDTOs == null || teamDTOs.isEmpty()}"
           style="color: red; font-size: 20px;">No available teams!</span>
     <div class="table-wrapper">
     <table class="table table-hover">
-        <thead>
+        <thead class="bg-dark position-sticky top-0">
         <tr>
             <th scope="col" class="text-info">Name</th>
             <th scope="col" class="text-info">Manager Full Name</th>
             <th scope="col" class="text-info">Group</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +39,7 @@
         </tbody>
     </table>
     </div>
+    <div th:replace="~{fragments/footer::foot}"></div>
 </div>
 </body>
 </html>

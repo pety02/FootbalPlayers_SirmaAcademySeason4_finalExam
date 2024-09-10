@@ -4,8 +4,9 @@
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
 <div class="container">
-    <img src="/images/socer.jpg" class="football-logo">
-    <img src="/images/soocer.png" class="football-logo">
+    <div class="container">
+        <img src="/images/football_championship_2024.jpg" class="football-logo img-fluid mx-auto d-block mt-3">
+    </div>
     <p class="text-info-emphasis container text-center mt-3">
         This table provides statistics about how long two players
         from different teams are played at the same match and the
@@ -13,7 +14,7 @@
     </p>
     <div class="table-wrapper">
     <table class="table table-hover">
-        <thead>
+        <thead class="bg-dark position-sticky top-0">
         <tr>
             <th scope="col" class="text-info">Match ID</th>
             <th scope="col" class="text-info">Player From A Team</th>
@@ -31,6 +32,7 @@
         </tbody>
     </table>
     </div>
+    <div th:replace="~{fragments/footer::foot}"></div>
 </div>
 </body>
 </html>
