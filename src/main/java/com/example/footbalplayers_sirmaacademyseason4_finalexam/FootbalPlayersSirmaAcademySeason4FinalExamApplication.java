@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FootbalPlayersSirmaAcademySeason4FinalExamApplication {
 
+    /**
+     * The main method that triggers the application
+     * @param args a String array of the main method's arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(FootbalPlayersSirmaAcademySeason4FinalExamApplication.class, args);
     }

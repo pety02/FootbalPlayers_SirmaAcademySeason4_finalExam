@@ -6,7 +6,6 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.SupportingT
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.SupportingTableRepositoryImpl;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class RecordService implements Service<Record, RecordDTO> {
      *
      * @param recordRepository          the record repository
      * @param recordConverter           the record converter
-     * @param supportingTableService
+     * @param supportingTableService    the supporting tables service
      */
     @Autowired
     public RecordService(RecordRepository recordRepository,

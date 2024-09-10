@@ -2,12 +2,14 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.converter
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.interfaces.CSVConvertable;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
 
     /**
@@ -36,9 +38,8 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
                 String group = fields[0];
                 TeamDTO teamDTO = new TeamDTO(id, name, managerFullName, group, new ArrayList<>(), new ArrayList<>());
                 teamDTOs.add(teamDTO);
-            } catch (IndexOutOfBoundsException | NumberFormatException ex) {
-                continue;
             } catch (Exception ex) {
+                log.error("Exception occurred: " + ex.getMessage());
                 return teamDTOs;
             }
         }

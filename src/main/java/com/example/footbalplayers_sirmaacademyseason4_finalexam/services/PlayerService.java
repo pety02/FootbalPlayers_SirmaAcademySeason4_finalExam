@@ -7,7 +7,6 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.PlayerRepository;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
@@ -22,24 +21,20 @@ import java.util.List;
 public class PlayerService implements Service<Player, PlayerDTO> {
     private final PlayerAdapter playerConverter;
     private final PlayerRepository playerRepository;
-    private final RecordRepository recordRepository;
     private final SupportingTableService supportingTableService;
 
     /**
      * PlayerService constructor with parameters
      * @param playerConverter the player converter
      * @param playerRepository the player repository
-     * @param recordRepository the record repository
      * @param supportingTableService the supporting tables service
      */
     @Autowired
     public PlayerService(@NonNull PlayerAdapter playerConverter,
                          @NonNull PlayerRepository playerRepository,
-                         @NonNull RecordRepository recordRepository,
                          @NonNull SupportingTableService supportingTableService) {
         this.playerConverter = playerConverter;
         this.playerRepository = playerRepository;
-        this.recordRepository = recordRepository;
         this.supportingTableService = supportingTableService;
     }
 

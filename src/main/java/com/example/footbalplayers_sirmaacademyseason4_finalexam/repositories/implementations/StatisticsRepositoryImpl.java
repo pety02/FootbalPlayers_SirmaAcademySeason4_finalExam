@@ -1,6 +1,7 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.implementations;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.StatisticsDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.StatisticsRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -13,6 +14,17 @@ import java.util.List;
 public class StatisticsRepositoryImpl implements StatisticsRepository {
     @PersistenceContext
     private EntityManager entityManager;
+
+    /**
+     * Selects all players that are played for the longest time (in minutes) in same match,
+     * are from different teams and also the duration of their common play in the match.
+     * The query is select query from record and player tables in the database and the
+     * result sets are joined on their primary keys so that to return the right result set
+     * of players.
+     * @return a List of StatisticsDTO objects where StatisticsDTO is a data transfer object
+     * that contains the definite match id, the full names of the pair of players that are
+     * played together and the duration of their common play
+     */
     @Transactional
     @Override
     public List<StatisticsDTO> loadAll() {

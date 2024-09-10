@@ -1,5 +1,6 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.implementations;
 
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.SupportingTableRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -11,6 +12,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Adds a record in the player_records table in the database
+     * @param playerId the id of the player
+     * @param recordId the id of the record
+     * @return the count of rows in player_records table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int addPlayerRecord(Long playerId, Long recordId) {
@@ -21,6 +29,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Adds a record in the team_matches table in the database
+     * @param teamId the id of the team
+     * @param matchId the id of the match
+     * @return the count of rows in team_Matches table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int addTeamMatch(Long teamId, Long matchId) {
@@ -31,6 +46,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Adds a record in the team_players table in the database
+     * @param teamId the id of the team
+     * @param playerId the id of the player
+     * @return the count of rows in team_players table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int addTeamPlayer(Long teamId, Long playerId) {
@@ -41,6 +63,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Updates a record in the player_records table in the database
+     * @param playerId the id of the player
+     * @param recordId the id of the record
+     * @return the count of rows in player_records table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int updatePlayerRecord(Long recordId, Long playerId) {
@@ -51,6 +80,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Updates a record in the player_records table in the database
+     * @param playerId the id of the player
+     * @param recordId the id of the record
+     * @return the count of rows in player_records table that were affected
+     * of the query
+     */
     @Override
     public int updateRecordPlayer(Long recordId, Long playerId) {
         return entityManager
@@ -60,6 +96,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Updates a record in the team_matches table in the database
+     * @param teamId the id of the team
+     * @param matchId the id of the match
+     * @return the count of rows in team_Matches table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int updateTeamMatch(Long teamId, Long matchId) {
@@ -70,6 +113,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Updates a record in the team_matches table in the database
+     * @param teamId the id of the team
+     * @param matchId the id of the match
+     * @return the count of rows in team_Matches table that were affected
+     * of the query
+     */
     @Override
     public int updateMatchTeam(Long matchId, Long teamId) {
         return entityManager
@@ -79,6 +129,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Updates a record in the team_players table in the database
+     * @param teamId the id of the team
+     * @param playerId the id of the player
+     * @return the count of rows in team_players table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int updateTeamPlayer(Long teamId, Long playerId) {
@@ -89,6 +146,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Updates a record in the team_players table in the database
+     * @param teamId the id of the team
+     * @param playerId the id of the player
+     * @return the count of rows in team_players table that were affected
+     * of the query
+     */
     @Override
     public int updatePlayerTeam(Long playerId, Long teamId) {
         return entityManager
@@ -98,6 +162,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Deletes a record in the player_records table in the database
+     * @param playerId the id of the player
+     * @param recordId the id of the record
+     * @return the count of rows in player_records table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int deletePlayerRecord(Long playerId, Long recordId) {
@@ -108,6 +179,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Deletes a record in the team_matches table in the database
+     * @param teamId the id of the team
+     * @param matchId the id of the match
+     * @return the count of rows in team_Matches table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int deleteTeamMatch(Long teamId, Long matchId) {
@@ -118,6 +196,13 @@ public class SupportingTableRepositoryImpl implements SupportingTableRepository 
                 .executeUpdate();
     }
 
+    /**
+     * Deletes a record in the team_players table in the database
+     * @param teamId the id of the team
+     * @param playerId the id of the player
+     * @return the count of rows in team_players table that were affected
+     * of the query
+     */
     @Transactional
     @Override
     public int deleteTeamPlayer(Long teamId, Long playerId) {

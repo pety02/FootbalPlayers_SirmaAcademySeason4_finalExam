@@ -1,5 +1,6 @@
-package com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories;
+package com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.implementations;
 
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.EmptyDataBaseRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,10 @@ public class EmptyDataBaseRepositoryImpl implements EmptyDataBaseRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Counts the records in player_records table in the database
+     * @return the count of the records in this table
+     */
     @Transactional
     @Override
     public int countPlayerRecords() {
@@ -18,6 +23,10 @@ public class EmptyDataBaseRepositoryImpl implements EmptyDataBaseRepository {
                 .getSingleResult()).intValue();
     }
 
+    /**
+     * Counts the records in team_matches table in the database
+     * @return the count of the records in this table
+     */
     @Transactional
     @Override
     public int countTeamMatches() {
@@ -26,6 +35,10 @@ public class EmptyDataBaseRepositoryImpl implements EmptyDataBaseRepository {
                 .getSingleResult()).intValue();
     }
 
+    /**
+     * Counts the records in team_players table in the database
+     * @return the count of the records in this table
+     */
     @Transactional
     @Override
     public int countTeamPlayers() {

@@ -7,11 +7,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmptyDataBaseService {
     private final EmptyDataBaseRepository emptyDataBaseRepository;
+
+    /**
+     * EmptyDataBseService class constructor with a parameter
+     * @param emptyDataBaseRepository the empty database repository
+     */
     @Autowired
     public EmptyDataBaseService(EmptyDataBaseRepository emptyDataBaseRepository) {
         this.emptyDataBaseRepository = emptyDataBaseRepository;
     }
 
+    /**
+     * Checks if the database is empty
+     * @return true if the database is empty and false if not
+     */
     public boolean isEmpty() {
         return emptyDataBaseRepository.countPlayerRecords() == 0
                 && emptyDataBaseRepository.countTeamMatches() == 0

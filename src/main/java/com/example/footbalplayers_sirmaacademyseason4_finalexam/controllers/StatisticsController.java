@@ -14,11 +14,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class StatisticsController {
     private final StatisticsService statisticsService;
+
+    /**
+     * StatisticsController class constructor with a parameter
+     * @param statisticsService the statistics service
+     */
     @Autowired
     public StatisticsController(@NonNull StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
     }
 
+    /**
+     * Gets all players that are from different teams and are played together in the same
+     * match for the longest period of time in minutes and the duration of their common play
+     * @param model the Model object to which the List of this players will be attached
+     * @return the statistics.html view that shows the user these players in a table view
+     */
     @GetMapping("/players-in-one-match")
     public String getStatistics(@NonNull Model model) {
         model.addAttribute("playersOverlaps", statisticsService.loadAll());
