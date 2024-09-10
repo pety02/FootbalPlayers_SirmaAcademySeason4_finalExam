@@ -3,6 +3,34 @@
 <head th:replace="~{fragments/header::head}"></head>
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
-<p>All Matches</p>
+<div class="container mt-5" style="font-size:1rem;">
+    <a th:href="@{/all-matches/create}" class="btn btn-light">New Match</a>
+    <br>
+    <span th:if="${allMatchDTOs == null || allMatchDTOs.isEmpty()}"
+          style="color: red; font-size: 20px;">No available matches!</span>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" class="text-info">Date</th>
+            <th scope="col" class="text-info">Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="currentMatchDTO : ${allMatchDTOs}">
+            <td th:text="${currentMatchDTO.date}"></td>
+            <td th:text="${currentMatchDTO.score}"></td>
+            <td><a th:href="@{/all-matches/{id}(id=${currentMatchDTO.id})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/all-matches/update/{id}(id=${currentMatchDTO.id})}"
+                   class="btn btn-success">Update</a></td>
+            <td>
+                <form th:object="${currentMatchDTO}" th:action="@{/notebooks/delete/{id}(id=${currentMatchDTO.id})}"
+                      th:method="GET">
+                    <input type="submit" th:value="Delete" class="btn btn-danger">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
