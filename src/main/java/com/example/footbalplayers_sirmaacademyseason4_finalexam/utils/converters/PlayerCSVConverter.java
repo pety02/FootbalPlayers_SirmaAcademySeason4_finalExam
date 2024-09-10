@@ -27,8 +27,23 @@ public class PlayerCSVConverter implements CSVConvertable<PlayerDTO> {
                 Integer teamNumber = Integer.parseInt(fields[3]);
                 String position = fields[0];
                 String fullName = fields[2];
+                StringBuilder modifiedFullName = new StringBuilder(fullName.charAt(0) + "");
+                int i = 1;
+                for(; i < fullName.length(); ++i) {
+                    char currentChar = fullName.charAt(i);
+                    if('A' <= currentChar && currentChar <= 'Z') {
+                        modifiedFullName.append(' ');
+                        modifiedFullName.append(currentChar);
+                        break;
+                    }
+
+                    modifiedFullName.append(currentChar);
+                }
+                if(i + 1 < fullName.length()) {
+                    modifiedFullName.append(fullName.substring(i + 1));
+                }
                 Long teamId = Long.parseLong(fields[4]);
-                PlayerDTO currentPlayerDTO = new PlayerDTO(id, teamNumber, position, fullName, teamId, new ArrayList<>());
+                PlayerDTO currentPlayerDTO = new PlayerDTO(id, teamNumber, position, modifiedFullName.toString(), teamId, new ArrayList<>());
                 players.add(currentPlayerDTO);
             } catch (Exception ex) {
                 log.error("Exception occurred: " + ex.getMessage());

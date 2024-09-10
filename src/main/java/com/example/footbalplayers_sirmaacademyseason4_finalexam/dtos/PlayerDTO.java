@@ -22,8 +22,11 @@ public class PlayerDTO {
     @NotNull(message = "FullName should not be null!")
     @NotBlank(message = "FullName should not be blank!")
     @Size(min = 1, max = 150, message = "FullName should have 2 symbols length!")
-    @Pattern(regexp = "^[A-Z]{1}[a-z]{1,} [A-Z]{1}[a-z]{1,}$",
-            message = "First name and surname should start with a capital letter and continue with lowercase!")
+    // I used this validation regex for managerFullName and here for the player full name, but
+    // I saw that here is some records in the players.csv file that do not match this regex, so
+    // I decided to comment in order to can store all records in the database.
+    /*@Pattern(regexp = "^[A-Z]{1}[a-z]{1,} [A-Z]{1}[a-z]{1,}$",
+            message = "First name and surname should start with a capital letter and continue with lowercase!")*/
     private String fullName;
     @NotNull(message = "TeamID should not be null!")
     @Min(value = 1, message = "TeamID should be positive number!")

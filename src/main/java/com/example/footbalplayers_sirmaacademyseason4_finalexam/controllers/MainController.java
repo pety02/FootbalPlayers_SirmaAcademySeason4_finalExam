@@ -6,6 +6,7 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.*;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.CSVDataExtractor;
+import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +32,28 @@ public class MainController {
 
     private void populateMatches() {
         List<MatchDTO> matchDTOs = dataExtractor.extractMatches(matchCSVFilename);
-        for(MatchDTO matchDTO : matchDTOs) {
+        for(@Valid MatchDTO matchDTO : matchDTOs) {
             matchService.create(matchDTO);
         }
     }
 
     private void populatePlayers() {
         List<PlayerDTO> playerDTOs = dataExtractor.extractPlayers(playerCSVFilename);
-        for(PlayerDTO playerDTO : playerDTOs) {
+        for(@Valid PlayerDTO playerDTO : playerDTOs) {
             playerService.create(playerDTO);
         }
     }
 
     private void populateTeams() {
         List<TeamDTO> teamDTOs = dataExtractor.extractTeams(teamCSVFilename);
-        for(TeamDTO teamDTO : teamDTOs) {
+        for(@Valid TeamDTO teamDTO : teamDTOs) {
             teamService.create(teamDTO);
         }
     }
 
     private void populateRecords() {
         List<RecordDTO> recordDTOs = dataExtractor.extractRecords(recordCSVFilename);
-        for(RecordDTO recordDTO : recordDTOs) {
+        for(@Valid RecordDTO recordDTO : recordDTOs) {
             recordService.create(recordDTO);
         }
     }
