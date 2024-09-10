@@ -6,6 +6,31 @@
 <div class="container">
     <img src="/images/socer.jpg" class="football-logo">
     <img src="/images/soocer.png" class="football-logo">
+    <p class="text-info-emphasis container text-center mt-3">
+        This table provides statistics about how long two players
+        from different teams are played at the same match and the
+        duration of their overlaps at this match.
+    </p>
+    <div class="table-wrapper">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" class="text-info">Match ID</th>
+            <th scope="col" class="text-info">Player From A Team</th>
+            <th scope="col" class="text-info">Player From B Team</th>
+            <th scope="col" class="text-info">Duration</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="currentOverlap : ${playersOverlaps}">
+            <td th:text="${currentOverlap.matchId}"></td>
+            <td th:text="${currentOverlap.playerOfTeamAFullName}"></td>
+            <td th:text="${currentOverlap.playerOfTeamBFullName}"></td>
+            <td th:text="${currentOverlap.duration}"></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
 </div>
 </body>
 </html>

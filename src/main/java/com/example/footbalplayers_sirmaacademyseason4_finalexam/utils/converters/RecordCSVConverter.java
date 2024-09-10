@@ -2,6 +2,7 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.converter
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.interfaces.CSVConvertable;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,13 +26,21 @@ public class RecordCSVConverter implements CSVConvertable<RecordDTO> {
                 Long playerId = Long.parseLong(fields[0]);
                 Long matchId = Long.parseLong(fields[3]);
                 Integer fromMinutes = Integer.parseInt(fields[2]);
-                Integer toMinutes = Integer.parseInt(fields[1]);
+                Integer toMinutes = null;
+                if(fields[1].equals("NULL")) {
+                    toMinutes = 90;
+                } else {
+                    toMinutes = Integer.parseInt(fields[1]);
+                }
 
                 RecordDTO currentPlayerDTO = new RecordDTO(id, playerId, matchId, fromMinutes, toMinutes);
                 recordDTOs.add(currentPlayerDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
+                System.out.println("index out of bound or number format exception");
+                System.out.println(ex.getMessage());
                 continue;
             } catch (Exception ex) {
+                System.out.println(ex.getMessage());
                 return recordDTOs;
             }
         }

@@ -69,7 +69,7 @@ public class MainController {
         this.recordService = recordService;
         this.emptyDataBaseService = emptyDataBaseService;
     }
-    // TODO: to debug and find the problem for this message: Exception occurred:Invalid headers!
+
     public void populateDataBase() {
         if(emptyDataBaseService.isEmpty()) {
             populateTeams();
