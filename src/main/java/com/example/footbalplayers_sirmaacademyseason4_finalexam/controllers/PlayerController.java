@@ -1,7 +1,9 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.PlayerService;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.TeamService;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
@@ -20,14 +23,18 @@ import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 @Slf4j
 public class PlayerController {
     private final PlayerService playerService;
+    private final TeamService teamService;
 
     /**
      * PlayerController class constructor with a parameter
+     *
      * @param playerService the player service
+     * @param teamService
      */
     @Autowired
-    public PlayerController(PlayerService playerService) {
+    public PlayerController(PlayerService playerService, TeamService teamService) {
         this.playerService = playerService;
+        this.teamService = teamService;
     }
 
     /**
@@ -40,7 +47,16 @@ public class PlayerController {
     public String getAllPlayers(@NonNull Model model) {
         List<PlayerDTO> playerDTOs = playerService.loadAll();
         model.addAttribute("playerDTOs", playerDTOs);
-
+        List<TeamDTO> teamDTOs = teamService.loadAll();
+        List<String> teamsNames = new ArrayList<>();
+        for(PlayerDTO playerDTO : playerDTOs) {
+            for (TeamDTO teamDTO : teamDTOs) {
+                if (teamDTO.getId().equals(playerDTO.getTeamId())) {
+                    teamsNames.add(teamDTO.getName());
+                }
+            }
+        }
+        model.addAttribute("teamsNames", teamsNames);
         return "all-players";
     }
 

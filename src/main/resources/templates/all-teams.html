@@ -3,6 +3,37 @@
 <head th:replace="~{fragments/header::head}"></head>
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
-<p>All Teams</p>
+<div class="container mt-5" style="font-size:1rem;">
+    <a th:href="@{/all-teams/create}" class="btn btn-light">Add Team</a>
+    <br>
+    <span th:if="${teamDTOs == null || teamDTOs.isEmpty()}"
+          style="color: red; font-size: 20px;">No available teams!</span>
+    <div class="table-wrapper">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" class="text-info">Name</th>
+            <th scope="col" class="text-info">Manager Full Name</th>
+            <th scope="col" class="text-info">Group</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="currentTeamDTO : ${teamDTOs}">
+            <td th:text="${currentTeamDTO.name}"></td>
+            <td th:text="${currentTeamDTO.managerFullName}"></td>
+            <td th:text="${currentTeamDTO.group}"></td>
+            <td><a th:href="@{/all-teams/update/{id}(id=${currentTeamDTO.id})}"
+                   class="btn btn-success">Update</a></td>
+            <td>
+                <form th:object="${ccurrentTeamDTO}" th:action="@{/all-teams/delete/{id}(id=${currentTeamDTO.id})}"
+                      th:method="GET">
+                    <input type="submit" th:value="Delete" class="btn btn-danger">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
 </body>
 </html>

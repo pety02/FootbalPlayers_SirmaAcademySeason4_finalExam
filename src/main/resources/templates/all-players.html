@@ -4,34 +4,46 @@
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
 <div class="container mt-5" style="font-size:1rem;">
-    <a th:href="@{/all-players/create}" class="btn btn-light">New Notebook</a>
+    <a th:href="@{/all-players/create}" class="btn btn-light">Add Footballer</a>
     <br>
     <span th:if="${playerDTOs == null || playerDTOs.isEmpty()}"
           style="color: red; font-size: 20px;">No available footballers!</span>
     <div class="table-wrapper">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col" class="text-info">Full name</th>
-            <th scope="col" class="text-info">Team</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="currentPlayerDTO : ${playerDTOs}">
-            <td th:text="${currentPlayerDTO.fullName}"></td>
-            <td th:text="${currentPlayerDTO.teamId}"></td>
-            <td><a th:href="@{/all-players/{id}(id=${currentPlayerDTO.id})}" class="btn btn-primary">View</a></td>
-            <td><a th:href="@{/all-players/update/{id}(id=${currentPlayerDTO.id})}"
-                   class="btn btn-success">Update</a></td>
-            <td>
-                <form th:object="${currentPlayerDTO}" th:action="@{/all-players/delete/{id}(id=${currentPlayerDTO.id})}"
-                      th:method="GET">
-                    <input type="submit" th:value="Delete" class="btn btn-danger">
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="table-wrapper">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="text-info">Full Name</th>
+                        <th scope="col" class="text-info">Team</th>
+                        <th scope="col" class="text-info">Position</th>
+                        <th scope="col" class="text-info">Team Number</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="currentPlayerDTO, stat : ${playerDTOs}">
+                        <td th:text="${currentPlayerDTO.fullName}"></td>
+                        <td th:text="${teamsNames[stat.count]}"></td>
+                        <td>
+                            <p th:if="${currentPlayerDTO.position == 'GK' ||
+                            (currentPlayerDTO.position != 'DF' && currentPlayerDTO.position != 'MF'
+                            && currentPlayerDTO.position != 'FW')}">Goal Keeper</p>
+                            <p th:if="${currentPlayerDTO.position == 'DF'}">Defender</p>
+                            <p th:if="${currentPlayerDTO.position == 'MF'}">Midfielder</p>
+                            <p th:if="${currentPlayerDTO.position == 'FW'}">Forward</p>
+                        </td>
+                        <td th:text="${currentPlayerDTO.teamNumber}"></td>
+                        <td><a th:href="@{/all-players/update/{id}(id=${currentPlayerDTO.id})}"
+                               class="btn btn-success">Update</a></td>
+                        <td>
+                            <form th:object="${currentPlayerDTO}" th:action="@{/all-players/delete/{id}(id=${currentPlayerDTO.id})}"
+                                  th:method="GET">
+                                <input type="submit" th:value="Delete" class="btn btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
     </div>
 </div>
 </body>

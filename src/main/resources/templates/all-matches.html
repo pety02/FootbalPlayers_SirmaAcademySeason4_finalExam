@@ -4,7 +4,7 @@
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
 <div class="container mt-5" style="font-size:1rem;">
-    <a th:href="@{/all-matches/create}" class="btn btn-light">New Match</a>
+    <a th:href="@{/all-matches/create}" class="btn btn-light">Add Match</a>
     <br>
     <span th:if="${allMatchDTOs == null || allMatchDTOs.isEmpty()}"
           style="color: red; font-size: 20px;">No available matches!</span>
@@ -14,13 +14,16 @@
         <tr>
             <th scope="col" class="text-info">Date</th>
             <th scope="col" class="text-info">Score</th>
+            <th scope="col" class="text-info">Team A</th>
+            <th scope="col" class="text-info">Team B</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="currentMatchDTO : ${allMatchDTOs}">
             <td th:text="${currentMatchDTO.date}"></td>
             <td th:text="${currentMatchDTO.score}"></td>
-            <td><a th:href="@{/all-matches/{id}(id=${currentMatchDTO.id})}" class="btn btn-primary">View</a></td>
+            <td th:text="${currentMatchDTO.getATeamId()}"></td>
+            <td th:text="${currentMatchDTO.getBTeamId()}"></td>
             <td><a th:href="@{/all-matches/update/{id}(id=${currentMatchDTO.id})}"
                    class="btn btn-success">Update</a></td>
             <td>
