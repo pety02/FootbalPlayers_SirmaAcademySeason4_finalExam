@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,6 +22,7 @@ import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 
 @Controller
 @Slf4j
+@Validated
 public class PlayerController {
     private final PlayerService playerService;
     private final TeamService teamService;
@@ -32,7 +34,8 @@ public class PlayerController {
      * @param teamService
      */
     @Autowired
-    public PlayerController(PlayerService playerService, TeamService teamService) {
+    public PlayerController(@NonNull PlayerService playerService,
+                            @NonNull TeamService teamService) {
         this.playerService = playerService;
         this.teamService = teamService;
     }

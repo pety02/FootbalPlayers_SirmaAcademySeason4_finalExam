@@ -6,12 +6,17 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.*;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.CSVDataExtractor;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
+@Slf4j
+@Validated
 public class MainController {
     private final CSVDataExtractor dataExtractor = new CSVDataExtractor();
     private final String matchCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\matches.csv";
@@ -53,11 +58,11 @@ public class MainController {
     }
 
     @Autowired
-    public MainController(MatchService matchService,
-                          PlayerService playerService,
-                          TeamService teamService,
-                          RecordService recordService,
-                          EmptyDataBaseService emptyDataBaseService) {
+    public MainController(@NonNull MatchService matchService,
+                          @NonNull PlayerService playerService,
+                          @NonNull TeamService teamService,
+                          @NonNull RecordService recordService,
+                          @NonNull EmptyDataBaseService emptyDataBaseService) {
         this.matchService = matchService;
         this.playerService = playerService;
         this.teamService = teamService;

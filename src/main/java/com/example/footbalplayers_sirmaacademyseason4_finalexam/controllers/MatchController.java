@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 
 @Controller
 @Slf4j
+@Validated
 public class MatchController {
     private final MatchService matchService;
 
@@ -28,7 +30,7 @@ public class MatchController {
      * @param matchService the match service
      */
     @Autowired
-    public MatchController(MatchService matchService) {
+    public MatchController(@NonNull MatchService matchService) {
         this.matchService = matchService;
     }
 

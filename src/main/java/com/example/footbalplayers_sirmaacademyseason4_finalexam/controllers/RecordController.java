@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 
 @Controller
 @Slf4j
+@Validated
 public class RecordController {
     private final RecordService recordService;
 
@@ -28,7 +30,8 @@ public class RecordController {
      * @param recordService the record service
      */
     @Autowired
-    public RecordController(RecordService recordService) {
+    public RecordController(@NonNull RecordService recordService) {
+
         this.recordService = recordService;
     }
 
