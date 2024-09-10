@@ -2,6 +2,7 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.MatchService;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.TeamService;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,17 @@ import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 @Validated
 public class MatchController {
     private final MatchService matchService;
-
+    private final TeamService teamService;
     /**
-     * MatchController class constructor with a parameter
+     * MatchController class constructor with parameters
+     *
      * @param matchService the match service
+     * @param teamService the team service
      */
     @Autowired
-    public MatchController(@NonNull MatchService matchService) {
+    public MatchController(@NonNull MatchService matchService, TeamService teamService) {
         this.matchService = matchService;
+        this.teamService = teamService;
     }
 
     /**
@@ -75,6 +79,7 @@ public class MatchController {
     @GetMapping("/all-matches/create")
     public String getAddMatchForm(@NonNull Model model) {
         model.addAttribute("newMatchDTO", new MatchDTO());
+        model.addAttribute("teamsDTOs", teamService.loadAll());
         return "create-match";
     }
 
@@ -183,23 +188,12 @@ public class MatchController {
      * Executes a GET request that deletes a definite match from the database in dependence
      * of its id
      * @param id the definite match's id
-     * @param binding the validation binding result object
-     * @param redirectAttributes the redirect attributes object
      * @return no matters the request is successful or not, the method redirects
      * to /all-matches
      */
     @GetMapping("/all-matches/delete/{id}")
-    public String deleteMatch(@PathVariable @NonNull Long id,
-                              @NonNull BindingResult binding,
-                              @NonNull RedirectAttributes redirectAttributes) {
-        try {
-            matchService.deleteById(id);
-        } catch (RuntimeException ex) {
-            log.error("Error deleting a match: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("matchID", id);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchID", binding);
-        }
-
+    public String deleteMatch(@PathVariable @NonNull Long id) {
+        matchService.deleteById(id);
         return "redirect:/all-matches";
     }
 }
