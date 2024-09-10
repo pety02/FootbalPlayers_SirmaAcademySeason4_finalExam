@@ -153,7 +153,7 @@ public class TeamController {
      * If there is any problem with the update of the team in the database or the
      * TeamDTO object is invalid, the method redirects to /all-teams/update/{id}.
      */
-    @PutMapping("/all-teams/update/{id}")
+    @PostMapping("/all-teams/update/{id}")
     public String updateTeam(@PathVariable @NonNull Long id,
                              @Valid TeamDTO teamDTO,
                              @NonNull BindingResult binding,

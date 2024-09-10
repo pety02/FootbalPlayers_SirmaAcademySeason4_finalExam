@@ -167,7 +167,7 @@ public class PlayerController {
      * If there is any problem with the update of the player in the database or the
      * PlayerDTO object is invalid, the method redirects to /all-players/update/{id}.
      */
-    @PutMapping("/all-players/update/{id}")
+    @PostMapping("/all-players/update/{id}")
     public String updatePlayer(@PathVariable @NonNull Long id,
                                @Valid @ModelAttribute PlayerDTO playerDTO,
                                @NonNull BindingResult binding,

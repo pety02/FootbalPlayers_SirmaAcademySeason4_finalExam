@@ -154,7 +154,7 @@ public class RecordController {
      * If there is any problem with the update of the record in the database or the
      * RecordDTO object is invalid, the method redirects to /all-records/update/{id}.
      */
-    @PutMapping("/all-records/update/{id}")
+    @PostMapping("/all-records/update/{id}")
     public String updateRecord(@PathVariable @NonNull Long id,
                                @Valid RecordDTO recordDTO,
                                @NonNull BindingResult binding,

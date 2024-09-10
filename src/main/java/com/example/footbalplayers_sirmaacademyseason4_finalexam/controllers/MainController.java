@@ -30,6 +30,9 @@ public class MainController {
     private final RecordService recordService;
     private final EmptyDataBaseService emptyDataBaseService;
 
+    /**
+     * Populates all matches from the CSV matches file
+     */
     private void populateMatches() {
         List<MatchDTO> matchDTOs = dataExtractor.extractMatches(matchCSVFilename);
         for(@Valid MatchDTO matchDTO : matchDTOs) {
@@ -37,6 +40,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Populates all players from the CSV players file
+     */
     private void populatePlayers() {
         List<PlayerDTO> playerDTOs = dataExtractor.extractPlayers(playerCSVFilename);
         for(@Valid PlayerDTO playerDTO : playerDTOs) {
@@ -44,6 +50,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Populates all teams from the CSV teams file
+     */
     private void populateTeams() {
         List<TeamDTO> teamDTOs = dataExtractor.extractTeams(teamCSVFilename);
         for(@Valid TeamDTO teamDTO : teamDTOs) {
@@ -51,6 +60,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Populates all records from the CSV records file
+     */
     private void populateRecords() {
         List<RecordDTO> recordDTOs = dataExtractor.extractRecords(recordCSVFilename);
         for(@Valid RecordDTO recordDTO : recordDTOs) {
@@ -58,6 +70,14 @@ public class MainController {
         }
     }
 
+    /**
+     * MainController constructor with parameters
+     * @param matchService the match service
+     * @param playerService the player service
+     * @param teamService the team service
+     * @param recordService the record service
+     * @param emptyDataBaseService the empty database service
+     */
     @Autowired
     public MainController(@NonNull MatchService matchService,
                           @NonNull PlayerService playerService,
@@ -71,6 +91,9 @@ public class MainController {
         this.emptyDataBaseService = emptyDataBaseService;
     }
 
+    /**
+     * Populates the database if it is empty
+     */
     public void populateDataBase() {
         if(emptyDataBaseService.isEmpty()) {
             populateTeams();
@@ -79,6 +102,11 @@ public class MainController {
             populateRecords();
         }
     }
+
+    /**
+     * Gets the home view
+     * @return the home view name
+     */
     @GetMapping("/")
     public String getHomePage() {
         populateDataBase();
