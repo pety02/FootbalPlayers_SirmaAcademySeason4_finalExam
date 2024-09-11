@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +36,6 @@ public class MatchCSVConverter implements CSVConvertable<MatchDTO> {
                 matchDTOs.add(currentMatchDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
                 log.error("Error occurred: " + ex.getMessage());
-                continue;
             } catch (Exception ex) {
                 log.error("Error occurred: " + ex.getMessage());
                 return matchDTOs;
@@ -45,38 +43,5 @@ public class MatchCSVConverter implements CSVConvertable<MatchDTO> {
         }
 
         return matchDTOs;
-    }
-
-    /**
-     * Converts a List of MatchDTO to List of Map of String and String
-     * @param objs the List of MatchDTO
-     * @return a List of Map of String and String representation of all lines of CSV file
-     */
-    @Override
-    public List<Map<String, String>> convertToCSV(List<MatchDTO> objs) {
-        List<Map<String, String>> data = new ArrayList<>();
-        String[] headers = objs.getFirst().toString().split(",");
-        if(headers.length == 0) {
-            throw new IllegalArgumentException("The CSV file is in incorrect format or empty!");
-        }
-
-        for (MatchDTO match : objs) {
-            Map<String, String> obj = new HashMap<>();
-
-            String[] fields = new String[] {
-                    match.getId() + "",
-                    match.getATeamId() + "",
-                    match.getBTeamId() + "",
-                    match.getDate().toString(),
-                    match.getScore()
-            };
-
-            for (int i = 0; i < headers.length; i++) {
-                obj.put(headers[i], fields[i]);
-            }
-            data.add(obj);
-        }
-
-        return data;
     }
 }

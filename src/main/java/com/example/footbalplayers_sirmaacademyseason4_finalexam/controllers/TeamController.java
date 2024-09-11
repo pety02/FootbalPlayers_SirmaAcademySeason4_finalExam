@@ -86,10 +86,7 @@ public class TeamController {
             return "redirect:/all-teams";
         } catch (Exception ex) {
             log.error("Error creating new team: {}", ex.getMessage());
-            model.addAttribute("newTeamDTO", teamDTO);
-            List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
-            model.addAttribute("groups", groups);
-            return "create-team";
+            return "redirect:/all-teams/create";
         }
     }
 
@@ -151,11 +148,7 @@ public class TeamController {
             return "redirect:/all-teams";
         } catch (Exception ex) {
             log.error("Error updating a team: {}", ex.getMessage());
-            model.addAttribute("teamDTO", teamDTO);
-            List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
-            model.addAttribute("groups", groups);
-            model.addAttribute("selectedGroup", teamDTO.getGroup());
-            return "team-update";
+            return "redirect:/all-teams/update/{id}";
         }
     }
 

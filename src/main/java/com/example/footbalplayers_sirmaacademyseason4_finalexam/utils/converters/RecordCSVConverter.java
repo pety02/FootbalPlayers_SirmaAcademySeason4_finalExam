@@ -2,7 +2,6 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.converter
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.utils.interfaces.CSVConvertable;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -39,45 +38,11 @@ public class RecordCSVConverter implements CSVConvertable<RecordDTO> {
                 recordDTOs.add(currentPlayerDTO);
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
                 log.error("Exception occurred:" + ex.getMessage());
-                continue;
             } catch (Exception ex) {
                 log.error("Exception occurred:" + ex.getMessage());
                 return recordDTOs;
             }
         }
         return recordDTOs;
-    }
-
-    /**
-     * Converts a List of RecordDTO to List of Map of String and String
-     * @param objs the List of RecordDTO
-     * @return a List of Map of String and String representation of all lines of CSV file
-     */
-    @Override
-    public List<Map<String, String>> convertToCSV(List<RecordDTO> objs) {
-        List<Map<String, String>> data = new ArrayList<>();
-        String[] headers = objs.getFirst().toString().split(",");
-        if(headers.length == 0) {
-            throw new IllegalArgumentException("The CSV file is in incorrect format or empty!");
-        }
-
-        for (RecordDTO record : objs) {
-            Map<String, String> obj = new HashMap<>();
-
-            String[] fields = new String[] {
-                    record.getId() + "",
-                    record.getPlayerId() + "",
-                    record.getMatchId() + "",
-                    record.getFromMinutes() + "",
-                    record.getToMinutes() + ""
-            };
-
-            for (int i = 0; i < headers.length; i++) {
-                obj.put(headers[i], fields[i]);
-            }
-            data.add(obj);
-        }
-
-        return data;
     }
 }

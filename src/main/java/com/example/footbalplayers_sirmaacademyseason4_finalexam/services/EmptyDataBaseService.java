@@ -1,10 +1,13 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.services;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.EmptyDataBaseRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 public class EmptyDataBaseService {
     private final EmptyDataBaseRepository emptyDataBaseRepository;
 
@@ -13,7 +16,7 @@ public class EmptyDataBaseService {
      * @param emptyDataBaseRepository the empty database repository
      */
     @Autowired
-    public EmptyDataBaseService(EmptyDataBaseRepository emptyDataBaseRepository) {
+    public EmptyDataBaseService(@NonNull EmptyDataBaseRepository emptyDataBaseRepository) {
         this.emptyDataBaseRepository = emptyDataBaseRepository;
     }
 

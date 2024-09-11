@@ -7,10 +7,13 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.MatchRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.PlayerRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
+@Validated
 public class RecordAdapter implements Adaptable<Record, RecordDTO> {
     private final MatchRepository matchRepository;
     private final PlayerRepository playerRepository;
@@ -21,8 +24,8 @@ public class RecordAdapter implements Adaptable<Record, RecordDTO> {
      * @param playerRepository the player repository
      */
     @Autowired
-    public RecordAdapter(MatchRepository matchRepository,
-                         PlayerRepository playerRepository) {
+    public RecordAdapter(@NonNull MatchRepository matchRepository,
+                         @NonNull PlayerRepository playerRepository) {
         this.matchRepository = matchRepository;
         this.playerRepository = playerRepository;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@ToString
+@ToString
 @Table
 @Entity
 public class Team {

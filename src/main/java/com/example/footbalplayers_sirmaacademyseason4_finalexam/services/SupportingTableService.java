@@ -33,8 +33,8 @@ public class SupportingTableService implements SupportingService {
      * @param <M> a template parameter that defines the value of the firstCl
      * @param <N> a template parameter that defines the value of the secondCl
      * @throws RuntimeException this exception is thrown when any of the template argument defines not
-     * supported type for firstCl or secondCl parameters. The supported types are: Player.class, Record.class,
-     * Team.class or Match.class.
+     * supported type for firstCl or secondCl parameters. The supported types are: Player class, Record class,
+     * Team class or Match.class.
      */
     @Override
     public <M, N> void create(Class<M> firstCl, Class<N> secondCl,
@@ -65,8 +65,8 @@ public class SupportingTableService implements SupportingService {
      * @param <M> a template parameter that defines the value of the firstCl
      * @param <N> a template parameter that defines the value of the secondCl
      * @throws RuntimeException this exception is thrown when any of the template argument defines not
-     * supported type for firstCl or secondCl parameters. The supported types are: Player.class, Record.class,
-     * Team.class or Match.class.
+     * supported type for firstCl or secondCl parameters. The supported types are: Player class, Record class,
+     * Team class or Match.class.
      */
     @Override
     public <M, N> void update(Class<M> firstCl, Class<N> secondCl, Long id,
@@ -99,8 +99,8 @@ public class SupportingTableService implements SupportingService {
      * @param <M> a template parameter that defines the value of the firstCl
      * @param <N> a template parameter that defines the value of the secondCl
      * @throws RuntimeException this exception is thrown when any of the template argument defines not
-     * supported type for firstCl or secondCl parameters. The supported types are: Player.class, Record.class,
-     * Team.class or Match.class.
+     * supported type for firstCl or secondCl parameters. The supported types are: Player class, Record class,
+     * Team class or Match.class.
      */
     @Override
     public <M, N> void deleteById(Class<M> firstCl, Class<N> secondCl, Long firstId, Long secondId) throws RuntimeException {

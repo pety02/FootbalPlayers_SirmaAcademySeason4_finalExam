@@ -32,7 +32,7 @@ public class DateValidator implements ConstraintValidator<ValidDate, LocalDate> 
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             sdf.setLenient(false);
             LocalDate date = LocalDate.parse(value);
-            return true;
+            return date != null;
         } catch (DateTimeParseException ex) {
             return false;
         }

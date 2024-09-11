@@ -110,12 +110,7 @@ public class PlayerController {
                 return "redirect:/all-players";
         }  catch (Exception ex) {
             log.error("Error creating new player: {}", ex.getMessage());
-            model.addAttribute("newPlayerDTO", playerDTO);
-            List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
-            List<TeamDTO> teamDTOs = teamService.loadAll();
-            model.addAttribute("positions", positions);
-            model.addAttribute("teamDTOs", teamDTOs);
-            return "create-player";
+            return "redirect:/all-players/create";
         }
     }
 
@@ -181,12 +176,7 @@ public class PlayerController {
             return "redirect:/all-players";
         } catch (Exception ex) {
             log.error("Error updating a player: {}", ex.getMessage());
-            model.addAttribute("playerDTO", playerDTO);
-            List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
-            List<TeamDTO> teamDTOs = teamService.loadAll();
-            model.addAttribute("positions", positions);
-            model.addAttribute("teamDTOs", teamDTOs);
-            return "player-update";
+            return "redirect:/all-players/update/{id}";
         }
     }
 

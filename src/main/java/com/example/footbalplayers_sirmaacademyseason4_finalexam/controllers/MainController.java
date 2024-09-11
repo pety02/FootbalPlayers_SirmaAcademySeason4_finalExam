@@ -109,7 +109,12 @@ public class MainController {
      */
     @GetMapping("/")
     public String getHomePage() {
-        populateDataBase();
+        // This line populates the database with the data from the CSV
+        // files, but it is slow process because the application checks
+        // if all supporting tables are empty and if it so, it populates
+        // the database with all data that you provided us for testing.
+        // Uncomment this line only on the first execute of the application.
+        //populateDataBase();
         return "home";
     }
 }

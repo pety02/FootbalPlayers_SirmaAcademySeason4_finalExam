@@ -108,9 +108,7 @@ public class MatchController {
             return "redirect:/all-matches";
         } catch (IllegalArgumentException ex) {
             log.error("Error creating new match: {}", ex.getMessage());
-            model.addAttribute("newMatchDTO", matchDTO);
-            model.addAttribute("teamsDTOs", teamService.loadAll());
-            return "create-match";
+            return "redirect:/all-matches/create";
         }
     }
 
@@ -168,9 +166,7 @@ public class MatchController {
             return "redirect:/all-matches";
         } catch (IllegalArgumentException ex) {
             log.error("Error updating a match: {}", ex.getMessage());
-            model.addAttribute("matchDTO", matchDTO);
-            model.addAttribute("teamsDTOs", teamService.loadAll());
-            return "match-update";
+            return "redirect:/all-matches/update/{id}";
         }
     }
 

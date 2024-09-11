@@ -64,7 +64,7 @@ public class Reader implements Readable{
                 String[] fields = line.split(delimiter);
                 int index = 0;
                 for (String field : fields) {
-                    field = field.replaceAll("\\s", "");
+                    field = field.trim();
                     fields[index++] = field;
                 }
                 Map<String, String> obj = new HashMap<>();

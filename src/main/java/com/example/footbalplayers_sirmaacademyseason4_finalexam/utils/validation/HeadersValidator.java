@@ -4,9 +4,10 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 
+// In methods below there are /*headers[0].equals("ID") &&*/ comments.
+// I commented these pieces of code because they bugs the logic.
+// headers[0] is equals to "ID" but the
 public class HeadersValidator {
     /**
      * Validates the Player class headers used in a CSV file
@@ -17,7 +18,10 @@ public class HeadersValidator {
         if(headers.length != 5) {
             return false;
         }
-        return /*headers[0].equals("ID") &&*/ headers[1].equals("TeamNumber")
+        if(headers[0].startsWith("\uFEFF")) {
+            headers[0] = headers[0].replace("\uFEFF", "");
+        }
+        return headers[0].equals("ID") && headers[1].equals("TeamNumber")
                 && headers[2].equals("Position") && headers[3].equals("FullName")
                 && headers[4].equals("TeamID");
     }
@@ -31,14 +35,11 @@ public class HeadersValidator {
         if(headers.length != 4) {
             return false;
         }
-        int index = 0;
-        for(String h : headers) {
-            headers[index++] = h.trim();
+        if(headers[0].startsWith("\uFEFF")) {
+            headers[0] = headers[0].replace("\uFEFF", "");
         }
-        boolean b = /*headers[0].equals("ID") &&*/ headers[1].equals("Name")
+        return headers[0].equals("ID") && headers[1].equals("Name")
                 && headers[2].equals("ManagerFullName") && headers[3].equals("Group");
-
-        return b;
     }
 
     /**
@@ -50,7 +51,10 @@ public class HeadersValidator {
         if(headers.length != 5) {
             return false;
         }
-        return /*headers[0].equals("ID") &&*/ headers[1].equals("PlayerID")
+        if(headers[0].startsWith("\uFEFF")) {
+            headers[0] = headers[0].replace("\uFEFF", "");
+        }
+        return headers[0].equals("ID") && headers[1].equals("PlayerID")
                 && headers[2].equals("MatchID") && headers[3].equals("fromMinutes")
                 && headers[4].equals("toMinutes");
     }
@@ -64,7 +68,10 @@ public class HeadersValidator {
         if(headers.length != 5) {
             return false;
         }
-        return /*headers[0].equals("ID") &&*/ headers[1].equals("ATeamID")
+        if(headers[0].startsWith("\uFEFF")) {
+            headers[0] = headers[0].replace("\uFEFF", "");
+        }
+        return headers[0].equals("ID") && headers[1].equals("ATeamID")
                 && headers[2].equals("BTeamID") && headers[3].equals("Date")
                 && headers[4].equals("Score");
     }

@@ -10,7 +10,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@ToString
+@ToString
 @Table
 @Entity
 public class Player {
