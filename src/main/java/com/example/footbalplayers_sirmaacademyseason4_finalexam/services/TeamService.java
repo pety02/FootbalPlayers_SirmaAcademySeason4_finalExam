@@ -39,12 +39,20 @@ public class TeamService implements Service<Team, TeamDTO> {
      *
      * @param id the Team object id
      * @return a TeamDTO object
+     * @throws RuntimeException this exception is thrown if the
+     * TeamAdapter object cannot convert properly Team object to
+     * TeamDTO object
      */
     @Transactional
     @Override
-    public TeamDTO loadByID(Long id) {
+    public TeamDTO loadByID(Long id) throws RuntimeException {
         Team team = teamRepository.findById(id).orElse(null);
-        return teamConverter.toDTO(team);
+        TeamDTO teamDTO = teamConverter.toDTO(team);
+        if(teamDTO == null) {
+            throw new RuntimeException("Cannot convert Team object to TeamDTO object!");
+        }
+
+        return teamDTO;
     }
 
     /**

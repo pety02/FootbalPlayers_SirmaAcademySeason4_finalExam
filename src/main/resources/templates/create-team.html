@@ -37,7 +37,7 @@
                 <label for="group" class="visually-hidden">Group</label>
                 <select name="group" id="group">
                     <option value="" disabled selected>Select an option</option>
-                    <option th:each="group : ${groups}" th:text="${group}" th:value="${group}"></option>
+                    <option th:each="group : ${groups}" th:text="${group}" th:value="${group}" th:field="*{group}"></option>
                 </select>
             </div>
         </div>
@@ -50,4 +50,20 @@
 </div>
 <div th:replace="~{fragments/footer::foot}"></div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+    });
+    const btn = document.querySelector("#btn");
+    btn.addEventListener("submit", (e) => {
+        e.preventDefault();
+    })
+    const btnCloseErrs = document.querySelector("#btn-close-errs")
+    btnCloseErrs.addEventListener("click", () => {
+        const alerts = document.querySelectorAll("[data-err-alert]");
+        alerts.forEach((a) => {
+            new bootstrap.Alert(a).close();
+        })
+    })
+</script>
 </html>

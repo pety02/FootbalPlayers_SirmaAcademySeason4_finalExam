@@ -20,10 +20,6 @@ import java.util.List;
 @Validated
 public class MainController {
     private final CSVDataExtractor dataExtractor = new CSVDataExtractor();
-    private final String matchCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\matches.csv";
-    private final String playerCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\players.csv";
-    private final String teamCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\teams.csv";
-    private final String recordCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\records.csv";
     private final MatchService matchService;
     private final PlayerService playerService;
     private final TeamService teamService;
@@ -34,6 +30,7 @@ public class MainController {
      * Populates all matches from the CSV matches file
      */
     private void populateMatches() {
+        final String matchCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\matches.csv";
         List<MatchDTO> matchDTOs = dataExtractor.extractMatches(matchCSVFilename);
         for(@Valid MatchDTO matchDTO : matchDTOs) {
             matchService.create(matchDTO);
@@ -44,6 +41,7 @@ public class MainController {
      * Populates all players from the CSV players file
      */
     private void populatePlayers() {
+        final String playerCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\players.csv";
         List<PlayerDTO> playerDTOs = dataExtractor.extractPlayers(playerCSVFilename);
         for(@Valid PlayerDTO playerDTO : playerDTOs) {
             playerService.create(playerDTO);
@@ -54,6 +52,7 @@ public class MainController {
      * Populates all teams from the CSV teams file
      */
     private void populateTeams() {
+        final String teamCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\teams.csv";
         List<TeamDTO> teamDTOs = dataExtractor.extractTeams(teamCSVFilename);
         for(@Valid TeamDTO teamDTO : teamDTOs) {
             teamService.create(teamDTO);
@@ -64,6 +63,7 @@ public class MainController {
      * Populates all records from the CSV records file
      */
     private void populateRecords() {
+        final String recordCSVFilename = "C:\\Users\\User\\OneDrive\\Documents\\FootbalPlayers_SirmaAcademySeason4_finalExam\\src\\main\\resources\\static\\records.csv";
         List<RecordDTO> recordDTOs = dataExtractor.extractRecords(recordCSVFilename);
         for(@Valid RecordDTO recordDTO : recordDTOs) {
             recordService.create(recordDTO);

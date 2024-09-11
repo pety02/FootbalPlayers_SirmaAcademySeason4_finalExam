@@ -42,9 +42,7 @@ public class MatchService implements Service<Match, MatchDTO> {
      */
     @Override
     public MatchDTO loadByID(Long id) {
-        return matchConverter.toDTO(matchRepository
-                .findById(id)
-                .orElse(null));
+        return matchConverter.toDTO(matchRepository.findById(id).orElse(null));
     }
 
     /**
@@ -58,7 +56,6 @@ public class MatchService implements Service<Match, MatchDTO> {
         for(Match match : matches) {
             matchDTOs.add(matchConverter.toDTO(match));
         }
-
         return matchDTOs;
     }
 
@@ -75,7 +72,12 @@ public class MatchService implements Service<Match, MatchDTO> {
         if(dto.getId() != null && matchRepository.existsById(dto.getId())) {
             throw new IllegalArgumentException("Match ID already exists!");
         }
-        Match created = matchRepository.save(matchConverter.toEntity(dto));
+        Match match = matchConverter.toEntity(dto);
+        if(match == null) {
+            return null;
+        }
+        System.out.println(match);
+        Match created = matchRepository.save(match);
         SupportingTableDTO teamMatchDTO = new SupportingTableDTO(created.getATeam().getId(), created.getId());
         supportingService.create(Team.class, Match.class, teamMatchDTO);
         return matchConverter.toDTO(created);

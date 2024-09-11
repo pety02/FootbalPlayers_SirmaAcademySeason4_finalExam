@@ -1,7 +1,7 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers;
 
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.TeamAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.MatchService;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.TeamService;
 import jakarta.validation.Valid;
@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -24,8 +21,8 @@ import java.util.List;
 import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 
 @Controller
-@Slf4j
 @Validated
+@Slf4j
 public class MatchController {
     private final MatchService matchService;
     private final TeamService teamService;
@@ -55,30 +52,21 @@ public class MatchController {
         List<String> teamsA = new ArrayList<>();
         List<String> teamsB = new ArrayList<>();
         for(MatchDTO matchDTO : allMatchDTOs) {
-            teamsA.add(teamService.loadByID(matchDTO.getATeamId()).getName());
-            teamsB.add(teamService.loadByID(matchDTO.getBTeamId()).getName());
+            String teamAName;
+            String teamBName;
+            try {
+                teamAName = teamService.loadByID(matchDTO.getATeamId()).getName();
+                teamBName = teamService.loadByID(matchDTO.getBTeamId()).getName();
+            } catch (RuntimeException ex) {
+                log.error("Exception occurred: " + ex.getMessage());
+                break;
+            }
+            teamsA.add(teamAName);
+            teamsB.add(teamBName);
         }
         model.addAttribute("teamsA", teamsA);
         model.addAttribute("teamsB", teamsB);
         return "all-matches";
-    }
-
-    /**
-     * Executes a GET request for a single MatchDTO object
-     * @param id the wanted match's id
-     * @param model the Model object to which the MatchDTO object will be attached
-     * @return match.html view with the wanted match if it exists in the database
-     */
-    @GetMapping("/all-matches/{id}")
-    public String getMatch(@PathVariable @NonNull Long id,
-                           @NonNull Model model) {
-        if(id <= 0) {
-            return "redirect:/all-matches";
-        }
-        MatchDTO matchDTO = matchService.loadByID(id);
-        model.addAttribute("matchDTO", matchDTO);
-
-        return "match";
     }
 
     /**
@@ -109,28 +97,32 @@ public class MatchController {
      * MatchDTO object is invalid, the method redirects to /all-matches/create.
      */
     @PostMapping("/all-matches/create")
-    public String addMatch(@Valid MatchDTO matchDTO,
+    public String addMatch(@Valid @ModelAttribute("newMatchDTO") MatchDTO matchDTO,
                            @NonNull BindingResult binding,
                            @NonNull Model model,
                            @NonNull RedirectAttributes redirectAttributes) {
         if(binding.hasErrors()) {
             log.error("Error creating new match: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);
-            return "redirect:/all-matches/create";
+            redirectAttributes.addFlashAttribute("newMatchDTO", matchDTO);
+            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newMatchDTO", binding);
+            return "create-match";
         }
 
         try {
             MatchDTO insertedMatchDTO = matchService.create(matchDTO);
+            if(insertedMatchDTO == null || insertedMatchDTO.equals(new MatchDTO())) {
+                redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
+                redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);
+                return "redirect:/all-matches/create";
+            }
             model.addAttribute("insertedMatchDTO", insertedMatchDTO);
 
             return "redirect:/all-matches";
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             log.error("Error creating new match: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("newMatchDTO", matchDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newMatchDTO", binding);
-
-            return "redirect:/all-matches/create";
+            return "create-match";
         }
     }
 
@@ -188,7 +180,7 @@ public class MatchController {
             model.addAttribute("updatedMatchDTO", matchDTO);
 
             return "redirect:/all-matches";
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             log.error("Error updating a match: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);

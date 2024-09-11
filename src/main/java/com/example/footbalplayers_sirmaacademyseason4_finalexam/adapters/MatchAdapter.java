@@ -35,10 +35,14 @@ public class MatchAdapter implements Adaptable<Match, MatchDTO> {
         }
         Match match = new Match();
         match.setId(matchDTO.getId());
-        Team teamA = teamRepository.findById(matchDTO.getATeamId()).orElse(null);
-        match.setATeam(teamA);
-        Team teamB = teamRepository.findById(matchDTO.getBTeamId()).orElse(null);
-        match.setBTeam(teamB);
+        if(matchDTO.getATeamId() != null) {
+            Team teamA = teamRepository.findById(matchDTO.getATeamId()).orElse(null);
+            match.setATeam(teamA);
+        }
+        if(matchDTO.getBTeamId() != null) {
+            Team teamB = teamRepository.findById(matchDTO.getBTeamId()).orElse(null);
+            match.setBTeam(teamB);
+        }
         match.setDate(matchDTO.getDate());
         match.setScore(matchDTO.getScore());
 

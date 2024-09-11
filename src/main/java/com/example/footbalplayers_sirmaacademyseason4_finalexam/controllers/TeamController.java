@@ -10,22 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 
 @Controller
 @Slf4j
-@Validated
 public class TeamController {
     private final TeamService teamService;
 
@@ -53,31 +47,14 @@ public class TeamController {
     }
 
     /**
-     * Executes a GET request for a single TeamDTO object
-     * @param id the wanted team's id
-     * @param model the Model object to which the TeamDTO object will be attached
-     * @return team.html view with the wanted team if it exists in the database
-     */
-    @GetMapping("/all-teams/{id}")
-    public String getTeam(@PathVariable @NonNull Long id,
-                          @NonNull Model model) {
-        if(id <= 0) {
-            return "redirect:/all-teams";
-        }
-        TeamDTO teamDTO = teamService.loadByID(id);
-        model.addAttribute("teamDTO", teamDTO);
-
-        return "team";
-    }
-
-    /**
      * Executes a GET request that returns a Model object with an empty
      * TeamDTO object in order to be filled and stored in the database
      * @param model the Model object to which an empty TeamDTO object will be attached
      * @return create-team.html view that contains empty TeamDTO object
      */
     @GetMapping("/all-teams/create")
-    public String getAddTeamForm(@NonNull Model model) {
+    public String getAddTeamForm(Model model) {
+
         model.addAttribute("newTeamDTO", new TeamDTO());
         List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
         model.addAttribute("groups", groups);
@@ -90,26 +67,22 @@ public class TeamController {
      * the database
      * @param teamDTO the team's data transfer object
      * @param binding the validation binding result object
-     * @param model the Model object to which a created in the database TeamDTO
-     *              object will be attached
-     * @param redirectAttributes the redirect attributes object
      * @return If everything is fine and the team is successfully inserted in the
      * database, the method redirects to /all-teams in order to show all teams.
      * If there is any problem with the insertion of the team in the database or the
      * TeamDTO object is invalid, the method redirects to /all-teams/create.
      */
     @PostMapping("/all-teams/create")
-    public String addTeam(@Valid TeamDTO teamDTO,
+    public String addTeam(@Valid @ModelAttribute("newTeamDTO") TeamDTO teamDTO,
                           @NonNull BindingResult binding,
-                          @NonNull Model model,
-                          @NonNull RedirectAttributes redirectAttributes) {
+                          @NonNull Model model) {
         if(binding.hasErrors()) {
             log.error("Error creating new team: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("teamDTO", teamDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "teamDTO", binding);
-            return "redirect:/all-teams/create";
+            model.addAttribute("newTeamDTO", teamDTO);
+            List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
+            model.addAttribute("groups", groups);
+            return "create-team";
         }
-
         try {
             TeamDTO insertedTeamDTO = teamService.create(teamDTO);
             model.addAttribute("insertedTeamDTO", insertedTeamDTO);
@@ -117,9 +90,10 @@ public class TeamController {
             return "redirect:/all-teams";
         } catch (Exception ex) {
             log.error("Error creating new team: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("newTeamDTO", teamDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newTeamDTO", binding);
-            return "redirect:/all-teams/create";
+            model.addAttribute("newTeamDTO", teamDTO);
+            List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
+            model.addAttribute("groups", groups);
+            return "create-team";
         }
     }
 
@@ -155,7 +129,6 @@ public class TeamController {
      * @param binding the validation binding result object
      * @param model the Model object to which an updated in the database TeamDTO
      *              object will be attached
-     * @param redirectAttributes the redirect attributes object
      * @return If everything is fine and the team is successfully updated in the
      * database, the method redirects to /all-teams in order to show all teams.
      * If there is any problem with the update of the team in the database or the
@@ -163,15 +136,16 @@ public class TeamController {
      */
     @PutMapping("/all-teams/update/{id}")
     public String updateTeam(@PathVariable @NonNull Long id,
-                             @Valid TeamDTO teamDTO,
+                             @Valid @ModelAttribute("teamDTO") TeamDTO teamDTO,
                              @NonNull BindingResult binding,
-                             @NonNull Model model,
-                             @NonNull RedirectAttributes redirectAttributes) {
+                             @NonNull Model model) {
         if(binding.hasErrors() || id <= 0) {
             log.error("Error updating a team: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("teamDTO", teamDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "teamDTO", binding);
-            return "redirect:/all-teams/update/{id}";
+            model.addAttribute("teamDTO", teamDTO);
+            List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
+            model.addAttribute("groups", groups);
+            model.addAttribute("selectedGroup", teamDTO.getGroup());
+            return "team-update";
         }
 
         try {
@@ -181,9 +155,11 @@ public class TeamController {
             return "redirect:/all-teams";
         } catch (Exception ex) {
             log.error("Error updating a team: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("teamDTO", teamDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "teamDTO", binding);
-            return "redirect:/all-teams/update/{id}";
+            model.addAttribute("teamDTO", teamDTO);
+            List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
+            model.addAttribute("groups", groups);
+            model.addAttribute("selectedGroup", teamDTO.getGroup());
+            return "team-update";
         }
     }
 
@@ -196,7 +172,6 @@ public class TeamController {
      */
     @GetMapping("/all-teams/delete/{id}")
     public String deleteTeam(@PathVariable @NonNull Long id) {
-
         teamService.deleteById(id);
         return "redirect:/all-teams";
     }

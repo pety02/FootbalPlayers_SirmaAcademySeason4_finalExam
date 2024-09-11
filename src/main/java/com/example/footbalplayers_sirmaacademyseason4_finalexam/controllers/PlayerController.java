@@ -29,10 +29,10 @@ public class PlayerController {
     private final TeamService teamService;
 
     /**
-     * PlayerController class constructor with a parameter
+     * PlayerController class constructor with parameters
      *
      * @param playerService the player service
-     * @param teamService
+     * @param teamService the team service
      */
     @Autowired
     public PlayerController(@NonNull PlayerService playerService,
@@ -62,24 +62,6 @@ public class PlayerController {
         }
         model.addAttribute("teamsNames", teamsNames);
         return "all-players";
-    }
-
-    /**
-     * Executes a GET request for a single PlayerDTO object
-     * @param id the wanted player's id
-     * @param model the Model object to which the PlayerDTO object will be attached
-     * @return player.html view with the wanted player if it exists in the database
-     */
-    @GetMapping("/all-players/{id}")
-    public String getPlayer(@PathVariable @NonNull Long id,
-                            @NonNull Model model) {
-        if(id <= 0) {
-            return "redirect:/all-players";
-        }
-        PlayerDTO playerDTO = playerService.loadByID(id);
-        model.addAttribute("playerDTO", playerDTO);
-
-        return "player";
     }
 
     /**
