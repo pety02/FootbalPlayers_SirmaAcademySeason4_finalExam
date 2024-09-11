@@ -4,11 +4,12 @@
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
 <div class="container mt-5" style="font-size:1rem;">
+    <h6>Update <span class="text-info">Team</span></h6>
     <a th:href="@{/all-teams}" class="btn btn-light">Back</a>
     <br>
-    <form th:object="${teamDTO}" th:method="POST" th:action="@{/all-teams/update/{id}(id=${teamDTO.id})}"
+    <form th:object="${teamDTO}" th:method="PUT" th:action="@{/all-teams/update/{id}(id=${teamDTO.id})}"
           enctype="multipart/form-data">
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="name" class="visually-hidden">Name</label>
                 <input type="text" class="form-control" id="name" name="name" th:value="*{name}" placeholder="Name">
@@ -20,7 +21,7 @@
             </div>
         </div>
         <br>
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="managerFullName" class="visually-hidden">Manager Full Name</label>
                 <input type="text" class="form-control" id="managerFullName" name="managerFullName" th:value="*{managerFullName}" placeholder="Manager Full Name">
@@ -32,7 +33,7 @@
             </div>
         </div>
         <br>
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="group" class="visually-hidden">Group</label>
                 <select name="group" id="group" th:field="${teamDTO.group}">
@@ -41,7 +42,7 @@
                 </select>
             </div>
         </div>
-        <div>
+        <div class="mt-2">
             <button type="submit" class="btn btn-primary">Save</button>
             <a th:href="@{/all-matches}" class="btn btn-light">Cancel</a>
         </div>

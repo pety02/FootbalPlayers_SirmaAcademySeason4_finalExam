@@ -45,11 +45,13 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
         player.setTeamNumber(playerDTO.getTeamNumber());
         player.setPosition(playerDTO.getPosition());
         player.setFullName(playerDTO.getFullName());
-        Team team = teamRepository.findById(playerDTO.getTeamId()).orElse(null);
-        if(team == null) {
-            throw new IllegalArgumentException("Every player should play at a team!");
+        if(playerDTO.getTeamId() != null) {
+            Team team = teamRepository.findById(playerDTO.getTeamId()).orElse(null);
+            if (team == null) {
+                throw new IllegalArgumentException("Every player should play at a team!");
+            }
+            player.setTeam(team);
         }
-        player.setTeam(team);
         List<Long> recordsIds = playerDTO.getRecordsIds();
         List<Record> records = new ArrayList<>();
         if(recordsIds != null) {

@@ -119,20 +119,28 @@ public class PlayerController {
                             @NonNull RedirectAttributes redirectAttributes) {
         if(binding.hasErrors()) {
             log.error("Error creating new player: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("playerDTO", playerDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerDTO", binding);
+            redirectAttributes.addFlashAttribute("newPlayerDTO", playerDTO);
+            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newPlayerDTO", binding);
             return "redirect:/all-players/create";
         }
 
         try {
-            PlayerDTO insertedPlayerDTO = playerService.create(playerDTO);
-            model.addAttribute("insertedPlayerDTO", insertedPlayerDTO);
+            if(playerDTO != null && !playerDTO.equals(new PlayerDTO())) {
+                PlayerDTO insertedPlayerDTO = playerService.create(playerDTO);
+                model.addAttribute("insertedPlayerDTO", insertedPlayerDTO);
 
-            return "redirect:/all-players";
-        } catch (IllegalArgumentException ex) {
+                return "redirect:/all-players";
+            } else {
+                System.out.println("HERE----------------------------------");
+                redirectAttributes.addFlashAttribute("newPlayerDTO", new PlayerDTO());
+                redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newPlayerDTO", binding);
+                return "redirect:/all-players/create";
+            }
+        }  catch (Exception ex) {
+            log.error("exception is in catch block");
             log.error("Error creating new player: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("playerDTO", playerDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerDTO", binding);
+            redirectAttributes.addFlashAttribute("newPlayerDTO", playerDTO);
+            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newPlayerDTO", binding);
             return "redirect:/all-players/create";
         }
     }
@@ -176,7 +184,7 @@ public class PlayerController {
      * If there is any problem with the update of the player in the database or the
      * PlayerDTO object is invalid, the method redirects to /all-players/update/{id}.
      */
-    @PostMapping("/all-players/update/{id}")
+    @PutMapping("/all-players/update/{id}")
     public String updatePlayer(@PathVariable @NonNull Long id,
                                @Valid @ModelAttribute PlayerDTO playerDTO,
                                @NonNull BindingResult binding,
@@ -194,7 +202,7 @@ public class PlayerController {
             model.addAttribute("updatedPlayerDTO", playerDTO);
 
             return "redirect:/all-players";
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             log.error("Error updating a player: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("playerDTO", playerDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerDTO", binding);

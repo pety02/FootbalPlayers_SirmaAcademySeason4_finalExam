@@ -79,8 +79,8 @@ public class PlayerService implements Service<Player, PlayerDTO> {
     @Transactional
     @Override
     public PlayerDTO create(PlayerDTO dto) throws IllegalArgumentException {
-        if(dto.getId() != null && playerRepository.existsById(dto.getId())) {
-            throw new IllegalArgumentException("Player ID already exists!");
+        if(dto == null || dto.getId() != null && playerRepository.existsById(dto.getId())) {
+            throw new IllegalArgumentException("Player could not be created!");
         }
 
         PlayerDTO created = playerConverter.toDTO(playerRepository.save(playerConverter.toEntity(dto)));

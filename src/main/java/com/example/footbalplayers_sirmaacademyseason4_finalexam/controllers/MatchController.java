@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -124,10 +125,10 @@ public class MatchController {
             model.addAttribute("insertedMatchDTO", insertedMatchDTO);
 
             return "redirect:/all-matches";
-        } catch (IllegalArgumentException ex) {
+        } catch (Exception ex) {
             log.error("Error creating new match: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);
+            redirectAttributes.addFlashAttribute("newMatchDTO", matchDTO);
+            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newMatchDTO", binding);
 
             return "redirect:/all-matches/create";
         }
@@ -169,7 +170,7 @@ public class MatchController {
      * If there is any problem with the update of the match in the database or the
      * MatchDTO object is invalid, the method redirects to /all-matches/update/{id}.
      */
-    @PostMapping("/all-matches/update/{id}")
+    @PutMapping("/all-matches/update/{id}")
     public String updateMatch(@PathVariable @NonNull Long id,
                               @Valid MatchDTO matchDTO,
                               @NonNull BindingResult binding,
@@ -187,7 +188,7 @@ public class MatchController {
             model.addAttribute("updatedMatchDTO", matchDTO);
 
             return "redirect:/all-matches";
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             log.error("Error updating a match: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);

@@ -110,10 +110,10 @@ public class RecordController {
             model.addAttribute("createdDTO", createdDTO);
 
             return "redirect:/all-records";
-        } catch (IllegalArgumentException ex) {
+        } catch (Exception ex) {
             log.error("Error creating new record: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("recordDTO", recordDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + recordDTO, binding);
+            redirectAttributes.addFlashAttribute("newRecordDTO", recordDTO);
+            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newRecordDTO", binding);
             return "redirect:/all-records/create";
         }
     }
@@ -154,7 +154,7 @@ public class RecordController {
      * If there is any problem with the update of the record in the database or the
      * RecordDTO object is invalid, the method redirects to /all-records/update/{id}.
      */
-    @PostMapping("/all-records/update/{id}")
+    @PutMapping("/all-records/update/{id}")
     public String updateRecord(@PathVariable @NonNull Long id,
                                @Valid RecordDTO recordDTO,
                                @NonNull BindingResult binding,
@@ -172,7 +172,7 @@ public class RecordController {
             model.addAttribute("updatedRecordDTO", recordDTO);
 
             return "redirect:/all-records";
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             log.error("Error updating a record: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("recordDTO", recordDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "recordDTO", binding);

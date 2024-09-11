@@ -4,11 +4,12 @@
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
 <div class="container mt-5" style="font-size:1rem;">
+    <h6>Update <span class="text-info">Match</span></h6>
     <a th:href="@{/all-matches}" class="btn btn-light">Back</a>
     <br>
-    <form th:object="${matchDTO}" th:method="POST" th:action="@{/all-matches/update/{id}(id=${matchDTO.id})}"
+    <form th:object="${matchDTO}" th:method="PUT" th:action="@{/all-matches/update/{id}(id=${matchDTO.id})}"
           enctype="multipart/form-data">
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="date" class="visually-hidden">Date</label>
                 <input type="date" class="form-control" id="date" name="date" th:value="*{date}" placeholder="Date">
@@ -19,7 +20,7 @@
                 </div>
             </div>
             <br>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 mt-2">
                 <label for="score" class="visually-hidden">Score</label>
                 <input type="text" class="form-control" id="score" name="score" th:value="*{score}" placeholder="Score">
                 <div th:if="${#fields.hasErrors('score')}"
@@ -29,7 +30,7 @@
                 </div>
             </div>
             <br>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 mt-2">
                 <label for="aTeamId" class="visually-hidden">team A name</label>
                 <select name="aTeamId" id="aTeamId" th:field="${matchDTO.ATeamId}">
                     <option value="" disabled selected>Select an option</option>
@@ -37,7 +38,7 @@
                 </select>
             </div>
             <br>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 mt-2">
                 <label for="bTeamId" class="visually-hidden">team B name</label>
                 <select name="bTeamId" id="bTeamId" th:field="${matchDTO.BTeamId}">
                     <option value="" disabled selected>Select an option</option>
@@ -45,7 +46,7 @@
                 </select>
             </div>
         </div>
-        <div>
+        <div class="mt-2">
             <button type="submit" class="btn btn-primary">Save</button>
             <a th:href="@{/all-matches}" class="btn btn-light">Cancel</a>
         </div>

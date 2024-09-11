@@ -4,10 +4,11 @@
 <body>
 <div th:replace="~{fragments/menu::navigation}"></div>
 <div class="container mt-3" style="font-size:1rem;">
+    <h6>Create <span class="text-info">Footballer</span></h6>
     <a th:href="@{/all-players}" class="btn btn-light">Back</a>
     <br>
     <form th:object="${newPlayerDTO}" th:method="POST" th:action="@{/all-players/create}">
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="fullName" class="visually-hidden">Full Name</label>
                 <input type="text" class="form-control" id="fullName" name="fullName" th:field="*{fullName}" placeholder="Name and Surname">
@@ -19,7 +20,7 @@
             </div>
         </div>
         <br>
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="position" class="visually-hidden">Position</label>
                 <select name="position" id="position">
@@ -29,7 +30,7 @@
             </div>
         </div>
         <br>
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="teamNumber" class="visually-hidden">Team Number</label>
                 <input type="number" min="1" max="12" step="1" class="form-control"
@@ -37,7 +38,7 @@
             </div>
         </div>
         <br>
-        <div class="form-row row align-items-center">
+        <div class="form-row row align-items-center mt-2">
             <div class="form-group col-md-6">
                 <label for="teamId" class="visually-hidden">Team</label>
                 <select name="teamId" id="teamId">
@@ -46,8 +47,10 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a th:href="@{/all-teams}" class="btn btn-light">Cancel</a>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/all-teams}" class="btn btn-light">Cancel</a>
+        </div>
     </form>
     <br>
 </div>

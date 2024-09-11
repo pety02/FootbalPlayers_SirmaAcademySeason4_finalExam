@@ -115,10 +115,10 @@ public class TeamController {
             model.addAttribute("insertedTeamDTO", insertedTeamDTO);
 
             return "redirect:/all-teams";
-        } catch (IllegalArgumentException ex) {
+        } catch (Exception ex) {
             log.error("Error creating new team: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("teamDTO", teamDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "teamDTO", binding);
+            redirectAttributes.addFlashAttribute("newTeamDTO", teamDTO);
+            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newTeamDTO", binding);
             return "redirect:/all-teams/create";
         }
     }
@@ -161,7 +161,7 @@ public class TeamController {
      * If there is any problem with the update of the team in the database or the
      * TeamDTO object is invalid, the method redirects to /all-teams/update/{id}.
      */
-    @PostMapping("/all-teams/update/{id}")
+    @PutMapping("/all-teams/update/{id}")
     public String updateTeam(@PathVariable @NonNull Long id,
                              @Valid TeamDTO teamDTO,
                              @NonNull BindingResult binding,
@@ -179,7 +179,7 @@ public class TeamController {
             model.addAttribute("updatedTeamDTO", teamDTO);
 
             return "redirect:/all-teams";
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             log.error("Error updating a team: {}", ex.getMessage());
             redirectAttributes.addFlashAttribute("teamDTO", teamDTO);
             redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "teamDTO", binding);
