@@ -1,5 +1,9 @@
 # Java Spring Boot Football Players Application
 
+### !!!IMPORTANT: My idea for the project is to read all data from the CSV files that was provided to me and if the database is empty on first load of Home view to populate the database with the read data. It is slow process, so my advice to you is to comment the next line after populating for first time the data base in order not to slow your user expirience with my application. The line you shoul comment is in java.com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers.MainController.class 
+
+![main_controller](https://github.com/user-attachments/assets/16411e31-51be-4b60-bf27-fa95bd1dbe9c)
+
 ## Project Description
 
 This is a Java Spring Boot application that analyzes and visualizes information about football players and teams based on data from CSV files. The application identifies player pairs who have played together in common matches for the longest time and presents this information through web views.
