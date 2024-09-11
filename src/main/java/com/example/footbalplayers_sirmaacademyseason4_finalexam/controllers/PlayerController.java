@@ -197,23 +197,13 @@ public class PlayerController {
      * Executes a GET request that deletes a definite player from the database in dependence
      * of its id
      * @param id the definite player's id
-     * @param binding the validation binding result object
-     * @param redirectAttributes the redirect attributes object
      * @return no matters the request is successful or not, the method redirects
      * to /all-players
      */
     @GetMapping("/all-players/delete/{id}")
-    public String deletePlayer(@PathVariable @NonNull Long id,
-                               @NonNull BindingResult binding,
-                               @NonNull RedirectAttributes redirectAttributes) {
-        try {
-            playerService.deleteById(id);
-        } catch (RuntimeException ex) {
-            log.error("Error deleting a player: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("playerID", id);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerID", binding);
-        }
+    public String deletePlayer(@PathVariable @NonNull Long id) {
 
+        playerService.deleteById(id);
         return "redirect:/all-players";
     }
 }
