@@ -1,7 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.MatchService;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.TeamService;
 import jakarta.validation.Valid;
@@ -90,7 +89,6 @@ public class MatchController {
      * @param binding the validation binding result object
      * @param model the Model object to which a created in the database MatchDTO
      *              object will be attached
-     * @param redirectAttributes the redirect attributes object
      * @return If everything is fine and the match is successfully inserted in the
      * database, the method redirects to /all-matches in order to show all matches.
      * If there is any problem with the insertion of the match in the database or the
@@ -99,29 +97,23 @@ public class MatchController {
     @PostMapping("/all-matches/create")
     public String addMatch(@Valid @ModelAttribute("newMatchDTO") MatchDTO matchDTO,
                            @NonNull BindingResult binding,
-                           @NonNull Model model,
-                           @NonNull RedirectAttributes redirectAttributes) {
+                           @NonNull Model model) {
         if(binding.hasErrors()) {
             log.error("Error creating new match: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("newMatchDTO", matchDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newMatchDTO", binding);
+            model.addAttribute("newMatchDTO", matchDTO);
+            model.addAttribute("teamsDTOs", teamService.loadAll());
             return "create-match";
         }
 
         try {
             MatchDTO insertedMatchDTO = matchService.create(matchDTO);
-            if(insertedMatchDTO == null || insertedMatchDTO.equals(new MatchDTO())) {
-                redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
-                redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);
-                return "redirect:/all-matches/create";
-            }
             model.addAttribute("insertedMatchDTO", insertedMatchDTO);
 
             return "redirect:/all-matches";
         } catch (IllegalArgumentException ex) {
             log.error("Error creating new match: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("newMatchDTO", matchDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newMatchDTO", binding);
+            model.addAttribute("newMatchDTO", matchDTO);
+            model.addAttribute("teamsDTOs", teamService.loadAll());
             return "create-match";
         }
     }
@@ -170,9 +162,9 @@ public class MatchController {
                               @NonNull RedirectAttributes redirectAttributes) {
         if(binding.hasErrors() || id <= 0) {
             log.error("Error updating a match: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);
-            return "redirect:/all-matches/update/{id}";
+            model.addAttribute("matchDTO", matchDTO);
+            model.addAttribute("teamsDTOs", teamService.loadAll());
+            return "match-update";
         }
 
         try {
@@ -182,9 +174,9 @@ public class MatchController {
             return "redirect:/all-matches";
         } catch (IllegalArgumentException ex) {
             log.error("Error updating a match: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("matchDTO", matchDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "matchDTO", binding);
-            return "redirect:/all-matches/update/{id}";
+            model.addAttribute("matchDTO", matchDTO);
+            model.addAttribute("teamsDTOs", teamService.loadAll());
+            return "match-update";
         }
     }
 

@@ -50,20 +50,4 @@
 </div>
 <div th:replace="~{fragments/footer::foot}"></div>
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-    });
-    const btn = document.querySelector("#btn");
-    btn.addEventListener("submit", (e) => {
-        e.preventDefault();
-    })
-    const btnCloseErrs = document.querySelector("#btn-close-errs")
-    btnCloseErrs.addEventListener("click", () => {
-        const alerts = document.querySelectorAll("[data-err-alert]");
-        alerts.forEach((a) => {
-            new bootstrap.Alert(a).close();
-        })
-    })
-</script>
 </html>

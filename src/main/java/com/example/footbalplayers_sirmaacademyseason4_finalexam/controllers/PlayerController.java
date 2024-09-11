@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,11 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
-
 @Controller
 @Slf4j
-@Validated
 public class PlayerController {
     private final PlayerService playerService;
     private final TeamService teamService;
@@ -88,42 +84,38 @@ public class PlayerController {
      * @param binding the validation binding result object
      * @param model the Model object to which a created in the database PlayerDTO
      *              object will be attached
-     * @param redirectAttributes the redirect attributes object
      * @return If everything is fine and the player is successfully inserted in the
      * database, the method redirects to /all-players in order to show all players.
      * If there is any problem with the insertion of the player in the database or the
      * PlayerDTO object is invalid, the method redirects to /all-players/create.
      */
     @PostMapping("/all-players/create")
-    public String addPlayer(@Valid @ModelAttribute PlayerDTO playerDTO,
+    public String addPlayer(@Valid @ModelAttribute("newPlayerDTO") PlayerDTO playerDTO,
                             @NonNull BindingResult binding,
-                            @NonNull Model model,
-                            @NonNull RedirectAttributes redirectAttributes) {
+                            @NonNull Model model) {
         if(binding.hasErrors()) {
             log.error("Error creating new player: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("newPlayerDTO", playerDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newPlayerDTO", binding);
-            return "redirect:/all-players/create";
+            model.addAttribute("newPlayerDTO", playerDTO);
+            List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
+            List<TeamDTO> teamDTOs = teamService.loadAll();
+            model.addAttribute("positions", positions);
+            model.addAttribute("teamDTOs", teamDTOs);
+            return "create-player";
         }
 
         try {
-            if(playerDTO != null && !playerDTO.equals(new PlayerDTO())) {
                 PlayerDTO insertedPlayerDTO = playerService.create(playerDTO);
                 model.addAttribute("insertedPlayerDTO", insertedPlayerDTO);
 
                 return "redirect:/all-players";
-            } else {
-                System.out.println("HERE----------------------------------");
-                redirectAttributes.addFlashAttribute("newPlayerDTO", new PlayerDTO());
-                redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newPlayerDTO", binding);
-                return "redirect:/all-players/create";
-            }
         }  catch (Exception ex) {
-            log.error("exception is in catch block");
             log.error("Error creating new player: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("newPlayerDTO", playerDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "newPlayerDTO", binding);
-            return "redirect:/all-players/create";
+            model.addAttribute("newPlayerDTO", playerDTO);
+            List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
+            List<TeamDTO> teamDTOs = teamService.loadAll();
+            model.addAttribute("positions", positions);
+            model.addAttribute("teamDTOs", teamDTOs);
+            return "create-player";
         }
     }
 
@@ -137,7 +129,7 @@ public class PlayerController {
      * @return player-update.html view with editable fields for the PlayerDTO object
      */
     @GetMapping("/all-players/update/{id}")
-    public String getUpdatePlayerForm(@PathVariable @NonNull Long id,
+    public String getUpdatePlayerForm(@PathVariable("id") @NonNull Long id,
                                       @NonNull Model model) {
         if(id <= 0) {
             return "redirect:/all-players";
@@ -167,16 +159,19 @@ public class PlayerController {
      * PlayerDTO object is invalid, the method redirects to /all-players/update/{id}.
      */
     @PutMapping("/all-players/update/{id}")
-    public String updatePlayer(@PathVariable @NonNull Long id,
-                               @Valid @ModelAttribute PlayerDTO playerDTO,
+    public String updatePlayer(@PathVariable("id") @NonNull Long id,
+                               @Valid @ModelAttribute("playerDTO") PlayerDTO playerDTO,
                                @NonNull BindingResult binding,
                                @NonNull Model model,
                                @NonNull RedirectAttributes redirectAttributes) {
         if(binding.hasErrors() || id <= 0) {
             log.error("Error updating a player: {}", binding.getAllErrors());
-            redirectAttributes.addFlashAttribute("playerDTO", playerDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerDTO", binding);
-            return "redirect:/all-players/update/{id}";
+            model.addAttribute("playerDTO", playerDTO);
+            List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
+            List<TeamDTO> teamDTOs = teamService.loadAll();
+            model.addAttribute("positions", positions);
+            model.addAttribute("teamDTOs", teamDTOs);
+            return "player-update";
         }
 
         try {
@@ -186,9 +181,12 @@ public class PlayerController {
             return "redirect:/all-players";
         } catch (Exception ex) {
             log.error("Error updating a player: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("playerDTO", playerDTO);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "playerDTO", binding);
-            return "redirect:/all-players/update/{id}";
+            model.addAttribute("playerDTO", playerDTO);
+            List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
+            List<TeamDTO> teamDTOs = teamService.loadAll();
+            model.addAttribute("positions", positions);
+            model.addAttribute("teamDTOs", teamDTOs);
+            return "player-update";
         }
     }
 
@@ -200,7 +198,7 @@ public class PlayerController {
      * to /all-players
      */
     @GetMapping("/all-players/delete/{id}")
-    public String deletePlayer(@PathVariable @NonNull Long id) {
+    public String deletePlayer(@PathVariable("id") @NonNull Long id) {
 
         playerService.deleteById(id);
         return "redirect:/all-players";
