@@ -2,6 +2,7 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class FootbalPlayersSirmaAcademySeason4FinalExamApplication {

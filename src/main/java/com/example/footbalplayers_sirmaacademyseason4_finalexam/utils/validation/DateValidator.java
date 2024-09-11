@@ -9,13 +9,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class DateValidator implements ConstraintValidator<ValidDate, LocalDate> {
-    private final String[] formats;
+    private String[] formats;
 
     /**
      * DateValidator class constructor with parameters
      * @param constraintAnnotation ValidDate annotation object
      */
-    public DateValidator (ValidDate constraintAnnotation) {
+    @Override
+    public void initialize (ValidDate constraintAnnotation)
+    {
         this.formats = constraintAnnotation.formats();
     }
 

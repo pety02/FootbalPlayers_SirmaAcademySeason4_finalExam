@@ -13,11 +13,6 @@
             <div class="form-group col-md-6">
                 <label for="date" class="visually-hidden">Date</label>
                 <input type="date" class="form-control" id="date" name="date" th:value="*{date}" placeholder="Date">
-                <div th:if="${#fields.hasErrors('date')}"
-                     class="alert alert-danger alert-dismissible fade show" data-err-alert>
-                    <span th:errors="*{date}" class="alert-danger"></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
             </div>
             <br>
             <div class="form-group col-md-6 mt-2">

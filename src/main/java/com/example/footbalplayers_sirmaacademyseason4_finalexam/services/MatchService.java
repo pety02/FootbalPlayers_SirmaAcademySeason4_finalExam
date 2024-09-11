@@ -9,12 +9,15 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.Mat
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.Service;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.interfaces.SupportingService;
 import jakarta.transaction.Transactional;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Validated
 public class MatchService implements Service<Match, MatchDTO> {
     private final MatchRepository matchRepository;
     private final MatchAdapter matchConverter;
@@ -27,9 +30,9 @@ public class MatchService implements Service<Match, MatchDTO> {
      * @param supportingService the supporting tables service
      */
     @Autowired
-    public MatchService(MatchRepository matchRepository,
-                        MatchAdapter matchConverter,
-                        SupportingService supportingService) {
+    public MatchService(@NonNull MatchRepository matchRepository,
+                        @NonNull MatchAdapter matchConverter,
+                        @NonNull SupportingService supportingService) {
         this.matchRepository = matchRepository;
         this.matchConverter = matchConverter;
         this.supportingService = supportingService;
@@ -76,7 +79,6 @@ public class MatchService implements Service<Match, MatchDTO> {
         if(match == null) {
             return null;
         }
-        System.out.println(match);
         Match created = matchRepository.save(match);
         SupportingTableDTO teamMatchDTO = new SupportingTableDTO(created.getATeam().getId(), created.getId());
         supportingService.create(Team.class, Match.class, teamMatchDTO);

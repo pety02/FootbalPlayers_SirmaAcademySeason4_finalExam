@@ -10,17 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
 
 @Controller
-@Validated
 @Slf4j
 public class MatchController {
     private final MatchService matchService;
@@ -128,7 +124,7 @@ public class MatchController {
      * @return match-update.html view with editable fields for the MatchDTO object
      */
     @GetMapping("/all-matches/update/{id}")
-    public String getUpdateMatchForm(@PathVariable @NonNull Long id,
+    public String getUpdateMatchForm(@PathVariable("id") @NonNull Long id,
                                      @NonNull Model model) {
         if(id <= 0) {
             return "redirect:/all-matches";
@@ -148,18 +144,16 @@ public class MatchController {
      * @param binding the validation binding result object
      * @param model the Model object to which an updated in the database MatchDTO
      *              object will be attached
-     * @param redirectAttributes the redirect attributes object
      * @return If everything is fine and the player is successfully updated in the
      * database, the method redirects to /all-matches in order to show all matches.
      * If there is any problem with the update of the match in the database or the
      * MatchDTO object is invalid, the method redirects to /all-matches/update/{id}.
      */
     @PutMapping("/all-matches/update/{id}")
-    public String updateMatch(@PathVariable @NonNull Long id,
-                              @Valid MatchDTO matchDTO,
+    public String updateMatch(@PathVariable("id") @NonNull Long id,
+                              @Valid @ModelAttribute("matchDTO") MatchDTO matchDTO,
                               @NonNull BindingResult binding,
-                              @NonNull Model model,
-                              @NonNull RedirectAttributes redirectAttributes) {
+                              @NonNull Model model) {
         if(binding.hasErrors() || id <= 0) {
             log.error("Error updating a match: {}", binding.getAllErrors());
             model.addAttribute("matchDTO", matchDTO);
@@ -188,7 +182,7 @@ public class MatchController {
      * to /all-matches
      */
     @GetMapping("/all-matches/delete/{id}")
-    public String deleteMatch(@PathVariable @NonNull Long id) {
+    public String deleteMatch(@PathVariable("id") @NonNull Long id) {
         matchService.deleteById(id);
         return "redirect:/all-matches";
     }
