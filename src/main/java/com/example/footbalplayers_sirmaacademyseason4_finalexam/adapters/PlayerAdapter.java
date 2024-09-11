@@ -7,13 +7,16 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Record;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.RecordRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.TeamRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Validated
 public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
     private final TeamRepository teamRepository;
     private final RecordRepository recordRepository;
@@ -24,8 +27,8 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
      * @param recordRepository the record repository
      */
     @Autowired
-    public PlayerAdapter(TeamRepository teamRepository,
-                         RecordRepository recordRepository) {
+    public PlayerAdapter(@NonNull TeamRepository teamRepository,
+                         @NonNull RecordRepository recordRepository) {
         this.teamRepository = teamRepository;
         this.recordRepository = recordRepository;
     }
@@ -34,9 +37,12 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
      * Converts a PlayerDTO object to a Player object
      * @param playerDTO the PlayerDTO object
      * @return a Player object
+     * @throws IllegalArgumentException this exception is thrown if the PlayerDTO
+     * object's id is null, there is no such Team object in the database or the
+     * PlayerDTO object's records' ids list is null
      */
     @Override
-    public Player toEntity(PlayerDTO playerDTO) {
+    public Player toEntity(PlayerDTO playerDTO) throws IllegalArgumentException {
         if(playerDTO == null) {
             return null;
         }
@@ -45,16 +51,17 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
         player.setTeamNumber(playerDTO.getTeamNumber());
         player.setPosition(playerDTO.getPosition());
         player.setFullName(playerDTO.getFullName());
-        if(playerDTO.getTeamId() != null) {
-            Team team = teamRepository.findById(playerDTO.getTeamId()).orElse(null);
-            if (team == null) {
-                throw new IllegalArgumentException("Every player should play at a team!");
-            }
-            player.setTeam(team);
+        if(playerDTO.getTeamId() == null) {
+            throw new IllegalArgumentException("TeamID could not be null!");
         }
+        Team team = teamRepository.findById(playerDTO.getTeamId()).orElse(null);
+        if (team == null) {
+            throw new IllegalArgumentException("Player's team could not be null!");
+        }
+        player.setTeam(team);
         List<Long> recordsIds = playerDTO.getRecordsIds();
         List<Record> records = new ArrayList<>();
-        if(recordsIds != null) {
+        if(recordsIds != null && !recordsIds.isEmpty()) {
             for (Long recordId : recordsIds) {
                 records.add(recordRepository.findById(recordId).orElse(null));
             }
@@ -81,7 +88,7 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
         playerDTO.setTeamId(player.getTeam().getId());
         List<Record> records = player.getRecords();
         List<Long> recordsIds = new ArrayList<>();
-        if(records != null) {
+        if(records != null && !records.isEmpty()) {
             for (Record record : records) {
                 recordsIds.add(record.getId());
             }

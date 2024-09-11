@@ -7,13 +7,16 @@ import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.MatchRepository;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.PlayerRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Validated
 public class TeamAdapter implements Adaptable<Team, TeamDTO> {
     private final PlayerRepository playerRepository;
     private final MatchRepository matchRepository;
@@ -24,8 +27,8 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
      * @param matchRepository the math repository
      */
     @Autowired
-    public TeamAdapter(PlayerRepository playerRepository,
-                       MatchRepository matchRepository) {
+    public TeamAdapter(@NonNull PlayerRepository playerRepository,
+                       @NonNull MatchRepository matchRepository) {
         this.playerRepository = playerRepository;
         this.matchRepository = matchRepository;
     }
@@ -47,7 +50,7 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
         team.setTeamGroup(teamDTO.getGroup());
         List<Long> playersIds = teamDTO.getPlayersIds();
         List<Player> players = new ArrayList<>();
-        if(playersIds != null) {
+        if(playersIds != null && !playersIds.isEmpty()) {
             for (Long playerId : playersIds) {
                 players.add(playerRepository.findById(playerId).orElse(null));
             }
@@ -55,7 +58,7 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
         team.setPlayers(players);
         List<Long> matchesIds = teamDTO.getMatchesIds();
         List<Match> matches = new ArrayList<>();
-        if(matchesIds != null) {
+        if(matchesIds != null && !matchesIds.isEmpty()) {
             for (Long matchId : matchesIds) {
                 matches.add(matchRepository.findById(matchId).orElse(null));
             }
@@ -81,14 +84,18 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
         teamDTO.setGroup(team.getTeamGroup());
         List<Player> players = team.getPlayers();
         List<Long> playersIds = new ArrayList<>();
-        for(Player player : players) {
-            playersIds.add(player.getId());
+        if(players != null && !players.isEmpty()) {
+            for (Player player : players) {
+                playersIds.add(player.getId());
+            }
         }
         teamDTO.setPlayersIds(playersIds);
         List<Match> matches = team.getMatches();
         List<Long> matchesIds = new ArrayList<>();
-        for(Match match : matches) {
-            matchesIds.add(match.getId());
+        if(matches != null && !matches.isEmpty()) {
+            for (Match match : matches) {
+                matchesIds.add(match.getId());
+            }
         }
         teamDTO.setMatchesIds(matchesIds);
         return teamDTO;

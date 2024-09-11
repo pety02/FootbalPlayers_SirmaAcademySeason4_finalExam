@@ -2,28 +2,26 @@ package com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.interfaces.Adaptable;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.TeamDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Team;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.repositories.TeamRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
+@Validated
 public class MatchAdapter implements Adaptable<Match, MatchDTO> {
     private final TeamRepository teamRepository;
-    private final TeamAdapter teamConverter;
 
     /**
-     * MatchConverter class constructor with arguments
+     * MatchConverter class constructor with an argument
      * @param teamRepository the team repository
-     * @param teamConverter the team converter
      */
     @Autowired
-    public MatchAdapter(TeamRepository teamRepository,
-                        TeamAdapter teamConverter) {
+    public MatchAdapter(@NonNull TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
-        this.teamConverter = teamConverter;
     }
     /**
      * Converts a MatchDTO object to a Match object

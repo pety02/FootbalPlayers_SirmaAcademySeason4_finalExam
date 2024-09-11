@@ -1,8 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters;
 
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.interfaces.Adaptable;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
-import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.PlayerDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.RecordDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Match;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.models.Player;
@@ -15,41 +13,42 @@ import org.springframework.stereotype.Component;
 @Component
 public class RecordAdapter implements Adaptable<Record, RecordDTO> {
     private final MatchRepository matchRepository;
-    private final MatchAdapter matchConverter;
     private final PlayerRepository playerRepository;
-    private final PlayerAdapter playerConverter;
 
     /**
      * RecordConverter class constructor with arguments
      * @param matchRepository the match repository
-     * @param matchConverter the match converter
      * @param playerRepository the player repository
-     * @param playerConverter the player converter
      */
     @Autowired
     public RecordAdapter(MatchRepository matchRepository,
-                         MatchAdapter matchConverter,
-                         PlayerRepository playerRepository,
-                         PlayerAdapter playerConverter) {
+                         PlayerRepository playerRepository) {
         this.matchRepository = matchRepository;
-        this.matchConverter = matchConverter;
         this.playerRepository = playerRepository;
-        this.playerConverter = playerConverter;
     }
 
     /**
      * Converts a RecordDTO object to a Record object
      * @param recordDTO the RecordDTO object
      * @return a Record object
+     * @throws IllegalArgumentException this exception is thrown
+     * if the Record object's match id is null or there is no such
+     * match in the database
      */
     @Override
-    public Record toEntity(RecordDTO recordDTO) {
+    public Record toEntity(RecordDTO recordDTO) throws IllegalArgumentException {
         if(recordDTO == null) {
             return null;
         }
         Record record = new Record();
         record.setId(recordDTO.getId());
+        if(recordDTO.getMatchId() == null) {
+            throw new IllegalArgumentException("Record's match id could not be null!");
+        }
         Match match = matchRepository.findById(recordDTO.getMatchId()).orElse(null);
+        if(match == null) {
+            throw new IllegalArgumentException("Record's match could not be null!");
+        }
         record.setMatch(match);
         Player player = playerRepository.findById(recordDTO.getPlayerId()).orElse(null);
         record.setPlayer(player);
