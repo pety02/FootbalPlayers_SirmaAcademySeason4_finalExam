@@ -47,27 +47,27 @@ The project is implemented as a monolithic Java Spring Boot application with an 
 
   ![app_matches](https://github.com/user-attachments/assets/483de267-3e60-4eec-9c5f-ba4babd6d93f)
 
-- **Teams**: Tabular view of full information about teams.
+- **Teams**: Tabular view of full information about all teams.
 
   ![app_teams](https://github.com/user-attachments/assets/6a5eb4d7-b7e1-4a6a-89a0-544731e98b5f)
 
-- **Footballers**: Tabular view of full information about football players.
+- **Footballers**: Tabular view of full information about all football players.
 
   ![app_footballers](https://github.com/user-attachments/assets/46ab7126-9566-4062-9326-d8a3e78b7eaa)
 
 ## Each view offers the ability to add, update, and delete records.
 
 ### Here are the designs for adding and updating a Match.
-![app_update_match](https://github.com/user-attachments/assets/fff84a67-522c-4152-af3d-a38eb6e6ecb0)
 ![app_create_match](https://github.com/user-attachments/assets/a20b6410-562b-435d-8fa9-83ad5d3123dc)
+![app_update_match](https://github.com/user-attachments/assets/fff84a67-522c-4152-af3d-a38eb6e6ecb0)
 
 ### Here are the designs for adding and updating a Team.
 ![app_create_team](https://github.com/user-attachments/assets/698371e4-f118-49e0-b5e9-be488bf006fc)
 ![app_update_footballer](https://github.com/user-attachments/assets/e73e3d44-8a01-4dc0-830d-fa21bd3542ad)
 
 ### Here are the designs for adding and updating a Player (Footballer).
-![app_update_team](https://github.com/user-attachments/assets/84ce82f6-a23e-4a8f-9e7d-6731e8a9b66b)
 ![app_create_footballer](https://github.com/user-attachments/assets/e60b421d-12b6-48e1-b0a2-6e5c864a61e9)
+![app_update_team](https://github.com/user-attachments/assets/84ce82f6-a23e-4a8f-9e7d-6731e8a9b66b)
 
 ## Functionality
 
