@@ -30,8 +30,6 @@ public class TeamDTO {
     @Size(min = 1, max = 1, message = "Group length should be one letter!")
     @Pattern(regexp = "^([ABCDEF]){1}$", message = "Groups possible values are A,B,C,D,E or F!")
     private String group;
-    @NotNull(message = "PlayersIds should not be null!")
     private List<Long> playersIds;
-    @NotNull(message = "MatchesIds should not be null!")
     private List<Long> matchesIds;
 }

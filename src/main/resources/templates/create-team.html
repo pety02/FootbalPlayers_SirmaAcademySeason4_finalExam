@@ -1,10 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{fragments/header::head}"></head>
 <body>
-
+<div th:replace="~{fragments/menu::navigation}"></div>
+<div class="container mt-3" style="font-size:1rem;">
+    <a th:href="@{/all-teams}" class="btn btn-light">Back</a>
+    <br>
+    <form th:object="${newTeamDTO}" th:method="POST" th:action="@{/all-teams/create}">
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="name" class="visually-hidden">Name</label>
+                <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Name">
+                <div th:if="${#fields.hasErrors('name')}"
+                     class="alert alert-danger alert-dismissible fade show" data-err-alert>
+                    <span th:errors="*{name}" class="alert-danger"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="managerFullName" class="visually-hidden">Manager Full Name</label>
+                <input type="text" class="form-control" id="managerFullName" name="managerFullName" th:field="*{managerFullName}" placeholder="Manager Full Name">
+                <div th:if="${#fields.hasErrors('managerFullName')}"
+                     class="alert alert-danger alert-dismissible fade show" data-err-alert>
+                    <span th:errors="*{managerFullName}" class="alert-danger"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="group" class="visually-hidden">Group</label>
+                <select name="group" id="group">
+                    <option value="" disabled selected>Select an option</option>
+                    <option th:each="group : ${groups}" th:text="${group}" th:value="${group}"></option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a th:href="@{/all-teams}" class="btn btn-light">Cancel</a>
+    </form>
+    <br>
+</div>
+<div th:replace="~{fragments/footer::foot}"></div>
 </body>
 </html>

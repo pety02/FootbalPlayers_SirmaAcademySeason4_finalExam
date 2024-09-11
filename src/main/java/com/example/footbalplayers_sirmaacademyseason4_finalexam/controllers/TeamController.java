@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
@@ -76,6 +79,8 @@ public class TeamController {
     @GetMapping("/all-teams/create")
     public String getAddTeamForm(@NonNull Model model) {
         model.addAttribute("newTeamDTO", new TeamDTO());
+        List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
+        model.addAttribute("groups", groups);
         return "create-team";
     }
 
@@ -135,6 +140,9 @@ public class TeamController {
         }
         TeamDTO teamDTO = teamService.loadByID(id);
         model.addAttribute("teamDTO", teamDTO);
+        List<String> groups = Arrays.asList("A", "B", "C", "D", "E", "F");
+        model.addAttribute("groups", groups);
+        model.addAttribute("selectedGroup", teamDTO.getGroup());
         return "team-update";
     }
 
@@ -183,23 +191,13 @@ public class TeamController {
      * Executes a GET request that deletes a definite team from the database in dependence
      * of its id
      * @param id the definite team's id
-     * @param bindings the validation binding result object
-     * @param redirectAttributes the redirect attributes object
      * @return no matters the request is successful or not, the method redirects
      * to /all-teams
      */
     @GetMapping("/all-teams/delete/{id}")
-    public String deleteTeam(@PathVariable @NonNull Long id,
-                             @NonNull BindingResult bindings,
-                             @NonNull RedirectAttributes redirectAttributes) {
-        try {
-            teamService.deleteById(id);
-        } catch (RuntimeException ex) {
-            log.error("Error deleting a team: {}", ex.getMessage());
-            redirectAttributes.addFlashAttribute("teamID", id);
-            redirectAttributes.addFlashAttribute(MODEL_KEY_PREFIX + "teamID", bindings);
-        }
+    public String deleteTeam(@PathVariable @NonNull Long id) {
 
+        teamService.deleteById(id);
         return "redirect:/all-teams";
     }
 }

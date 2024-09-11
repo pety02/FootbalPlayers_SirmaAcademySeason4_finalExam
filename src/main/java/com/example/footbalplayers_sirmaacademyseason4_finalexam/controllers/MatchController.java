@@ -1,5 +1,6 @@
 package com.example.footbalplayers_sirmaacademyseason4_finalexam.controllers;
 
+import com.example.footbalplayers_sirmaacademyseason4_finalexam.adapters.TeamAdapter;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.dtos.MatchDTO;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.MatchService;
 import com.example.footbalplayers_sirmaacademyseason4_finalexam.services.TeamService;
@@ -14,8 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
@@ -30,10 +32,11 @@ public class MatchController {
      * MatchController class constructor with parameters
      *
      * @param matchService the match service
-     * @param teamService the team service
+     * @param teamService  the team service
      */
     @Autowired
-    public MatchController(@NonNull MatchService matchService, TeamService teamService) {
+    public MatchController(@NonNull MatchService matchService,
+                           @NonNull TeamService teamService) {
         this.matchService = matchService;
         this.teamService = teamService;
     }
@@ -48,7 +51,14 @@ public class MatchController {
     public String getAllMatches(@NonNull Model model) {
         List<MatchDTO> allMatchDTOs = matchService.loadAll();
         model.addAttribute("allMatchDTOs", allMatchDTOs);
-
+        List<String> teamsA = new ArrayList<>();
+        List<String> teamsB = new ArrayList<>();
+        for(MatchDTO matchDTO : allMatchDTOs) {
+            teamsA.add(teamService.loadByID(matchDTO.getATeamId()).getName());
+            teamsB.add(teamService.loadByID(matchDTO.getBTeamId()).getName());
+        }
+        model.addAttribute("teamsA", teamsA);
+        model.addAttribute("teamsB", teamsB);
         return "all-matches";
     }
 

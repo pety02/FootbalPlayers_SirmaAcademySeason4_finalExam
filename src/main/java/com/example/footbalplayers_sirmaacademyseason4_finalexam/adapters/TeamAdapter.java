@@ -47,14 +47,18 @@ public class TeamAdapter implements Adaptable<Team, TeamDTO> {
         team.setTeamGroup(teamDTO.getGroup());
         List<Long> playersIds = teamDTO.getPlayersIds();
         List<Player> players = new ArrayList<>();
-        for(Long playerId : playersIds) {
-            players.add(playerRepository.findById(playerId).orElse(null));
+        if(playersIds != null) {
+            for (Long playerId : playersIds) {
+                players.add(playerRepository.findById(playerId).orElse(null));
+            }
         }
         team.setPlayers(players);
         List<Long> matchesIds = teamDTO.getMatchesIds();
         List<Match> matches = new ArrayList<>();
-        for(Long matchId : matchesIds) {
-            matches.add(matchRepository.findById(matchId).orElse(null));
+        if(matchesIds != null) {
+            for (Long matchId : matchesIds) {
+                matches.add(matchRepository.findById(matchId).orElse(null));
+            }
         }
         team.setMatches(matches);
         return team;

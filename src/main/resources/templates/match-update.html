@@ -31,7 +31,7 @@
             <br>
             <div class="form-group col-md-6">
                 <label for="aTeamId" class="visually-hidden">team A name</label>
-                <select name="aTeamId" id="aTeamId">
+                <select name="aTeamId" id="aTeamId" th:field="${matchDTO.ATeamId}">
                     <option value="" disabled selected>Select an option</option>
                     <option th:each="team : ${teamsDTOs}" th:text="${team.name}" th:value="${team.id}" th:selected="${matchDTO.ATeamId}"></option>
                 </select>
@@ -39,7 +39,7 @@
             <br>
             <div class="form-group col-md-6">
                 <label for="bTeamId" class="visually-hidden">team B name</label>
-                <select name="bTeamId" id="bTeamId">
+                <select name="bTeamId" id="bTeamId" th:field="${matchDTO.BTeamId}">
                     <option value="" disabled selected>Select an option</option>
                     <option th:each="team : ${teamsDTOs}" th:text="${team.name}" th:value="${team.id}" th:selected="${matchDTO.BTeamId}"></option>
                 </select>
