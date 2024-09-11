@@ -25,18 +25,34 @@ public class TeamCSVConverter implements CSVConvertable<TeamDTO> {
             try {
                 Long id = Long.parseLong(fields[1]);
                 String name = fields[3];
+                StringBuilder modifiedName = new StringBuilder(name.charAt(0) + "");
+                int i = 1;
+                for(; i < name.length(); ++i) {
+                    char currentChar = name.charAt(i);
+                    if('A' <= currentChar && currentChar <= 'Z') {
+                        modifiedName.append(' ');
+                        modifiedName.append(currentChar);
+                        break;
+                    }
+                    modifiedName.append(currentChar);
+                }
+                if(i + 1 < name.length()) {
+                    modifiedName.append(name.substring(i + 1));
+                }
                 String managerFullName = fields[2];
                 StringBuilder managerFullNameModified = new StringBuilder(managerFullName.charAt(0) + "");
-                for(int i = 1; i < managerFullName.length(); ++i) {
-                    char currChar = managerFullName.charAt(i);
+                for(int j = 1; j < managerFullName.length(); ++j) {
+                    char currChar = managerFullName.charAt(j);
                     if('A' <= currChar && currChar <= 'Z') {
                         managerFullNameModified.append(' ');
                     }
                     managerFullNameModified.append(currChar);
                 }
                 managerFullName = managerFullNameModified.toString();
+                name = modifiedName.toString();
                 String group = fields[0];
                 TeamDTO teamDTO = new TeamDTO(id, name, managerFullName, group, new ArrayList<>(), new ArrayList<>());
+                System.out.println(teamDTO);
                 teamDTOs.add(teamDTO);
             } catch (Exception ex) {
                 log.error("Exception occurred: " + ex.getMessage());

@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{fragments/header::head}"></head>
 <body>
-
+<div th:replace="~{fragments/menu::navigation}"></div>
+<div class="container mt-3" style="font-size:1rem;">
+    <a th:href="@{/all-players}" class="btn btn-light">Back</a>
+    <br>
+    <form th:object="${playerDTO}" th:method="POST" th:action="@{/all-players/update/{id}(id=${playerDTO.id})}">
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="fullName" class="visually-hidden">Full Name</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" th:value="*{fullName}" placeholder="Name and Surname">
+                <div th:if="${#fields.hasErrors('fullName')}"
+                     class="alert alert-danger alert-dismissible fade show" data-err-alert>
+                    <span th:errors="*{fullName}" class="alert-danger"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="position" class="visually-hidden">Position</label>
+                <select name="position" id="position" th:field="${playerDTO.position}">
+                    <option value="" disabled selected>Select an option</option>
+                    <option th:each="position : ${positions}" th:text="${position}" th:value="${position}"></option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="teamNumber" class="visually-hidden">Team Number</label>
+                <input type="number" min="1" max="12" step="1" class="form-control"
+                       id="teamNumber" name="teamNumber" th:value="*{teamNumber}">
+            </div>
+        </div>
+        <br>
+        <div class="form-row row align-items-center">
+            <div class="form-group col-md-6">
+                <label for="teamId" class="visually-hidden">Team</label>
+                <select name="teamId" id="teamId" th:field="${playerDTO.teamId}">
+                    <option value="" disabled selected>Select an option</option>
+                    <option th:each="teamDTO : ${teamDTOs}" th:text="${teamDTO.name}" th:value="${teamDTO.id}"></option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a th:href="@{/all-teams}" class="btn btn-light">Cancel</a>
+    </form>
+    <br>
+</div>
+<div th:replace="~{fragments/footer::foot}"></div>
 </body>
 </html>

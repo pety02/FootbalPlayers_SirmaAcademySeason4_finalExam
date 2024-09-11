@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.validation.BindingResult.MODEL_KEY_PREFIX;
@@ -90,6 +91,10 @@ public class PlayerController {
     @GetMapping("/all-players/create")
     public String getAddPlayerForm(@NonNull Model model) {
         model.addAttribute("newPlayerDTO", new PlayerDTO());
+        List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
+        List<TeamDTO> teamDTOs = teamService.loadAll();
+        model.addAttribute("positions", positions);
+        model.addAttribute("teamDTOs", teamDTOs);
         return "create-player";
     }
 
@@ -149,6 +154,10 @@ public class PlayerController {
         }
         PlayerDTO playerDTO = playerService.loadByID(id);
         model.addAttribute("playerDTO", playerDTO);
+        List<String> positions = Arrays.asList("GK", "DF", "MF", "FW");
+        List<TeamDTO> teamDTOs = teamService.loadAll();
+        model.addAttribute("positions", positions);
+        model.addAttribute("teamDTOs", teamDTOs);
         return "player-update";
     }
 

@@ -52,8 +52,10 @@ public class PlayerAdapter implements Adaptable<Player, PlayerDTO> {
         player.setTeam(team);
         List<Long> recordsIds = playerDTO.getRecordsIds();
         List<Record> records = new ArrayList<>();
-        for(Long recordId : recordsIds) {
-            records.add(recordRepository.findById(recordId).orElse(null));
+        if(recordsIds != null) {
+            for (Long recordId : recordsIds) {
+                records.add(recordRepository.findById(recordId).orElse(null));
+            }
         }
         player.setRecords(records);
         return player;

@@ -13,6 +13,7 @@ public class PlayerDTO {
     private Long id;
     @NotNull(message = "TeamNumber should not be null!")
     @Min(value = 1, message = "TeamNumber should be positive number!")
+    @Max(value = 12, message = "TeamNumber should be less than or equal to 12!")
     private Integer teamNumber;
     @NotNull(message = "Position should not be null!")
     @NotBlank(message = "Position should not be blank!")
@@ -31,6 +32,5 @@ public class PlayerDTO {
     @NotNull(message = "TeamID should not be null!")
     @Min(value = 1, message = "TeamID should be positive number!")
     private Long teamId;
-    @NotNull(message = "RecordsIds should not be null!")
     private List<Long> recordsIds;
 }
