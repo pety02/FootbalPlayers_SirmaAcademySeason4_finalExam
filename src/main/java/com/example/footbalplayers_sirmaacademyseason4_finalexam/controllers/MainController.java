@@ -114,7 +114,7 @@ public class MainController {
         // if all supporting tables are empty and if it so, it populates
         // the database with all data that you provided us for testing.
         // Uncomment this line only on the first execute of the application.
-        //populateDataBase();
+        // populateDataBase();
         return "home";
     }
 }

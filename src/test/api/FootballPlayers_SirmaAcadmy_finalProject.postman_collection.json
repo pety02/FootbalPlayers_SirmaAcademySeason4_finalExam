@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "2ca5bde5-195a-4ac1-ba52-412e277649c9",
+		"name": "FootballPlayers_SirmaAcadmy_finalProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40276258"
+	},
+	"item": [
+		{
+			"name": "Fetch All Plyers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/all-players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"all-players"
+					]
+				},
+				"description": "This is an end point in the FotballPlayers application API on which a list of all players is fetched."
+			},
+			"response": []
+		}
+	]
+}
